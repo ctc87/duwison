@@ -22,7 +22,16 @@ export class HttpComponent implements OnInit {
   ];
   
 //   results: string[];
+
+
  
+ /**
+  * 
+  * FALTA AUN ACABAR ESTO PARA HACER LAS LLAMADAS HTTP Y GUARDAR EN OBJETOS EN EL SERVICIO TODAS LAS VARIABLES.
+  *
+  **/
+  
+  
   // Inject HttpClient into your component or service.
   constructor(private http: HttpClient, public dataService: DataService) {}
  
@@ -35,7 +44,10 @@ export class HttpComponent implements OnInit {
   }
   
   getObjects() {
-      
+      this.http.get('/api/items').subscribe(data => {
+      // Read the result field from the JSON response.
+      this.results = data['results'];
+    });
   }
   
 }
