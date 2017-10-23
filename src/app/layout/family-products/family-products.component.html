@@ -1,0 +1,33 @@
+<!--Componente de las familias de productos-->
+<!--Este comoponente representa las familia de productos y su visulaización responsiva utlizando -->
+<!--Bootrap. Se automatizara cargando un objeto de la báse de datos con las familias y recorriendolas -->
+<!--con una directiva *ngFor de tal forma que se creará un elemeneto por cada una de las familias. -->
+<!--Hay que asociarles un nombre de familia una imágen. Tambien se debería tener una imágen por -->
+<!--defecto por si se creara una nueva familia en la base de datos sin una imagen asociada.-->
+
+ <!--Ejemplo de elemento -->
+ 
+ <!--   <div class="col-12 col-sm-3 col-lg-2 bordering-sm">-->
+ <!--     <p class="resposive-icon-text">-->
+ <!--     <img src="[nombre de la imágen asociada]" class="img-fluid max10" alt="Responsive image">-->
+ <!--     Arroces</p>-->
+ <!--   </div>-->
+
+<div [@routerTransition]>
+    <h2 class="text-muted">Familias</h2>
+    
+    <hr />
+    
+    <ngb-alert [type]="alert.type" (close)="closeAlert(alert)" *ngFor="let alert of alerts">{{ alert.message }}</ngb-alert>
+    
+    </div>
+    <div class="container">
+      <div class="row">
+        <div  class="col-12 col-sm-3 col-lg-2 bordering-sm" *ngFor="let i of familiArray">
+          <app-family-unit  [name]="i.name" [img_src]="i.img">
+          </app-family-unit>
+        </div>
+      </div>
+    </div>
+    <hr />
+

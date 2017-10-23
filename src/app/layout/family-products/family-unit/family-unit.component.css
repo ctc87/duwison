@@ -1,0 +1,40 @@
+.resposive-icon-text {
+  font-size: 20px;
+  text-align: center;
+}
+.max10 {
+max-width:100%!important;
+}
+
+/* Extra small devices (phones, less than 768px) */
+/* No media query since this is the default in Bootstrap */
+
+/*sm*/
+@media (max-width: 575px) {
+    .max10 {
+        max-width:10%!important;
+    }
+    .bordering-sm {
+         border-top:solid 2px black;   
+         padding-top: 1%;
+         /*padding-bottom: 1%;*/
+    }
+    .resposive-icon-text {
+      font-size: 20px;
+      text-align: left;
+    }
+}
+
+a {
+ text-decoration: none; 
+ color:black;
+}
+a {
+    text-decoration: none;
+    font-weight: bold;
+    transition: .8s linear;
+}
+a:hover {
+    color:green;
+}
+

@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { DataService } from '../../../../shared/services/data.service';
 
 @Component({
     selector: 'app-modal',
@@ -8,8 +9,11 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 })
 export class ModalComponent {
     closeResult: string;
-    constructor(private modalService: NgbModal) { }
+    @Input() nombre_boton: string;
+    @Input() index: number;
+    constructor(private modalService: NgbModal, public dataService: DataService) { }
 
+    
     open(content) {
         this.modalService.open(content).result.then((result) => {
             this.closeResult = `Closed with: ${result}`;
@@ -26,5 +30,9 @@ export class ModalComponent {
         } else {
             return  `with: ${reason}`;
         }
+    }
+    
+    cancelarPedido() {
+     this.dataService.clients.splice(this.index,1);   
     }
 }
