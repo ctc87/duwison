@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { HttpCalls } from '../peticionesHTTP/http';
+import { HttpClient } from '@angular/common/http';
+
 
 
 @Injectable()
@@ -9,8 +12,18 @@ export class DataService {
   private messageSource = new BehaviorSubject<string>("Otros");
   familia_actual = this.messageSource.asObservable();
   
-  constructor() { 
-    console.log("construyendo servicio")
+  public httpCalls : HttpCalls;
+  ObjetosJSON = [];
+
+  constructor(public http : HttpClient) { 
+  //   console.log("construyendo servicio")
+    this.httpCalls = new HttpCalls(this.http, this.ObjetosJSON)
+    this.httpCalls.getObjects();
+    console.log(this.ObjetosJSON)
+    // this.httpCalls = new HttpCalls(this.http, this.ObjetosJSON)
+  
+  // console.log("http")
+  // console.log(this.http)
   }
     
   cambiarFamilia(familia_seleccionada: string) {
@@ -19,7 +32,6 @@ export class DataService {
     console.log(this.messageSource)
   }
 
-  ObjetosJSON = {}
  
   familiArray =  [
       {name:"Arroces", img:"assets/png/035-paella.png"},

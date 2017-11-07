@@ -43,7 +43,9 @@ export class DashboardComponent implements OnInit {
         const index: number = this.alerts.indexOf(alert);
         this.alerts.splice(index, 1);
     }
+    
     addClient() {
+        console.log("ejec");
         if(this.alerts[0] && this.alerts[0].id === 1) {
            this.closeAlert(this.alerts[0]);
         }

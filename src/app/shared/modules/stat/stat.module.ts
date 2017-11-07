@@ -15,7 +15,7 @@ import { RouterModule } from '@angular/router';
         StatComponent, 
         ModalComponent
     ],
-    exports: [StatComponent],
+    exports: [StatComponent]
 })
 export class StatModule { }
 

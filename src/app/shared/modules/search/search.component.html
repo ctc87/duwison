@@ -1,0 +1,50 @@
+<!--<div class="{{sizeOut}}">-->
+<!--<div class="card card-inverse {{bgClass}}">-->
+<!--    <div class="card-header">-->
+<!--        <div class="row">-->
+<!--            <div class="col col-xs-3">-->
+<!--                <i class="fa {{icon}} fa-5x"></i>-->
+<!--            </div>-->
+<!--            <div class="col col-xs-9 text-right">-->
+                <!--<div class="d-block huge">Resumén Productos{{count}}</div>-->
+<!--                <div class="d-block">{{label}}</div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="card-block">-->
+<!--        <div class="row">-->
+<!--            <div class="col-6">-->
+<!--            <a [routerLink]="['/familias']">-->
+<!--               <button (click)="cambiarBotonAccion(false)" class="btn btn-lg btn-{{boton_accion.tipo}}" type="button">{{boton_accion.accion}}</button>-->
+<!--            </a>-->
+<!--            </div>-->
+<!--            <div class="col-6">-->
+<!--               <app-modal [nombre_boton]="'Cancelar'" [index]="index"></app-modal>-->
+<!--            </div>-->
+<!--            <hr/>-->
+<!--    </div>-->
+<!--    <br/>-->
+<!--    <div id="collapseExample" [ngbCollapse]="isCollapsed" class="card-block">-->
+<!--       AQUI VAN LOS DATOS DEL PEDIDO-->
+<!--    </div>-->
+<!--    <div class="card-footer">-->
+<!--        <span class="float-left">Ver pedido del cliente {{data}}</span>-->
+<!--        <a href="javascript:void(0)" class="float-right card-inverse"  -->
+<!--        (click)="dataService.closeTagsCLients(index)"-->
+<!--                        [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample" >-->
+<!--            <span ><i class="fa fa-arrow-circle-right"></i></span>-->
+<!--        </a>-->
+<!--    </div>-->
+<!--</div>-->
+
+
+<input
+    (keyup)="searchTerm$.next($event.target.value)">
+
+<ul *ngIf="results">
+  <li *ngFor="let result of results | slice:0:9">
+    <a href="{{ result.latest }}" target="_blank">
+      {{ result.name }}
+    </a>
+  </li>
+</ul>
