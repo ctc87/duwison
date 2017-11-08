@@ -21,10 +21,14 @@
             "prefix": "app",
             "styles": [
                 "../node_modules/font-awesome/css/font-awesome.css",
-                "styles/app.scss"
+                "styles/app.scss",
+                "../node_modules/selectize/dist/css/selectize.css",
+                "../node_modules/selectize/dist/css/selectize.bootstrap3.css"
             ],
             "scripts": [
-                "../node_modules/chart.js/dist/Chart.js"
+                "../node_modules/chart.js/dist/Chart.js",
+                "../node_modules/jquery/dist/jquery.min.js",
+                "../node_modules/ng-selectize/selectize/selectize.standalone.js"
             ],
             "environmentSource": "environments/environment.ts",
             "environments": {

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { HttpCalls } from '../peticionesHTTP/http';
-import { HttpClient } from '@angular/common/http';
+import { Carrito } from '../class/carritoCliente.class';
 
 
 
@@ -11,20 +10,61 @@ export class DataService {
   
   private messageSource = new BehaviorSubject<string>("Otros");
   familia_actual = this.messageSource.asObservable();
+  public alerts: Array<any> = [];
+  public errores = [];
+  public LIM = 10;
   
-  public httpCalls : HttpCalls;
-  ObjetosJSON = [];
-
-  constructor(public http : HttpClient) { 
-  //   console.log("construyendo servicio")
-    this.httpCalls = new HttpCalls(this.http, this.ObjetosJSON)
-    this.httpCalls.getObjects();
-    console.log(this.ObjetosJSON)
-    // this.httpCalls = new HttpCalls(this.http, this.ObjetosJSON)
-  
-  // console.log("http")
-  // console.log(this.http)
+  constructor() { 
+  this.errores =  [{
+            id: 1,
+            type: 'success',
+            message: `Pulsa Nuevo pedidos paa empezar a añadir clientes`
+        }, {
+            id: 2,
+            type: 'danger',
+            message: `No se permiten mas de ` + this.LIM + ` clientes.`
+        }];
   }
+  
+  public mostrarError(error : number) {
+    if(this.alerts.length <= 0)
+      this.alerts.push(this.errores[error]);
+  }
+  
+  public closeAlert(alert: any) {
+        const index: number = this.alerts.indexOf(alert);
+        this.alerts.splice(index, 1);
+  }
+  
+  public cerrar(num) {
+   this.clients.forEach(function(elemnt, i) {
+            if(i != num)
+                elemnt.collapsed = true;
+    });
+  }
+  
+  public addClient() {
+    console.log("ejec");
+    if(this.alerts[0] && this.alerts[0].id === 1) {
+       this.closeAlert(this.alerts[0]);
+    }
+    let indexx = this.clients.length;
+    if(this.clients.length < this.LIM) {
+         this.clients.push({
+            metodoFacturacion:"a",
+            id:indexx,
+            codcli:this.clienteSeleccionado.codcli,
+            clientes:this.clienteSeleccionado.clientes, 
+            collapsed : true,
+            carrito:new Carrito(),
+            index:(indexx - 1)
+            });
+     } else {
+        this.mostrarError(1);
+     }
+  } 
+  
+  clienteSeleccionado = { codcli:null, clientes:null};
     
   cambiarFamilia(familia_seleccionada: string) {
    
@@ -69,6 +109,7 @@ export class DataService {
       ]
     }
   ]
+  
   
     clients = [];
      

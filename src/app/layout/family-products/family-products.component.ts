@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { DataService } from '../../shared/services/data.service';
 import { routerTransition } from '../../router.animations';
+import { HttpCalls } from '../../shared';
 
 
 @Component({
@@ -14,8 +15,8 @@ export class FamilyProductsComponent {
  mensajes = [];
  public alerts: Array<any> = [];
  
- constructor(public dataService: DataService) {
-   this.familiArray = dataService.familiArray;
+ constructor(public dataService: DataService, public httpService: HttpCalls) {
+   this.familiArray = httpService.objetosJSON["familias"];
    this.mensajes =  [
             {
                 id: 1,

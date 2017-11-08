@@ -20,6 +20,7 @@ export class FamilyUnitComponent implements OnInit{
  } 
  ngOnInit() {
    // this.dataService.familia_actual.subscribe(message => this.name = message);
+   console.log(this.name)
   }
   
 
@@ -30,6 +31,10 @@ export class FamilyUnitComponent implements OnInit{
  
  seleccionarFamilia() {
   this.newMessage();
+ };
+ 
+ nombreFormateado() {
+  return this.name[0] + (this.name.toLowerCase()).slice(1);
  };
  
   

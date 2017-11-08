@@ -5,15 +5,9 @@
       "img":"assets/png/001-pistachio-1.png"
    },
    {
-      "codfam":"00001",
-      "familia":"FAMILIA PRINCIPAL",
-      "img":"assets/png/001-pistachio-1.png"
-      
-   },
-   {
       "codfam":"1",
       "familia":"ARROCES, CARNES Y EMBUTIDOS",
-      "img":"aassets/png/035-paella.png"
+      "img":"assets/png/033-paella-1.png"
    },
    {
       "codfam":"2",
@@ -42,17 +36,17 @@
    },
    {
       "codfam":"56",
-      "familia":"JUGOS Y ZUMOS"
+      "familia":"JUGOS Y ZUMOS",
       "img":"assets/png/orange-juice.png"
    },
    {
       "codfam":"6",
-      "familia":"I y IV GAMA"
+      "familia":"I y IV GAMA",
       "img":"assets/png/037-food-3.png"
    },
    {
       "codfam":"7",
-      "familia":"PANADERIA Y PASTELERIA"
+      "familia":"PANADERIA Y PASTELERIA",
       "img":"assets/png/029-food-5.png"
    }
 ]

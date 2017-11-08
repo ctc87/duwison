@@ -1,3 +1,4 @@
+
 <button class="btn btn-danger btn-lg" (click)="open(content)">{{nombre_boton}}</button>
 <ng-template #content let-c="close" let-d="dismiss">
     <div class="modal-header">
@@ -9,6 +10,7 @@
     <div class="modal-body">
         <p>Est&aacute; seguro de que desea cancelar el pedido.</p>
     </div>
+
     <div class="modal-footer">
     <!--Falta darle funcionalidad a este boton para que cancele el pedido (lo borre del array de clientes)-->
         <button type="button" class="btn btn-danger" (click)="c('Close click')" (click)="cancelarPedido()">Si</button>

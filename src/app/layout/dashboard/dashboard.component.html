@@ -2,38 +2,28 @@
     <h2 class="text-muted">Pedidos</h2>
     <div class="row"> 
         <div class="container">
-            <a class="btn btl-lg btn-success"  (click)="addClient()" style="color:white">
-              <i class="fa fa-plus fa-lg"></i> 
-                &nbsp;Nuevo pedido cliente
-             </a>
+        
+            <app-modal-clientes [nombre_boton]="'Nuevo pedido cliente'"></app-modal-clientes>
+
+            
         </div>
     </div>
     
     <hr />
     
-    <ngb-alert [type]="alert.type" (close)="closeAlert(alert)" *ngFor="let alert of alerts">{{ alert.message }}</ngb-alert>
+    <ngb-alert [type]="alert.type" (close)="dataService.closeAlert(dataService.alert)" *ngFor="let dataService.alert of alerts">{{ dataService.alert.message }}</ngb-alert>
     
     <div class="row">
         <!--<person-details *ngFor="let person of persons" [person]="person"></person-details>-->
         <app-stat  
-          *ngFor="let client of clients" 
+          *ngFor="let client of dataService.clients" 
           [sizeOut]="'col-xl-12 col-lg-6'" 
           [bgClass]="'card-primary'" 
           [icon]="'fa-user'" [count]="26" 
-          [label]="client.nom" 
-          [isCollapsed]="client.collapsed" 
-          [index]="client.index" 
+          [label]="dataService.clients.clientes" 
+          [isCollapsed]="dataService.clients.collapsed" 
+          [index]="dataService.clients.index" 
           ></app-stat>
-
-        <!--<div class="col-xl-3 col-lg-6">-->
-        <!--    <app-stat [bgClass]="'card-info'" [icon]="'fa-user'" [count]="12" [label]="'New task!'" ></app-stat>-->
-        <!--</div>-->
-        <!--<div class="col-xl-3 col-lg-6">-->
-        <!--    <app-stat [bgClass]="'card-success'" [icon]="'fa-user'" [count]="124" [label]="'New Orders!'" ></app-stat>-->
-        <!--</div>-->
-        <!--<div class="col-xl-3 col-lg-6">-->
-        <!--    <app-stat [bgClass]="'card-danger'" [icon]="'fa-user'" [count]="13" [label]="'New Tickets!'"></app-stat>-->
-        <!--</div>-->
     </div>
     <hr />
 

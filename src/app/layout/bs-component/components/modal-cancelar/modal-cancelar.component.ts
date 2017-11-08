@@ -3,11 +3,11 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { DataService } from '../../../../shared/services/data.service';
 
 @Component({
-    selector: 'app-modal',
-    templateUrl: './modal.component.html',
-    styleUrls: ['./modal.component.scss']
+    selector: 'app-modal-cancelar',
+    templateUrl: './modal-cancelar.component.html',
+    styleUrls: ['./modal-cancelar.component.scss']
 })
-export class ModalComponent {
+export class ModalCancelar {
     closeResult: string;
     @Input() nombre_boton: string;
     @Input() index: number;

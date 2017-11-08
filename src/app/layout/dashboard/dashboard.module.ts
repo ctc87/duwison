@@ -6,6 +6,9 @@ import {
     NgbModule
 } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
+import { ModalCliente } from '../bs-component/components';
+import { FormsModule } from '@angular/forms';
+import { NgSelectizeModule } from 'ng-selectize';        
 
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
@@ -27,14 +30,17 @@ import { StatModule } from '../../shared';
         NgbAlertModule.forRoot(),
         DashboardRoutingModule,
         StatModule,
-        RouterModule
+        RouterModule,
+        FormsModule,
+        NgSelectizeModule
     ],
     declarations: [
         DashboardComponent,
         TimelineComponent,
         NotificationComponent,
         ChatComponent, 
-        CollapseComponent
+        CollapseComponent,
+        ModalCliente
     ]
 })
 export class DashboardModule { }

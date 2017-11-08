@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { DataService } from '../../services/data.service';
-import { ModalComponent } from '../../../layout/bs-component/components';
+import { ModalCancelar, ModalCliente } from '../../../layout/bs-component/components';
+
 
 
 @Component({

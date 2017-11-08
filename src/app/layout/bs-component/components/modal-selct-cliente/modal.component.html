@@ -1,0 +1,34 @@
+<a class="btn btl-lg btn-success"   (click)="open(content)" style="color:white">
+              <i class="fa fa-plus fa-lg"></i> 
+                &nbsp;{{nombre_boton}}
+             </a>
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Selecionar Cliente</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p>Seleccione un cliente</p>
+
+	    <ng-selectize 
+    	    [config]="singleSelectConfig" 
+    	    [options]="singleSelectOptions" 
+    	    [placeholder]="placeholder"
+    		[(ngModel)]="singleSelectValue"
+    		(ngModelChange)="onChange($event)"
+    		ngDefaultControl
+    	>
+		</ng-selectize>
+		<div class="ui segment">
+			<p>Current value: {{singleSelectValue | json}}</p>
+		</div>
+	</div>
+    
+    <div class="modal-footer">
+    <!--Falta darle funcionalidad a este boton para que cancele el pedido (lo borre del array de clientes)-->
+        <button type="button" class="btn btn-success" (click)="addClient()" (click)="c('Close click')">Seleccionar</button>
+        <button type="button" class="btn btn-danger"  (click)="c('Close click')">Cancelar</button>
+    </div>
+</ng-template>

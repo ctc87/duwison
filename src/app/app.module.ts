@@ -10,6 +10,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthGuard } from './shared';
 import { DataService } from './shared';
+import { HttpCalls } from './shared';
+import { NgSelectizeModule } from 'ng-selectize';
+
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: Http) {
     // for development
@@ -27,6 +30,7 @@ export function HttpLoaderFactory(http: Http) {
         HttpModule,
         AppRoutingModule,
         HttpClientModule,
+        NgSelectizeModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
@@ -35,7 +39,11 @@ export function HttpLoaderFactory(http: Http) {
             }
         })
     ],
-    providers: [AuthGuard, DataService],
+    providers: [
+                AuthGuard,
+                DataService,
+                HttpCalls
+                ],
     bootstrap: [AppComponent]
 })
 export class AppModule {

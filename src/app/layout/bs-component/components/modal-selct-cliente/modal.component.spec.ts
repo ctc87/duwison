@@ -6,6 +6,11 @@ import { ModalComponent } from './modal.component';
 describe('ModalComponent', () => {
   let component: ModalComponent;
   let fixture: ComponentFixture<ModalComponent>;
+  
+  singleSelectConfig: any = SINGLE_SELECT_PRESET_VALUE_CONFIG;
+	singleSelectOptions: any = ExampleValues_Frameworks.slice(0);
+	singleSelectValue: string[] = ['reactjs']; // Defaulted value.
+
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

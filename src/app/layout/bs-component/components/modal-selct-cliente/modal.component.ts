@@ -1,0 +1,64 @@
+import { Component, Input,  OnInit } from '@angular/core';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { HttpCalls } from '../../../../shared/peticionesHTTP/http.service';
+import { DataService } from '../../../../shared/services/data.service';
+import {SINGLE_SELECT_PRESET_VALUE_CONFIG, MULTI_SELECT_PRESET_VALUE_CONFIG} from './presetValueExample.config';
+import {ExampleValues_Frameworks} from './selectize.configs';
+
+
+
+
+
+@Component({
+    selector: 'app-modal-clientes',
+    templateUrl: './modal.component.html',
+    styleUrls: ['./modal.component.scss']
+})
+export class ModalCliente implements OnInit {
+    closeResult: string;
+    @Input() nombre_boton: string;
+    
+    singleSelectConfig: any = SINGLE_SELECT_PRESET_VALUE_CONFIG;
+	singleSelectOptions: any;
+	cliente: string; // Defaulted value.
+
+	placeholder = 'Click to select...';
+    
+    constructor(private modalService: NgbModal, public httpJson: HttpCalls, public dataService: DataService) { }
+
+    ngOnInit() {
+    }
+    
+    
+    onChange($event) {
+        let clienteNombre = this.singleSelectOptions.filter(
+          cliente => cliente.codcli === $event);
+        this.cliente = clienteNombre[0].clientes;
+        
+    }
+    
+    
+    open(content) {
+        console.log(this.httpJson.objetosJSON.clientes, "clientes")
+        this.singleSelectOptions = this.httpJson.objetosJSON.clientes;
+        this.modalService.open(content).result.then((result) => {
+            this.closeResult = `Closed with: ${result}`;
+        }, (reason) => {
+            this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        });
+    }
+
+    private getDismissReason(reason: any): string {
+        if (reason === ModalDismissReasons.ESC) {
+            return 'by pressing ESC';
+        } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+            return 'by clicking on a backdrop';
+        } else {
+            return  `with: ${reason}`;
+        }
+    }
+    
+    cancelarPedido() {
+    //  this.dataService.clients.splice(this.index,1);   
+    }
+}
