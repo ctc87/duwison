@@ -50,6 +50,7 @@ export class DataService {
     }
     let indexx = this.clients.length;
     if(this.clients.length < this.LIM) {
+      console.log(this.clienteSeleccionado)
          this.clients.push({
             metodoFacturacion:"a",
             id:indexx,
@@ -114,11 +115,11 @@ export class DataService {
     clients = [];
      
     closeTagsCLients(index) {
-     this.clients.forEach(function(elemnt, i) {
-                if(i === index)
-                    elemnt.collapsed = !elemnt.collapsed;
+     this.clients.forEach(function(element, i) {
+                if(element.codcli === index)
+                    element.collapsed = !element.collapsed;
                 else
-                    elemnt.collapsed = true;
+                    element.collapsed = true;
         }); 
     }
   

@@ -18,6 +18,7 @@ export class StatComponent implements OnInit {
     @Input() data: number;
     @Input() sizeOut: string;
     @Input() index: number;
+    @Input() codcli: number;
     
 
     @Input() isCollapsed;

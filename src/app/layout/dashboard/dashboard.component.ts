@@ -35,6 +35,7 @@ export class DashboardComponent implements OnInit {
     }
 
     ngOnInit() { 
+        console.log(this.dataService.alerts)
         this.dataService.clients.length <= 0 ? this.dataService.mostrarError(0) : null;
     }
 

@@ -11,18 +11,18 @@
     
     <hr />
     
-    <ngb-alert [type]="alert.type" (close)="dataService.closeAlert(dataService.alert)" *ngFor="let dataService.alert of alerts">{{ dataService.alert.message }}</ngb-alert>
+    <ngb-alert [type]="alert.type" (close)="dataService.closeAlert(alert)" *ngFor="let alert of dataService.alerts">{{ alert.message }}</ngb-alert>
     
     <div class="row">
-        <!--<person-details *ngFor="let person of persons" [person]="person"></person-details>-->
         <app-stat  
           *ngFor="let client of dataService.clients" 
           [sizeOut]="'col-xl-12 col-lg-6'" 
           [bgClass]="'card-primary'" 
           [icon]="'fa-user'" [count]="26" 
-          [label]="dataService.clients.clientes" 
-          [isCollapsed]="dataService.clients.collapsed" 
-          [index]="dataService.clients.index" 
+          [label]="client.clientes" 
+          [isCollapsed]="client.collapsed" 
+          [index]="client.index" 
+          [codcli]="client.codcli" 
           ></app-stat>
     </div>
     <hr />
