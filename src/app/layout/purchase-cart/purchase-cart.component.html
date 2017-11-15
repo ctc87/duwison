@@ -1,0 +1,38 @@
+<div [@routerTransition]>
+    <h2 class="text-muted">Productos {{dataService.nombreFormateado(dataService.familia_actual.familia)}}</h2>
+    
+    <hr />
+    
+    <!--<ngb-alert [type]="alert.type" (close)="closeAlert(alert)" *ngFor="let alert of alerts">{{ alert.message }}</ngb-alert>-->
+    
+    </div>
+    <div class="container">
+      <div class="row">
+        
+    <app-tabs></app-tabs>
+        <div class="card mb-3">
+           
+                <!--<div class="card-header color">Pedido para el cliente {{dataService.clienteActualPedido.nombre}}</div>-->
+                <!--<input (keyup)="filtrar()" [(ngModel)]="filtrado">-->
+                <!--<table class="card-block table table-responsive">-->
+                <!--    <thead>-->
+                <!--    <tr>-->
+                <!--        <th class="th-responsive">C&oacute;digo</th>-->
+                <!--        <th class="th-responsive">Producto</th>-->
+                <!--        <th class="th-responsive">Precio</th>-->
+                <!--        <th class="th-responsive">Pedido</th>-->
+                <!--    </tr>-->
+                <!--    </thead>-->
+                <!--    <tbody>-->
+                <!--        <tr *ngFor="let producto of listaProductosCliente; let i = index" class="table-active">-->
+                <!--        <td class="td-responsive">{{producto.codArt}}</td>-->
+                <!--        <td class="td-responsive">{{producto.nombre}}</td>-->
+                <!--        <td class="td-responsive">{{producto.precio}}</td>-->
+                <!--        <td class="td-responsive">{{producto.cantidadPedido}}</td>-->
+                <!--        </tr>-->
+                <!--    </tbody>-->
+                <!--</table>-->
+            </div>
+        </div>
+    </div>
+    <hr />

@@ -39,8 +39,16 @@ export class ModalCliente implements OnInit {
     
     
     open(content) {
-        console.log(this.httpJson.objetosJSON.clientes, "clientes")
-        this.singleSelectOptions = this.httpJson.objetosJSON.clientes;
+        let that = this;
+        this.singleSelectOptions = this.httpJson.objetosJSON.clientes.filter(function(element, index){
+            let aux = true;
+            for(let i = 0; i < that.dataService.comercial.pedidos.length; i++) {
+                aux = that.dataService.comercial.pedidos[i].codigo != element.codcli && aux;  
+            }
+            return aux;
+        });
+        
+        
         this.modalService.open(content).result.then((result) => {
             this.closeResult = `Closed with: ${result}`;
         }, (reason) => {

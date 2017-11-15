@@ -1,8 +1,8 @@
 <!--Este componente representa una familia cualquiera de forma unitaria-->
       <!--<a (click)="seleccionarFamilia()" ><p class="resposive-icon-text bordering-sm">-->
-      <a (click)="seleccionarFamilia()" routerLink="/productos" routerLinkActive="active" >
+      <a (click)="seleccionarFamilia()" routerLink="/products" routerLinkActive="active" >
       <p class="resposive-icon-text bordering-sm">
       <img src="{{img_src}}" class="img-fluid max10" alt="Responsive image">
-      <span class="texto-familia">{{nombreFormateado()}}</span>
+      <span class="texto-familia">{{dataService.nombreFormateado(name)}}</span>
       </p></a>
       

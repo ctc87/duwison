@@ -1,0 +1,22 @@
+
+
+.color {
+   color:green;
+}
+
+
+@media (max-width: 990px) {
+  .color {
+   color:red;
+  }
+  
+  .th-responsive {
+       padding: 5px 5px;
+       font-size: 50%;
+   }
+  
+   .td-responsive {
+       padding: 5px 5px;
+       font-size: 50%;
+   }
+}

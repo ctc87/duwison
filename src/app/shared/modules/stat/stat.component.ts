@@ -20,7 +20,9 @@ export class StatComponent implements OnInit {
     @Input() index: number;
     @Input() codcli: number;
     
-
+    empezadoPedido = false;
+    listaProductosCliente = []; 
+    
     @Input() isCollapsed;
     @Output() event: EventEmitter<any> = new EventEmitter();
     
@@ -29,8 +31,8 @@ export class StatComponent implements OnInit {
      tipo:"success"
     }
     
-    cambiarBotonAccion(pedido_vacio) {
-        if(!pedido_vacio) {
+    cambiarBotonAccion() {
+        if(this.empezadoPedido) {
             this.boton_accion.accion = "Modificar";
             this.boton_accion.tipo = "warning";
         } else {
@@ -39,9 +41,54 @@ export class StatComponent implements OnInit {
         }
     }
     
+    empezarPedido() {
+        let that = this;
+        let cliente = this.dataService.comercial.pedidos.filter(function(element, index) {
+                return element.codigo == that.codcli;
+            });
+        cliente[0].empezadoPedido = true;
+        this.empezadoPedido = cliente[0].empezadoPedido;
+        this.dataService.asignarClienteActual(cliente[0]);
+        this.cambiarBotonAccion();
+    }
+    
     constructor(public dataService: DataService) { 
     }
-    ngOnInit() {}
+    ngOnInit() {
+        let that = this;
+        let cliente = this.dataService.comercial.pedidos.filter(function(element, index) {
+            return Number(element.codigo) === Number(that.codcli);
+        });
+        this.empezadoPedido = cliente[0].empezadoPedido;
+        this.cambiarBotonAccion();
+        this.actualizarListaProductosCliente()
+    }
+    
+    // carrito.productos
+    
+    actualizarListaProductosCliente() {
+        let that = this;
+        let cliente = this.dataService.comercial.pedidos.filter(function(element, index){
+            return Number(element.codigo) === Number(that.codcli)
+        });
+        console.log("PRODUCTOS CLIENTE")
+        let obj = cliente[0].carrito.productos;
+        console.log(cliente[0])
+        var result = Object.keys(obj).map(function(key) {
+                return obj[key];
+        });
+        this.listaProductosCliente = result.filter(function(element, index){
+            return element.cantidadPedido > 0
+                
+
+        });
+        console.log("lista productos cliente")
+        console.log(this.listaProductosCliente);
+      
+      
+    }
+    
+    
     
     
 }

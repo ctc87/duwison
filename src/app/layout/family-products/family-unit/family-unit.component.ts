@@ -1,5 +1,6 @@
 import { Component, Input, OnInit} from '@angular/core';
 import { DataService } from '../../../shared/services/data.service';
+import { NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-family-unit',
@@ -13,14 +14,14 @@ export class FamilyUnitComponent implements OnInit{
  @Input() img_src: string;
  // El nombre de la familia
  @Input() name: string;
+ @Input() codfam: string;
 
  constructor(public dataService: DataService) {
   
    // this.dataService.familia_actual.subscribe(message => this.name = message)
  } 
  ngOnInit() {
-   // this.dataService.familia_actual.subscribe(message => this.name = message);
-   console.log(this.name)
+//   console.log(this.name)
   }
   
 
@@ -30,12 +31,11 @@ export class FamilyUnitComponent implements OnInit{
    }
  
  seleccionarFamilia() {
-  this.newMessage();
+  this.dataService.familia_actual.codfam = this.codfam;
+  this.dataService.familia_actual.familia = this.name;
  };
  
- nombreFormateado() {
-  return this.name[0] + (this.name.toLowerCase()).slice(1);
- };
+ 
  
   
 }

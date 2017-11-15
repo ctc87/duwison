@@ -33,6 +33,6 @@ export class ModalCancelar {
     }
     
     cancelarPedido() {
-     this.dataService.clients.splice(this.index,1);   
+     this.dataService.comercial.pedidos.splice(this.index,1);   
     }
 }
