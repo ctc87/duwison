@@ -1,10 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import {  BlockUI, NgBlockUI } from 'ng-block-ui';
+
 
 
 @Injectable()
 export class HttpCalls  {
+    // Wires up BlockUI instance
+  @BlockUI() public blockUI: NgBlockUI;
   
   /**
    * ´IP´ Esta es la constante de la ip al backend
@@ -55,17 +59,10 @@ export class HttpCalls  {
   public data$: BehaviorSubject<any> = new BehaviorSubject({});
   
     public getFamilias() {
-       this.http.get(HttpCalls.SREVER_PATH_LOCAL + '/obj' + HttpCalls.EXT).subscribe(data => {
-          this.objPruebas = data;
-          return data;
-        }),
-        error => console.log("Error: ", error),
-        () => ((data)=>{
-            this.data$.next(data);
-        });
-        
+        this.blockUI.start("Cargando familias de productos.");
          this.http.get(HttpCalls.SREVER_PATH_LOCAL + HttpCalls.PATHS['familias'] + HttpCalls.EXT).subscribe(data => {
           this.objetosJSON['familias'] = data;
+          this.blockUI.stop();
           return data;
         }),
         error => console.log("Error: ", error),
@@ -85,9 +82,11 @@ export class HttpCalls  {
      * recibe el array como parámetro para poder jugar con los datos una vez terminada la 
      * llmada en segundo plano al backend.
      */
-    public getDescuentosPorClienteProducto(codCli, callback) {
+    public getDescuentosPorClienteProducto(codCli, cliente, callback) {
+      this.blockUI.start("Cargando descuentos para " + cliente + ".");
       this.http.get(HttpCalls.SREVER_PATH + HttpCalls.PATHS['tarifaArtciuloFamilia'] + "?codcli=" + codCli ).subscribe(data => {
         this.objetosJSON['tarifaArtciuloFamilia'] = data;
+        this.blockUI.stop();
         callback(this.objetosJSON['tarifaArtciuloFamilia']);
       }),
       error => console.log("Error: ", error),
@@ -109,9 +108,11 @@ export class HttpCalls  {
      * recibe el array como parámetro para poder jugar con los datos una vez terminada la 
      * llmada en segundo plano al backend.
      */
-    public getPreciosPortipoCLiente(tipCli, callback) {
+    public getPreciosPortipoCLiente(tipCli, cliente, callback) {
+      this.blockUI.start("Cargando precios para " + cliente + ".");
       this.http.get(HttpCalls.SREVER_PATH + HttpCalls.PATHS['tarifaTipoCliente'] + "?tipcli=" + tipCli ).subscribe(data => {
         this.objetosJSON['tarifaTipoCliente'] = data;
+        this.blockUI.stop();
         callback(this.objetosJSON['tarifaTipoCliente']);
       }),
       error => console.log("Error: ", error),
@@ -131,9 +132,10 @@ export class HttpCalls  {
      * @param codAlmacen  Código del almacen que .
      */
     public getProductos(codAlmacen) {
-      
+      this.blockUI.start("Cargando productos de la base de datos.");
       this.http.get(HttpCalls.SREVER_PATH + HttpCalls.PATHS['productos'] + "?codprov=" + codAlmacen ).subscribe(data => {
         this.objetosJSON['productos'] = data;
+         this.blockUI.stop();
       }),
       error => console.log("Error: ", error),
       () => ((data)=>{
@@ -151,8 +153,10 @@ export class HttpCalls  {
     this.getFamilias();
     // HAY QUE CAMBIAR ESTO PARA QUE VENGA DESDE EL COMERCIAL
     this.getProductos('00001');
+    this.blockUI.start("Cargando clientes de la base de datos.");
     this.http.get(HttpCalls.SREVER_PATH + HttpCalls.PATHS['clientes'] ).subscribe(data => {
       this.objetosJSON['clientes'] = data;
+      this.blockUI.stop();
     }),
     error => console.log("Error: ", error),
     () => ((data)=>{

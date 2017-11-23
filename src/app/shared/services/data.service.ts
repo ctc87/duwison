@@ -25,7 +25,6 @@ export class DataService {
   public almacen: number;
   public reNumbers: RegExp = /^\d+$/;
   
-  
   public clienteSeleccionado = { codcli:null, clientes:null, tarCli:null, tipoCliente:null };
   
   
@@ -65,8 +64,8 @@ export class DataService {
        this.closeAlert(this.alerts[0]);
     }
     let indexx = this.comercial.pedidos.length;
-    this.httpCalls.getDescuentosPorClienteProducto(this.clienteSeleccionado.codcli, function(arrayDescuentosPorCliente){
-      that.httpCalls.getPreciosPortipoCLiente(that.clienteSeleccionado.tipoCliente, function(arrayDescuentosPorTipoCliente){
+    this.httpCalls.getDescuentosPorClienteProducto(this.clienteSeleccionado.codcli, this.clienteSeleccionado.clientes, function(arrayDescuentosPorCliente){
+      that.httpCalls.getPreciosPortipoCLiente(that.clienteSeleccionado.tipoCliente, that.clienteSeleccionado.clientes, function(arrayDescuentosPorTipoCliente){
         if(that.comercial.pedidos.length < that.LIM) {
           console.log(that.clienteSeleccionado)
           that.comercial.insertarCliente(

@@ -12,6 +12,8 @@ import { AuthGuard } from './shared';
 import { DataService } from './shared';
 import { HttpCalls } from './shared';
 import { NgSelectizeModule } from 'ng-selectize';
+import { BlockUIModule } from 'ng-block-ui';
+
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: Http) {
@@ -31,6 +33,7 @@ export function HttpLoaderFactory(http: Http) {
         AppRoutingModule,
         HttpClientModule,
         NgSelectizeModule,
+        BlockUIModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
