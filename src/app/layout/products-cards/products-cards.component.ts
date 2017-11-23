@@ -7,18 +7,19 @@ import { Producto } from '../../shared/class/producto.class';
 
 
 @Component({
-  selector: 'app-products',
-  templateUrl: './products.component.html',
-  styleUrls: ['./products.component.css'],
+  selector: 'app-products-cards',
+  templateUrl: './products-cards.component.html',
+  styleUrls: ['./products-cards.component.css'],
     animations: [routerTransition()]
 })
-export class ProductsComponent implements OnInit {
+export class ProductsCardsComponent implements OnInit {
 
  constructor(public dataService: DataService, public httpService: HttpCalls) {
     } 
     
     
     public ngOnInit() {
+        console.log(this.dataService.arrayProductosFiltrados)
     }
     
     

@@ -7,16 +7,17 @@ import {
     NgbModule
 } from '@ng-bootstrap/ng-bootstrap';
 
-import { ProductsRoutingModule } from './products-routing.module';
-
-import { ProductsComponent } from './products.component';
+import { ProductsCardsRoutingModule } from './products-cards-routing.module';
 import { NavModule } from '../../shared/modules/nav/nav.module';
+
+import { ProductsCardsComponent } from './products-cards.component';
 import { PageHeaderModule } from './../../shared';
+
 
 @NgModule({
     imports: [
         CommonModule,
-        ProductsRoutingModule,
+        ProductsCardsRoutingModule,
         NgbModule.forRoot(),
         NgbAlertModule.forRoot(),
         PageHeaderModule,
@@ -24,7 +25,7 @@ import { PageHeaderModule } from './../../shared';
         NavModule
     ],
     declarations: [
-        ProductsComponent,
+        ProductsCardsComponent
     ]
 })
-export class ProductsModule { }
+export class ProductsCardsModule { }

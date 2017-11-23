@@ -14,10 +14,12 @@ export class Cliente {
         public nombre : String,
         public collapsed : boolean,
         public empezadoPedido : boolean,
-        todosProductosArray
+        todosProductosArray,
+        arrayPreciosParticulares,
+        arrayDescuentosPorTipoCliente
         )
         {
-            this.carrito = new Carrito(todosProductosArray);
+            this.carrito = new Carrito(todosProductosArray, arrayPreciosParticulares, arrayDescuentosPorTipoCliente, metodoFacturacion);
             this.fecha_pedido = new Date();
         };
     

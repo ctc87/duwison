@@ -17,19 +17,29 @@ export class DataService {
   public LIM = 10;
   public comercial : Comercial;
   public clienteActualPedido: Cliente;
+  public productosArray;
+  public arrayProductosFamilia;
+  public arrayProductosFiltrados;
+  mensajes = [];
+  public filtrado: String;
+  public almacen: number;
+  public reNumbers: RegExp = /^\d+$/;
+  
+  
+  public clienteSeleccionado = { codcli:null, clientes:null, tarCli:null, tipoCliente:null };
   
   
   constructor(public httpCalls: HttpCalls) { 
   this.errores =  [{
             id: 1,
             type: 'success',
-            message: `Pulsa Nuevo pedidos paa empezar a añadir clientes`
+            message: `Pulsa el botón superior para empezar a añadir clientes.`
         }, {
             id: 2,
             type: 'danger',
-            message: `No se permiten mas de ` + this.LIM + ` clientes.`
+            message: `No se permiten más de ` + this.LIM + ` clientes.`
         }];
-        this.comercial = new Comercial("Com_ex_1") 
+        this.comercial = new Comercial("Com_ex_1")
   }
   
   public mostrarError(error : number) {
@@ -50,28 +60,33 @@ export class DataService {
   }
   
   public addClient() {
+    let that = this;
     if(this.alerts[0] && this.alerts[0].id === 1) {
        this.closeAlert(this.alerts[0]);
     }
     let indexx = this.comercial.pedidos.length;
-    if(this.comercial.pedidos.length < this.LIM) {
-      console.log(this.clienteSeleccionado)
-      this.comercial.pedidos.push(new Cliente(
-            "a",
-            indexx,
-            this.clienteSeleccionado.codcli,
-            this.clienteSeleccionado.clientes, 
-            true,
-            false,
-            this.httpCalls.objetosJSON['productos']
-            )
-      );
-     } else {
+    this.httpCalls.getDescuentosPorClienteProducto(this.clienteSeleccionado.codcli, function(arrayDescuentosPorCliente){
+      that.httpCalls.getPreciosPortipoCLiente(that.clienteSeleccionado.tipoCliente, function(arrayDescuentosPorTipoCliente){
+        if(that.comercial.pedidos.length < that.LIM) {
+          console.log(that.clienteSeleccionado)
+          that.comercial.insertarCliente(
+              that.clienteSeleccionado.tarCli,
+              indexx,
+              that.clienteSeleccionado.codcli,
+              that.clienteSeleccionado.clientes, 
+              true,
+              false,
+              that.httpCalls.objetosJSON['productos'],
+              arrayDescuentosPorCliente, 
+              arrayDescuentosPorTipoCliente
+        );
+       } else {
         this.mostrarError(1);
-     }
+       }
+      });
+    });
+   
   } 
-  
-  clienteSeleccionado = { codcli:null, clientes:null};
     
   public cambiarFamilia(familia_seleccionada: string) {
    
@@ -88,7 +103,7 @@ export class DataService {
    }
   
    
-  closeTagsCLients(index) {
+  public closeTagsCLients(index) {
    this.comercial.pedidos.forEach(function(element, i) {
               if(element.codigo === index)
                   element.collapsed = !element.collapsed;
@@ -96,6 +111,20 @@ export class DataService {
                   element.collapsed = true;
       }); 
   }
+
+    
+    public truncate(val) {
+        return Number(val).toFixed(2)   
+    }
+    
+    
+    public filtrar($event) {
+        let re = new RegExp(".*"+this.filtrado+".*", "ig");
+        console.log(this.arrayProductosFamilia)
+        this.arrayProductosFiltrados = this.arrayProductosFamilia.filter(function(element, index){
+            return re.test(element.articulo) || re.test(element.codart)
+        });
+    }
 
   
 

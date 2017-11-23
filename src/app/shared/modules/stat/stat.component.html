@@ -15,7 +15,7 @@
         <div class="row">
             <div class="col-6">
             <a [routerLink]="['/familias']">
-               <button (click)="empezarPedido()" class="btn btn-lg btn-{{boton_accion.tipo}}" type="button">{{boton_accion.accion}}</button>
+               <button (click)="empezarPedido()" class="btn-responsive btn btn-lg btn-{{boton_accion.tipo}}" type="button">{{boton_accion.accion}}</button>
             </a>
             </div>
             <div class="col-6">
@@ -28,7 +28,7 @@
         <ng-container *ngIf="listaProductosCliente.length > 0">
             <table class="card-block table table-responsive">
                 <thead>
-                <tr>
+                <tr class="active">
                     <th class="th-responsive">C&oacute;digo</th>
                     <th class="th-responsive">Producto</th>
                     <th class="th-responsive">Precio</th>
@@ -36,7 +36,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let producto of listaProductosCliente; let i = index" class="table-active">
+                    <tr  *ngFor="let producto of listaProductosCliente; let i = index" class="table-white">
                     <td class="td-responsive">{{producto.codArt}}</td>
                     <td class="td-responsive">{{producto.nombre}}</td>
                     <td class="td-responsive">{{producto.precio}}</td>

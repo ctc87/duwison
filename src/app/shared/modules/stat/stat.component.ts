@@ -54,6 +54,7 @@ export class StatComponent implements OnInit {
     
     constructor(public dataService: DataService) { 
     }
+    
     ngOnInit() {
         let that = this;
         let cliente = this.dataService.comercial.pedidos.filter(function(element, index) {
@@ -64,26 +65,27 @@ export class StatComponent implements OnInit {
         this.actualizarListaProductosCliente()
     }
     
-    // carrito.productos
     
+    // inicializarPreciosArticuloCPorCLiente
+    /**
+     * ´actualizarListaProductosCliente´ este método sleciona el cliente que representa
+     * el card (la clase en si). Convierte el carrito de la compra en un array y filtra 
+     * solo los productos que tengan una cantidad mayor que 0 en el pedido para mostrarlos
+     * en el carrito de la compra.
+     *
+     */
     actualizarListaProductosCliente() {
         let that = this;
         let cliente = this.dataService.comercial.pedidos.filter(function(element, index){
             return Number(element.codigo) === Number(that.codcli)
         });
-        console.log("PRODUCTOS CLIENTE")
         let obj = cliente[0].carrito.productos;
-        console.log(cliente[0])
-        var result = Object.keys(obj).map(function(key) {
+        let result = Object.keys(obj).map(function(key) {
                 return obj[key];
         });
         this.listaProductosCliente = result.filter(function(element, index){
             return element.cantidadPedido > 0
-                
-
         });
-        console.log("lista productos cliente")
-        console.log(this.listaProductosCliente);
       
       
     }

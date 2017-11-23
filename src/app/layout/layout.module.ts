@@ -7,19 +7,25 @@ import { LayoutRoutingModule } from './layout-routing.module';
 import { LayoutComponent } from './layout.component';
 import { HeaderComponent, SidebarComponent } from '../shared';
 import { SearchComponent } from '../shared/modules/search/search.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { RouterModule } from '@angular/router';
+
 
 @NgModule({
     imports: [
         CommonModule,
         NgbDropdownModule.forRoot(),
         LayoutRoutingModule,
-        TranslateModule
+        TranslateModule,
+        RouterModule,
+        NgbModule.forRoot(),
+        FormsModule
     ],
     declarations: [
         LayoutComponent,
         HeaderComponent,
         SidebarComponent,
-        SearchComponent
+        SearchComponent, 
     ]
 })
 export class LayoutModule { }

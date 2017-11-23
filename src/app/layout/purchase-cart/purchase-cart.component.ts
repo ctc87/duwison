@@ -13,10 +13,28 @@ import { HttpCalls } from '../../shared/peticionesHTTP/http.service';
 
 
 export class CartComponent implements OnInit {
- 
+    
+    mensajes = [];
+    public alerts: Array<any> = [];
+    
     constructor(public dataService: DataService) {
+        this.mensajes =  [
+            {
+                id: 1,
+                type: 'success',
+                message: `Información de los pedidos.`
+            }
+        ];
+        this.alerts.push(this.mensajes[0]);
     }
-
+    
+    
+    
+    public closeAlert(alert: any) {
+        const index: number = this.alerts.indexOf(alert);
+        this.alerts.splice(index, 1);
+    }
+    
     ngOnInit() {
     }
 }

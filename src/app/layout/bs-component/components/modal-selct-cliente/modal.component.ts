@@ -34,7 +34,12 @@ export class ModalCliente implements OnInit {
         let clienteNombre = this.singleSelectOptions.filter(
           cliente => cliente.codcli === $event);
          this.cliente = clienteNombre[0].clientes;
-         this.dataService.clienteSeleccionado = { codcli:$event, clientes:this.cliente};
+         this.dataService.clienteSeleccionado = { 
+            codcli:$event, 
+            clientes:this.cliente, 
+            tarCli: clienteNombre[0].tarcli, 
+            tipoCliente:clienteNombre[0].clientes
+        };
     }
     
     

@@ -5,44 +5,66 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class HttpCalls  {
-  // public static readonly IP = "192.168.10.107";
-  // public static readonly SREVER_PATH = "appLorkel/web/app_dev.php";
-  public static readonly SREVER_PATH = "assets/JSON";
+  
+  /**
+   * ´IP´ Esta es la constante de la ip al backend
+   */
+  public static readonly IP = "http://192.168.10.15";
+  
+  /**
+   * ´SERVER_PATH´ Esta constante contiene el path del servidor backend
+   * a donde van las consultas JSON. 
+   */
+  public static readonly SREVER_PATH = HttpCalls.IP +"/appLorkel/web/app_dev.php";
+  
+  // SOLO DESARROLLO
+  public static readonly SREVER_PATH_LOCAL = "assets/JSON";
   public static readonly EXT = ".json";
-  public objetosJSON = {clientes:null, familias:null, productos:null};
+  
+  /**
+   * ´objetosJSON´ Este objeto contiene tdoas als consultas al backend con objetos JSON
+   * algunos son estáticos y otros dinámicos y se cambian a mediada que hace falta
+   * en la aplicación.
+   */  
+  public objetosJSON = {clientes:null, familias:null, productos:null, tarifaArtciuloFamilia:null, tarifaTipoCliente:null};
+  
+  /**
+   * ´PATHS´ Este objeto constante contiene los paths para las distintas consultas
+   */
   public static readonly PATHS = {
     'familias':'/familias',
     'clientes':'/clientes',
-    'productos':'/conexion'
+    'productos':'/conexion',
+    'tarifaArtciuloFamilia' :'/tarArtFam',
+    'tarifaTipoCliente' : '/tarclitip'
   };
   
+  // DEBUGING
+  public objPruebas;
 
 
   // Inject HttpClient into your component or service.
-  
   constructor(private http: HttpClient) {
     console.log("creado servicio de objetos JSON")
     this.getObjects(); 
   };
   
+  /**
+   * Variable dynamica para guardar los datos recibidos desde el servidor
+   */
   public data$: BehaviorSubject<any> = new BehaviorSubject({});
-
-
-  // public getObjects() {
-  //   this.http.get(HttpCalls.SREVER_PATH + HttpCalls.PATHS['familias'] + HttpCalls.EXT).subscribe(data => {
-  //     this.objetosJSON['familias'] = data;
-  //   });
-  //   this.http.get(HttpCalls.SREVER_PATH + HttpCalls.PATHS['clientes'] + HttpCalls.EXT).subscribe(data => {
-  //     this.objetosJSON['clientes'] = data;
-  //   });
-  //   this.http.get(HttpCalls.SREVER_PATH + HttpCalls.PATHS['productos'] + HttpCalls.EXT).subscribe(data => {
-  //     this.objetosJSON['productos'] = data;
-  //   });
-    
-  // }
   
     public getFamilias() {
-       this.http.get(HttpCalls.SREVER_PATH + HttpCalls.PATHS['familias'] + HttpCalls.EXT).subscribe(data => {
+       this.http.get(HttpCalls.SREVER_PATH_LOCAL + '/obj' + HttpCalls.EXT).subscribe(data => {
+          this.objPruebas = data;
+          return data;
+        }),
+        error => console.log("Error: ", error),
+        () => ((data)=>{
+            this.data$.next(data);
+        });
+        
+         this.http.get(HttpCalls.SREVER_PATH_LOCAL + HttpCalls.PATHS['familias'] + HttpCalls.EXT).subscribe(data => {
           this.objetosJSON['familias'] = data;
           return data;
         }),
@@ -51,18 +73,86 @@ export class HttpCalls  {
             this.data$.next(data);
         });
     }
+    
+    /**
+     * ´getDescuentosPorClienteProducto´ recibe el codigo del cliente y devuelve los productos 
+     * de ese cliente que tienen un descuento por familia o un precio particular, encapsulado en un objeto.
+     * También recibe un callback que se ejecuta asincronamente al terminar el proceso de 
+     * transferencia de los datos desde el servidor del backend.
+     * @param codAlmacen  Código del cliente del que se quieren conocer los descuentos y 
+     * precios particulares.
+     * @param callback Función que se ejecutará al terminar la transferencia. La función
+     * recibe el array como parámetro para poder jugar con los datos una vez terminada la 
+     * llmada en segundo plano al backend.
+     */
+    public getDescuentosPorClienteProducto(codCli, callback) {
+      this.http.get(HttpCalls.SREVER_PATH + HttpCalls.PATHS['tarifaArtciuloFamilia'] + "?codcli=" + codCli ).subscribe(data => {
+        this.objetosJSON['tarifaArtciuloFamilia'] = data;
+        callback(this.objetosJSON['tarifaArtciuloFamilia']);
+      }),
+      error => console.log("Error: ", error),
+      () => ((data)=>{
+          this.data$.next(data);
+      });
+    }
+    
+    // http://192.168.10.15/appLorkel/web/app_dev.php/tarclitip?tipcli=11
+    
+    /**
+     * ´getPreciosPortipoCLiente´ recibe el tipo del cliente y devuelve los productos 
+     * de ese cliente que tienen un descuento por tipo de cliente, encapsulado en un objeto.
+     * También recibe un callback que se ejecuta asincronamente al terminar el proceso de 
+     * transferencia de los datos desde el servidor del backend.
+     * @param tipcli  Código del tipo de cliente del que se quieren conocer los 
+     * precios por tipo de cliente.
+     * @param callback Función que se ejecutará al terminar la transferencia. La función
+     * recibe el array como parámetro para poder jugar con los datos una vez terminada la 
+     * llmada en segundo plano al backend.
+     */
+    public getPreciosPortipoCLiente(tipCli, callback) {
+      this.http.get(HttpCalls.SREVER_PATH + HttpCalls.PATHS['tarifaTipoCliente'] + "?tipcli=" + tipCli ).subscribe(data => {
+        this.objetosJSON['tarifaTipoCliente'] = data;
+        callback(this.objetosJSON['tarifaTipoCliente']);
+      }),
+      error => console.log("Error: ", error),
+      () => ((data)=>{
+          this.data$.next(data);
+      });
+    }
+    
+    
+    
+    /**
+     * ´getProductos´ recibe el codigo del almacen y devuelve los productos de uno
+     * de los almacenes. Trabaja con Tenerife y Las Palmas
+     * (00001 y 00002 correlartivamente). Se guardan los resultados en una variable
+     * indexada con un array asociativo (tabla hash) en la posición 'productos'.
+     *
+     * @param codAlmacen  Código del almacen que .
+     */
+    public getProductos(codAlmacen) {
+      
+      this.http.get(HttpCalls.SREVER_PATH + HttpCalls.PATHS['productos'] + "?codprov=" + codAlmacen ).subscribe(data => {
+        this.objetosJSON['productos'] = data;
+      }),
+      error => console.log("Error: ", error),
+      () => ((data)=>{
+          this.data$.next(data);
+      });
+      
+    }
   
+    /**
+     * ´getObjects´ Es la función principal para obtener todos los objetos JSON
+     * que deben cargarse al inicio de la conexión con la aplicación.
+     *
+     */
     public getObjects() {
     this.getFamilias();
-    this.http.get(HttpCalls.SREVER_PATH + HttpCalls.PATHS['clientes'] + HttpCalls.EXT).subscribe(data => {
+    // HAY QUE CAMBIAR ESTO PARA QUE VENGA DESDE EL COMERCIAL
+    this.getProductos('00001');
+    this.http.get(HttpCalls.SREVER_PATH + HttpCalls.PATHS['clientes'] ).subscribe(data => {
       this.objetosJSON['clientes'] = data;
-    }),
-    error => console.log("Error: ", error),
-    () => ((data)=>{
-        this.data$.next(data);
-    });
-    this.http.get(HttpCalls.SREVER_PATH + HttpCalls.PATHS['productos'] + HttpCalls.EXT).subscribe(data => {
-      this.objetosJSON['productos'] = data;
     }),
     error => console.log("Error: ", error),
     () => ((data)=>{
