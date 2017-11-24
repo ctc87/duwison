@@ -47,6 +47,7 @@ export class LoginComponent implements OnInit {
             {
                 if(this.identity.status=="ok")
                 {
+                    localStorage.setItem('email', identity.email); 
                     localStorage.setItem('nombre', identity.nombre); 
                     localStorage.setItem('apellidos', identity.apellidos);
                     localStorage.setItem('provincia', identity.codalm);                    
@@ -67,6 +68,9 @@ export class LoginComponent implements OnInit {
                                     localStorage.setItem('isLoggedin', 'true');  
                                     
                                         this.router.navigate(['/dashboard']);
+                                        console.log(this.identity);       
+                                        console.log(this.token);         
+                                        
                                 }
 
                     }, error=>{
