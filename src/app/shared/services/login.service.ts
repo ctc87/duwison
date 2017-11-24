@@ -18,11 +18,12 @@ export class LoginService {
     options: RequestOptions;
 
     constructor (private http: Http) {}
-    public LoginUrl  = "http://localhost/appLorkel/web/app_dev.php/login";
+    public servidor = "http://192.168.10.15";
+    public LoginUrl  = this.servidor + "/appLorkel/web/app_dev.php/login";
     public identity;
     public token;
     
-    signup(user_to_login:Object)
+    public signup(user_to_login:Object)
     {
         let json = JSON.stringify(user_to_login);        
         let params = "login="+json;//?
@@ -35,7 +36,7 @@ export class LoginService {
     }
 
 
-    getIdentity()
+    public getIdentity()
     {
          let identity = JSON.parse(localStorage.getItem("identity"));
          if(identity != "undefined")
@@ -49,7 +50,7 @@ export class LoginService {
         return this.identity;
     }
 
-    getToken()
+    public getToken()
     {
         let token = localStorage.getItem("token");
         if(token != "undefined")
