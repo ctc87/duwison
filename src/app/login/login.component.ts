@@ -47,6 +47,7 @@ export class LoginComponent implements OnInit {
             {
                 if(this.identity.status=="ok")
                 {
+                    localStorage.setItem('email', identity.email); 
                     localStorage.setItem('nombre', identity.nombre); 
                     localStorage.setItem('apellidos', identity.apellidos);
                     localStorage.setItem('provincia', identity.codalm);                    
@@ -65,7 +66,13 @@ export class LoginComponent implements OnInit {
                                 else
                                 {           
                                     localStorage.setItem('isLoggedin', 'true');  
-                                    this.dataService.cambiarDatosComercial()
+                                    this.dataService.cambiarDatosComercial
+                                    (
+                                        localStorage.nombre + " " + localStorage.apellidos;
+                                        localStorage.email;
+                                        localStorage.provincia;
+                                    )
+                                    console.log(this.dataService.comercial)
                                     this.router.navigate(['/dashboard']);
                                 }
 
