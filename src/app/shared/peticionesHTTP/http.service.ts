@@ -4,7 +4,16 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import {  BlockUI, NgBlockUI } from 'ng-block-ui';
 
 
-
+/**
+ * HttpCalls es un servicio que contiene tdoas las llamadas http al servidor
+ * estas llamadas son asíncronas en segundo plano. Los objetos se JSON se guardan
+ * en un objeto general. 
+ * 
+ * @author      Carlos Troyano Carmona
+ * @version     %I%, %G%
+ * @since       1.0
+ * @see Injectable
+ */
 @Injectable()
 export class HttpCalls  {
     // Wires up BlockUI instance

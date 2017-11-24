@@ -5,7 +5,16 @@ import { Cliente } from '../class/cliente.class';
 import { HttpCalls } from '../peticionesHTTP/http.service';
 
 
-
+/**
+ * DataService es un servicio que contiene todas los metdos y datos
+ * compartidos a traves de la aplicación. Aquí es donde se guardan los datos 
+ * de los epdidos en tiempo real.
+ * 
+ * @author      Carlos Troyano Carmona
+ * @version     %I%, %G%
+ * @since       1.0
+ * @see Injectable
+ */
 @Injectable()
 export class DataService {
   
@@ -39,6 +48,10 @@ export class DataService {
             message: `No se permiten más de ` + this.LIM + ` clientes.`
         }];
         this.comercial = new Comercial("Com_ex_1")
+  }
+  
+  public cambiarDatosCOmercial(comercial : string, provincia : string) {
+      
   }
   
   public mostrarError(error : number) {
