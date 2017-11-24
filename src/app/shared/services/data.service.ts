@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Carrito } from '../class/carritoCliente.class';
+import { Comercial } from '../class/comercial.class';
+import { Cliente } from '../class/cliente.class';
+import { HttpCalls } from '../peticionesHTTP/http.service';
 
 
 
@@ -9,21 +11,34 @@ export class DataService {
   
   
   private messageSource = new BehaviorSubject<string>("Otros");
-  familia_actual = this.messageSource.asObservable();
+  public familia_actual = {codfam:null, familia:null};
   public alerts: Array<any> = [];
   public errores = [];
   public LIM = 10;
+  public comercial : Comercial;
+  public clienteActualPedido: Cliente;
+  public productosArray;
+  public arrayProductosFamilia;
+  public arrayProductosFiltrados;
+  mensajes = [];
+  public filtrado: String;
+  public almacen: number;
+  public reNumbers: RegExp = /^\d+$/;
   
-  constructor() { 
+  public clienteSeleccionado = { codcli:null, clientes:null, tarCli:null, tipoCliente:null };
+  
+  
+  constructor(public httpCalls: HttpCalls) { 
   this.errores =  [{
             id: 1,
             type: 'success',
-            message: `Pulsa Nuevo pedidos paa empezar a añadir clientes`
+            message: `Pulsa el botón superior para empezar a añadir clientes.`
         }, {
             id: 2,
             type: 'danger',
-            message: `No se permiten mas de ` + this.LIM + ` clientes.`
+            message: `No se permiten más de ` + this.LIM + ` clientes.`
         }];
+        this.comercial = new Comercial("Com_ex_1")
   }
   
   public mostrarError(error : number) {
@@ -37,128 +52,79 @@ export class DataService {
   }
   
   public cerrar(num) {
-   this.clients.forEach(function(elemnt, i) {
+   this.comercial.pedidos.forEach(function(elemnt, i) {
             if(i != num)
                 elemnt.collapsed = true;
     });
   }
   
   public addClient() {
-    console.log("ejec");
+    let that = this;
     if(this.alerts[0] && this.alerts[0].id === 1) {
        this.closeAlert(this.alerts[0]);
     }
-    let indexx = this.clients.length;
-    if(this.clients.length < this.LIM) {
-      console.log(this.clienteSeleccionado)
-         this.clients.push({
-            metodoFacturacion:"a",
-            id:indexx,
-            codcli:this.clienteSeleccionado.codcli,
-            clientes:this.clienteSeleccionado.clientes, 
-            collapsed : true,
-            carrito:new Carrito(),
-            index:(indexx - 1)
-            });
-     } else {
+    let indexx = this.comercial.pedidos.length;
+    this.httpCalls.getDescuentosPorClienteProducto(this.clienteSeleccionado.codcli, this.clienteSeleccionado.clientes, function(arrayDescuentosPorCliente){
+      that.httpCalls.getPreciosPortipoCLiente(that.clienteSeleccionado.tipoCliente, that.clienteSeleccionado.clientes, function(arrayDescuentosPorTipoCliente){
+        if(that.comercial.pedidos.length < that.LIM) {
+          console.log(that.clienteSeleccionado)
+          that.comercial.insertarCliente(
+              that.clienteSeleccionado.tarCli,
+              indexx,
+              that.clienteSeleccionado.codcli,
+              that.clienteSeleccionado.clientes, 
+              true,
+              false,
+              that.httpCalls.objetosJSON['productos'],
+              arrayDescuentosPorCliente, 
+              arrayDescuentosPorTipoCliente
+        );
+       } else {
         this.mostrarError(1);
-     }
+       }
+      });
+    });
+   
   } 
-  
-  clienteSeleccionado = { codcli:null, clientes:null};
     
-  cambiarFamilia(familia_seleccionada: string) {
+  public cambiarFamilia(familia_seleccionada: string) {
    
     this.messageSource.next(familia_seleccionada)
     console.log(this.messageSource)
+  };
+  
+  public nombreFormateado(name) {
+    return name[0] + (name.toLowerCase()).slice(1);
+  };
+  
+  public asignarClienteActual(cliente) {
+    this.clienteActualPedido = cliente;
+   }
+  
+   
+  public closeTagsCLients(index) {
+   this.comercial.pedidos.forEach(function(element, i) {
+              if(element.codigo === index)
+                  element.collapsed = !element.collapsed;
+              else
+                  element.collapsed = true;
+      }); 
   }
 
- 
-  familiArray =  [
-      {name:"Arroces", img:"assets/png/035-paella.png"},
-      {name:"Comida Tem&aacute;tica", img:"assets/png/041-nachos.png"},
-      {name:"Cuarta Gama", img:"assets/png/037-food-3.png"},
-      {name:"Precocinados Refrigerados", img:"assets/png/049-refrigerator.png"},
-      {name:"L&aacute;cteos", img:"assets/png/031-milk-products.png"},
-      {name:"Precocinados Congelados", img:"assets/png/048-black.png"},
-      {name:"Panader&iacute;a y Boller&iacute;a", img:"assets/png/029-food-5.png"},
-      {name:"Pescados", img:"assets/png/019-fruit.png"},
-      {name:"Ovoproductos", img:"assets/png/010-food-16.png"},
-      {name:"Salsas", img:"assets/png/008-sauces.png"},
-      {name:"Otros", img:"assets/png/001-pistachio-1.png"}
-    ];
     
-    arrayProductosSctock = [ 
-    {
-      familia:"Cuarta Gama", 
-      productos:[
-        {cantidadPedido:0, codArt:1, nombre:"producto 1", stock:20, precios:{a:10, b:50, c:20} },
-        {cantidadPedido:0, codArt:2, nombre:"producto 2", stock:5, precios:{a:100, b:500, c:200} },
-        {cantidadPedido:0, codArt:3, nombre:"producto 3", stock:2, precios:{a:5, b:20, c:28} },
-        {cantidadPedido:0, codArt:4, nombre:"producto 4", stock:0, precios:{a:12, b:52, c:22} },
-        {cantidadPedido:0, codArt:5, nombre:"producto 5", stock:10, precios:{a:11, b:51, c:21} }
-      ]
-    }, 
-    {
-      familia:"Otros", 
-      productos:[
-        {cantidadPedido:0, codArt:6, nombre:"producto 6", stock:20, precios:{a:10, b:50, c:20} },
-        {cantidadPedido:0, codArt:7, nombre:"producto 7", stock:5, precios:{a:100, b:500, c:200} },
-        {cantidadPedido:0, codArt:8, nombre:"producto 8", stock:2, precios:{a:5, b:20, c:28} },
-        {cantidadPedido:0, codArt:9, nombre:"producto 9", stock:0, precios:{a:12, b:52, c:22} },
-        {cantidadPedido:0, codArt:10, nombre:"producto 10", stock:10, precios:{a:11, b:51, c:21} }
-      ]
+    public truncate(val) {
+        return Number(val).toFixed(2)   
     }
-  ]
-  
-  
-    clients = [];
-     
-    closeTagsCLients(index) {
-     this.clients.forEach(function(element, i) {
-                if(element.codcli === index)
-                    element.collapsed = !element.collapsed;
-                else
-                    element.collapsed = true;
-        }); 
+    
+    
+    public filtrar($event) {
+        let re = new RegExp(".*"+this.filtrado+".*", "ig");
+        console.log(this.arrayProductosFamilia)
+        this.arrayProductosFiltrados = this.arrayProductosFamilia.filter(function(element, index){
+            return re.test(element.articulo) || re.test(element.codart)
+        });
     }
-  
-  clientes = [
-                {nombre:'Hyper Dino', id:101, precio:'a'},
-                {nombre:'Carrefour', id:102, precio:'b'},
-                {nombre:'Macro', id:103, precio:'a'},
-                {nombre:'Alcampo', id:104, precio:'c'},
-                {nombre:'Comercial lopez', id:105, precio:'b'},
-                {nombre:'Anaga comidas', id:106, precio:'a'},
-                {nombre:'Restaurante Figaro', id:107, precio:'c'},
-                {nombre:'Comidas a domicilio Pepe', id:108, precio:'b'},
-                {nombre:'Comidas y reparados Ibañez S.L.', id:109, precio:'a'},
-                {nombre:'Hiper Cor', id:110, precio:'c'},
-                {nombre:'HiperTrebol', id:111, precio:'b'},
-             ];
-  
-  pedidos = {
-    comercial:"Candido Caballero", 
-    fecha_pedido:new Date(), 
-    pedidos:[
-      { 
-        codCli:101, 
-        articulos:[
-          {codArt:1, cantidadPedido:1},
-          {codArt:2, cantidadPedido:2},
-          {codArt:3, cantidadPedido:20}
-        ]
-      },
-      { 
-        codCli:102, 
-        articulos:[
-          {codArt:4, cantidadPedido:10},
-          {codArt:2, cantidadPedido:20},
-          {codArt:1, cantidadPedido:40}
-        ]
-      }
-    ]
-  }
+
   
 
   

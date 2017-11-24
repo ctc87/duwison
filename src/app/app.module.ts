@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Http, HttpModule } from '@angular/http';
-import {HttpClientModule} from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -13,6 +13,8 @@ import { DataService } from './shared';
 import { HttpCalls } from './shared';
 import { NgSelectizeModule } from 'ng-selectize';
 import { LoginService } from './shared/services/login.service';
+import { BlockUIModule } from 'ng-block-ui';
+
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: Http) {
@@ -32,6 +34,7 @@ export function HttpLoaderFactory(http: Http) {
         AppRoutingModule,
         HttpClientModule,
         NgSelectizeModule,
+        BlockUIModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,

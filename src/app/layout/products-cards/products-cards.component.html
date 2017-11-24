@@ -1,0 +1,72 @@
+    <!--<ngb-alert [type]="alert.type" (close)="closeAlert(alert)" *ngFor="let alert of alerts">{{ alert.message }}</ngb-alert>-->
+<div class="card" style="margin-bottom:10px;">
+ <div class="card-block text-center">
+  {{dataService.clienteActualPedido.nombre}} - Familia - {{dataService.nombreFormateado(dataService.familia_actual.familia)}}
+ </div>
+</div>
+<hr/>
+<app-nav></app-nav>
+<hr/>
+    <div [@routerTransition]>
+    <div class="container">
+      <div class="row">
+        <ng-container *ngFor="let producto of dataService.arrayProductosFiltrados; let i = index">
+          <div class="col-md-4 col-12" style="margin-bottom: 20px;">
+            <div class="card card-inverse bg-info" >
+                <div class="card-header bg-primary">
+                    <div class="row">
+                        <div class="col col-xs-12 text-center">
+                            <div class="d-block">{{producto.articulo}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-header" >
+                    <div class="row text-center">
+                        <div class="col-12">
+                            <div class="d-block">C&oacute;digo</div>
+                            <div class="d-block">{{producto.codart}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-header">
+                    <div class="row text-center">
+                        <div class="col-12">
+                            <div class="d-block">Precio</div>
+                            <div class="d-block">{{dataService.truncate(producto.prevena)}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-header">
+                    <div class="row text-center">
+                        <div class="col-12">
+                            <div class="d-block">Stock</div>
+                            <div class="d-block">{{dataService.truncate(producto.stock)}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="input-group">
+                      <span class="input-group-btn">
+                        <a class="btn btn-danger" (click)="restarPedido(producto.codart)">
+                          <i class="fa fa-minus" title="Align Left"></i>
+                        </a>
+                      </span>
+                      <input class="form-control" placeholder=""
+                      (click)="$event.target.select()"
+                       type="number" pattern="[0-9]*"
+                      [(ngModel)]="dataService.clienteActualPedido.carrito.productos[producto.codart].cantidadPedido"
+                      (keyup)="comprobarValorNumerico($event, producto.codart)"
+                      >
+                      <span class="input-group-btn">
+                        <a class="btn btn-success" (click)="sumarPedido(producto.codart)">
+                          <i class="fa fa-plus" title="Align Left"></i>
+                        </a>
+                      </span>
+                    </div>
+                </div>
+            </div>   
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

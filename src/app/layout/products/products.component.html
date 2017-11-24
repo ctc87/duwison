@@ -1,0 +1,59 @@
+<div class="card" style="margin-bottom:10px;">
+ <div class="card-block text-center">
+  {{dataService.clienteActualPedido.nombre}} - Familia - {{dataService.nombreFormateado(dataService.familia_actual.familia)}}
+ </div>
+</div>
+ <hr/>
+<app-nav></app-nav>
+<hr/>
+<div [@routerTransition]>  
+    <ngb-alert [type]="alert.type" (close)="closeAlert(alert)" *ngFor="let alert of alerts">{{ alert.message }}</ngb-alert>
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12 d-flex justify-content-center">
+          <table class="align-self-center table  table-bordered">
+              <thead>
+              <tr>
+                  <th class="th-responsive">C&oacute;digo</th>
+                  <th class="th-responsive">Producto</th>
+                  <th class="th-responsive">Precio</th>
+                  <th class="th-responsive">Stock</th>
+              </tr>
+              </thead>
+              <tbody>
+              <ng-container *ngFor="let producto of dataService.arrayProductosFiltrados; let i = index">
+              <tr [ngClass]="{'table-active': i % 2 == 0}">
+                  <td class="td-responsive">{{producto.codart}}</td>
+                  <td class="td-responsive">{{producto.articulo}}</td>
+                  <td class="td-responsive">{{dataService.truncate(producto.prevena)}}</td>
+                  <td class="td-responsive">{{dataService.truncate(producto.stock)}}</td>
+              </tr>
+              <tr [ngClass]="{'table-active': i % 2 == 0}">
+                  <td class="td-responsive" colspan="4">
+                          <div class="input-group">
+                            <span class="input-group-btn">
+                              <a class="btn btn-danger" (click)="restarPedido(producto.codart)">
+                                <i class="fa fa-minus" title="Align Left"></i>
+                              </a>
+                            </span>
+                            <input class="form-control" placeholder=""
+                             type="number" pattern="[0-9]*"
+                            [(ngModel)]="dataService.clienteActualPedido.carrito.productos[producto.codart].cantidadPedido"
+                            (keyup)="comprobarValorNumerico($event, producto.codart)"
+                            >
+                            <span class="input-group-btn">
+                              <a class="btn btn-success" (click)="sumarPedido(producto.codart)">
+                                <i class="fa fa-plus" title="Align Left"></i>
+                              </a>
+                            </span>
+                          </div>
+                      </td>
+                    </tr>
+                    </ng-container>
+              </tbody>
+          </table>
+        </div>
+    </div>
+    <hr />
+  </div>
+

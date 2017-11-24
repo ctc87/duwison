@@ -15,14 +15,14 @@
     
     <div class="row">
         <app-stat  
-          *ngFor="let client of dataService.clients" 
+          *ngFor="let client of dataService.comercial.pedidos" 
           [sizeOut]="'col-xl-12 col-lg-6'" 
           [bgClass]="'card-primary'" 
           [icon]="'fa-user'" [count]="26" 
-          [label]="client.clientes" 
+          [label]="client.nombre" 
           [isCollapsed]="client.collapsed" 
-          [index]="client.index" 
-          [codcli]="client.codcli" 
+          [index]="client.id" 
+          [codcli]="client.codigo" 
           ></app-stat>
     </div>
     <hr />

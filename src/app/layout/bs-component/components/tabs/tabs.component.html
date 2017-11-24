@@ -1,74 +1,43 @@
-<div class="row mt-3">
-    <div class="col-sm-6">
+    <div class="col-sm-12"  *ngIf="dataService.comercial.pedidos.length > 0">
         <div class="card">
-            <div class="card-header">Tabset</div>
+            <div class="card-header">Pedidos</div>
             <div class="card-block">
-                <ngb-tabset>
-                    <ngb-tab title="Simple">
+                <ngb-tabset >
+                    <ngb-tab ng  *ngFor="let grupo of arrayPedidosDeTresEntres; let i = index">
+                        <ng-template ngbTabTitle><b class="font-link">P&aacute;gina{{i+1}}</b></ng-template>
                         <ng-template ngbTabContent>
-                            <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth
-                            master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh
-                            dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum
-                            iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.</p>
-                        </ng-template>
-                    </ngb-tab>
-                    <ngb-tab>
-                        <ng-template ngbTabTitle><b>Fancy</b> title</ng-template>
-                        <ng-template ngbTabContent>
-                            <p>Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table
-                            craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl
-                            cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar helvetica VHS salvia
-                            yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit, sustainable jean
-                            shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester stumptown, tumblr butcher vero
-                            sint qui sapiente accusamus tattooed echo park.</p>
-                        </ng-template>
-                    </ngb-tab>
-                    <ngb-tab title="Disabled" [disabled]="true">
-                        <ng-template ngbTabContent>
-                            <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth
-                            master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh
-                            dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum
-                            iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.</p>
+                            <ngb-tabset type="pills">
+                                <ngb-tab ng  *ngFor="let pedido of grupo; let j = index">
+                                    <ng-template ngbTabTitle><b class="font-link">Pedido{{j+1}}</b></ng-template>
+                                    <ng-template ngbTabContent>
+                                        <div class="card-header color text-center">{{pedido.nombre}}</div>
+                                        <table class="card-block table table-responsive">
+                                            <thead>
+                                            <tr>
+                                                <th class="th-responsive">C&oacute;digo</th>
+                                                <th class="th-responsive">Producto</th>
+                                                <th class="th-responsive">Precio</th>
+                                                <th class="th-responsive">Pedido</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let producto of pedido.carrito.productos | keys; let k = index" class="table-active">
+                                                    <!--<td class="td-responsive">{{stringifi+(producto)}}</td>-->
+                                                    <td class="td-responsive">{{producto.codArt}}</td>
+                                                    <td class="td-responsive">{{producto.nombre}}</td>
+                                                    <td class="td-responsive">{{producto.precio}}</td>
+                                                    <td class="td-responsive">{{producto.cantidadPedido}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </ng-template>
+                                </ngb-tab>
+                            </ngb-tabset>    
                         </ng-template>
                     </ngb-tab>
                 </ngb-tabset>
             </div>
         </div>
     </div>
-    <div class="col-sm-6">
-        <div class="card">
-            <div class="card-header">Pills</div>
-            <div class="card-block">
-                <ngb-tabset type="pills">
-                    <ngb-tab title="Simple">
-                        <ng-template ngbTabContent>
-                            <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth
-                            master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh
-                            dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum
-                            iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.</p>
-                        </ng-template>
-                    </ngb-tab>
-                    <ngb-tab>
-                        <ng-template ngbTabTitle><b>Fancy</b> title</ng-template>
-                        <ng-template ngbTabContent>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid.
-                            <p>Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table
-                            craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl
-                            cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar helvetica VHS salvia
-                            yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit, sustainable jean
-                            shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester stumptown, tumblr butcher vero
-                            sint qui sapiente accusamus tattooed echo park.</p>
-                        </ng-template>
-                    </ngb-tab>
-                    <ngb-tab title="Disabled" [disabled]="true">
-                        <ng-template ngbTabContent>
-                            <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth
-                            master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh
-                            dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum
-                            iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.</p>
-                        </ng-template>
-                    </ngb-tab>
-                </ngb-tabset>
-            </div>
-        </div>
-    </div>
-</div>
+
+

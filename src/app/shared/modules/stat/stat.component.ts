@@ -20,7 +20,9 @@ export class StatComponent implements OnInit {
     @Input() index: number;
     @Input() codcli: number;
     
-
+    empezadoPedido = false;
+    listaProductosCliente = []; 
+    
     @Input() isCollapsed;
     @Output() event: EventEmitter<any> = new EventEmitter();
     
@@ -29,8 +31,8 @@ export class StatComponent implements OnInit {
      tipo:"success"
     }
     
-    cambiarBotonAccion(pedido_vacio) {
-        if(!pedido_vacio) {
+    cambiarBotonAccion() {
+        if(this.empezadoPedido) {
             this.boton_accion.accion = "Modificar";
             this.boton_accion.tipo = "warning";
         } else {
@@ -39,9 +41,56 @@ export class StatComponent implements OnInit {
         }
     }
     
+    empezarPedido() {
+        let that = this;
+        let cliente = this.dataService.comercial.pedidos.filter(function(element, index) {
+                return element.codigo == that.codcli;
+            });
+        cliente[0].empezadoPedido = true;
+        this.empezadoPedido = cliente[0].empezadoPedido;
+        this.dataService.asignarClienteActual(cliente[0]);
+        this.cambiarBotonAccion();
+    }
+    
     constructor(public dataService: DataService) { 
     }
-    ngOnInit() {}
+    
+    ngOnInit() {
+        let that = this;
+        let cliente = this.dataService.comercial.pedidos.filter(function(element, index) {
+            return Number(element.codigo) === Number(that.codcli);
+        });
+        this.empezadoPedido = cliente[0].empezadoPedido;
+        this.cambiarBotonAccion();
+        this.actualizarListaProductosCliente()
+    }
+    
+    
+    // inicializarPreciosArticuloCPorCLiente
+    /**
+     * ´actualizarListaProductosCliente´ este método sleciona el cliente que representa
+     * el card (la clase en si). Convierte el carrito de la compra en un array y filtra 
+     * solo los productos que tengan una cantidad mayor que 0 en el pedido para mostrarlos
+     * en el carrito de la compra.
+     *
+     */
+    actualizarListaProductosCliente() {
+        let that = this;
+        let cliente = this.dataService.comercial.pedidos.filter(function(element, index){
+            return Number(element.codigo) === Number(that.codcli)
+        });
+        let obj = cliente[0].carrito.productos;
+        let result = Object.keys(obj).map(function(key) {
+                return obj[key];
+        });
+        this.listaProductosCliente = result.filter(function(element, index){
+            return element.cantidadPedido > 0
+        });
+      
+      
+    }
+    
+    
     
     
 }

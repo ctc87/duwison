@@ -1,0 +1,16 @@
+<div [@routerTransition]>
+    <h2 class="text-muted">Relaci&oacute;n de pedidos</h2>
+    
+    <hr />
+    
+    <ngb-alert [type]="alert.type" (close)="closeAlert(alert)" *ngFor="let alert of alerts">{{ alert.message }}</ngb-alert>
+    
+    </div>
+    <div class="container">
+      <div class="row">
+        
+    <app-tabs></app-tabs>
+           
+        </div>
+    </div>
+    <hr />

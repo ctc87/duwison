@@ -16,7 +16,9 @@ export class FamilyProductsComponent {
  public alerts: Array<any> = [];
  
  constructor(public dataService: DataService, public httpService: HttpCalls) {
-   this.familiArray = httpService.objetosJSON["familias"];
+    this.familiArray = httpService.objetosJSON["familias"];
+    
+   
    this.mensajes =  [
             {
                 id: 1,

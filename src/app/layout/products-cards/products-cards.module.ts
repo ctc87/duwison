@@ -1,0 +1,31 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import {
+    NgbAlertModule,
+    NgbModule
+} from '@ng-bootstrap/ng-bootstrap';
+
+import { ProductsCardsRoutingModule } from './products-cards-routing.module';
+import { NavModule } from '../../shared/modules/nav/nav.module';
+
+import { ProductsCardsComponent } from './products-cards.component';
+import { PageHeaderModule } from './../../shared';
+
+
+@NgModule({
+    imports: [
+        CommonModule,
+        ProductsCardsRoutingModule,
+        NgbModule.forRoot(),
+        NgbAlertModule.forRoot(),
+        PageHeaderModule,
+        FormsModule,
+        NavModule
+    ],
+    declarations: [
+        ProductsCardsComponent
+    ]
+})
+export class ProductsCardsModule { }

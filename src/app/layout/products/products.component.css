@@ -1,0 +1,29 @@
+
+
+.color {
+   color:green;
+}
+
+.separated-btn {
+ margin-right: 5px;   
+}
+
+@media (max-width: 990px) {
+  .color {
+   color:red;
+  }
+
+    .separated-btn {
+     margin-bottom: 5px;   
+    }
+  
+  .th-responsive {
+       padding: 5px 5px;
+       font-size: 50%;
+   }
+  
+   .td-responsive {
+       padding: 5px 5px;
+       font-size: 50%;
+   }
+}

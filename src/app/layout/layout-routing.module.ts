@@ -15,6 +15,9 @@ const routes: Routes = [
             { path: 'components', loadChildren: './bs-component/bs-component.module#BsComponentModule' },
             { path: 'blank-page', loadChildren: './blank-page/blank-page.module#BlankPageModule' },
             { path: 'familias', loadChildren: './family-products/familiy-products.module#FamilyProductsModule' },
+            { path: 'products-cards', loadChildren: './products-cards/products-cards.module#ProductsCardsModule' },
+            { path: 'products', loadChildren: './products/products.module#ProductsModule' },
+            { path: 'cart', loadChildren: './purchase-cart/purchase-cart.module#CartModule' }
         ]
     }
 ];

@@ -9,6 +9,7 @@ import { HttpCalls } from './shared';
 })
 
 export class AppComponent {
+
     constructor(private translate: TranslateService) {
         translate.addLangs(['en', 'fr', 'ur', 'es', 'it', 'fa']);
         translate.setDefaultLang('en');
