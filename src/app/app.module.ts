@@ -12,6 +12,7 @@ import { AuthGuard } from './shared';
 import { DataService } from './shared';
 import { HttpCalls } from './shared';
 import { NgSelectizeModule } from 'ng-selectize';
+import { LoginService } from './shared/services/login.service';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: Http) {
@@ -42,7 +43,8 @@ export function HttpLoaderFactory(http: Http) {
     providers: [
                 AuthGuard,
                 DataService,
-                HttpCalls
+                HttpCalls,
+                LoginService
                 ],
     bootstrap: [AppComponent]
 })
