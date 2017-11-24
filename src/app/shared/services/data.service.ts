@@ -50,8 +50,10 @@ export class DataService {
         this.comercial = new Comercial("Com_ex_1")
   }
   
-  public cambiarDatosCOmercial(comercial : string, provincia : string) {
-      
+  public cambiarDatosComercial(comercial : string, provincia : number, mail : string) {
+      this.comercial.nombre  = comercial;
+      this.comercial.provincia = provincia;
+      this.comercial.mail = mail;
   }
   
   public mostrarError(error : number) {

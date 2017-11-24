@@ -15,7 +15,7 @@ import { NgSelectizeModule } from 'ng-selectize';
 import { BlockUIModule } from 'ng-block-ui';
 
 import { LoginService } from './shared/services/login.service';
-import { BlockUIModule } from 'ng-block-ui';
+
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: Http) {

@@ -4,13 +4,13 @@ import { routerTransition } from '../router.animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { LoginService } from '../shared/services/login.service';
+import { DataService } from '../shared';
 
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss'],
-    animations: [routerTransition()]//,
-  //  providers: [LoginService]
+    animations: [routerTransition()]
 })
 export class LoginComponent implements OnInit {
 
@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
     public identity;
     public token;
     
-    constructor(public router: Router, private loginService:LoginService) {}    
+    constructor(public router: Router, private loginService:LoginService, public dataService: DataService) {}    
 
     ngOnInit() {    
         
@@ -65,8 +65,8 @@ export class LoginComponent implements OnInit {
                                 else
                                 {           
                                     localStorage.setItem('isLoggedin', 'true');  
-                                    
-                                        this.router.navigate(['/dashboard']);
+                                    this.dataService.cambiarDatosComercial()
+                                    this.router.navigate(['/dashboard']);
                                 }
 
                     }, error=>{

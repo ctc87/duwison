@@ -16,6 +16,16 @@ export class Comercial {
    * Variable que representa el nombre del usuario que está usando la aplicaión.
    */
     public nombre: String;
+  /**
+   * Variable que representa el mail del usuario que está usando la aplicaión.
+   */
+    public mail: String;
+    
+  /**
+   * Variable que representa el codProv, código de la provincia, del usuario que está 
+   * usando la aplicaión.
+   */
+    public provincia: number;
     
   /**
    * Variable la fecha en que el usuario está realizando los pedidos en la aplicación.
@@ -46,8 +56,11 @@ export class Comercial {
         this.fecha_pedido = new Date();
         this.pedidos = [];
     };
+       
     
-    
+    public imprimirPedidos() {
+     console.log(this.pedidos) 
+    }
     
   /**
    * ´insertarCliente´ Este método inserta un cliente en el array de pedidos
