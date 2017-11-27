@@ -51,6 +51,11 @@ export class DataService {
         
   }
   
+  // DEBUGGIN
+  public cargarPruebas() {
+    this.comercial = this.httpCalls.objPruebas;
+  }
+  
   public cambiarDatosComercial(nombre : string, provincia : number, mail : string) {
       this.comercial.nombre  = nombre;
       this.comercial.provincia = provincia;

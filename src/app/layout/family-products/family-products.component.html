@@ -14,8 +14,11 @@
  <!--   </div>-->
 
 <div [@routerTransition]>
-    <h2 class="text-muted">Familias</h2>
-    
+    <div class="card" style="margin-bottom:10px;">
+     <div class="card-block text-center text-muted h3">
+      Familias
+     </div>
+    </div>
     <hr />
     
     <ngb-alert [type]="alert.type" (close)="closeAlert(alert)" *ngFor="let alert of alerts">{{ alert.message }}</ngb-alert>

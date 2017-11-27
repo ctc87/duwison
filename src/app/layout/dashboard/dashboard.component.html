@@ -1,11 +1,15 @@
 <div [@routerTransition]>
-    <h2 class="text-muted">Pedidos</h2>
+    <div class="card" style="margin-bottom:10px;">
+     <div class="card-block text-center text-muted h3">
+      Inicio
+     </div>
+    </div>
+    <!--DEBUGGIn-->
+    <button (click)="dataService.cargarPruebas()">carga pruebas</button>
     
     <div class="row"> 
         <div class="container">
             <app-modal-clientes [nombre_boton]="'Nuevo pedido cliente'"></app-modal-clientes>
-            
-            
         </div>
     </div>
     

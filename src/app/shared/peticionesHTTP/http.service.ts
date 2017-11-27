@@ -147,17 +147,17 @@ export class HttpCalls  {
         this.objetosJSON['productos'] = data;
          this.blockUI.stop();
          
-        // // DEBUGGIN
-        //   that.blockUI.start("Cargando datos de muestra.");
-        //   that.http.get(HttpCalls.SREVER_PATH_LOCAL + '/obj' + HttpCalls.EXT).subscribe(data => {
-        //     that.objPruebas =  data;
-        //       that.blockUI.stop();
-        //   }),
-        //   error => console.log("Error: ", error),
-        //   () => ((data)=>{
-        //       that.data$.next(data);
-        //   });
-        //   // FIN
+        // DEBUGGIN
+          that.blockUI.start("Cargando datos de muestra.");
+          that.http.get(HttpCalls.SREVER_PATH_LOCAL + '/obj' + HttpCalls.EXT).subscribe(data => {
+            that.objPruebas =  data;
+              that.blockUI.stop();
+          }),
+          error => console.log("Error: ", error),
+          () => ((data)=>{
+              that.data$.next(data);
+          });
+          // FIN
           
          
       }),

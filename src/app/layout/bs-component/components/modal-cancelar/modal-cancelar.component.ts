@@ -33,6 +33,13 @@ export class ModalCancelar {
     }
     
     cancelarPedido() {
-     this.dataService.comercial.pedidos.splice(this.index,1);   
+        console.log("Se cancela el " + this.index)
+     let indiceArray = 0;
+     let that = this;
+     this.dataService.comercial.pedidos.some(function(element, i){
+        indiceArray = i;
+        return that.index === element.codigo;
+     })
+     this.dataService.comercial.pedidos.splice(indiceArray,1);   
     }
 }

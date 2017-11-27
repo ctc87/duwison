@@ -1,16 +1,56 @@
 <div [@routerTransition]>
-    <h2 class="text-muted">Relaci&oacute;n de pedidos</h2>
-    
+    <div class="card" style="margin-bottom:10px;">
+     <div class="card-block text-center text-muted h3">
+      Pedidos
+     </div>
+    </div>
     <hr />
     
     <ngb-alert [type]="alert.type" (close)="closeAlert(alert)" *ngFor="let alert of alerts">{{ alert.message }}</ngb-alert>
-    <button (click)="generarObjetoJSON_Pedido()">pedir</button>
-    </div>
     <div class="container">
-      <div class="row">
-        
-    <app-tabs></app-tabs>
-           
+        <div class="row">
+            <div *ngIf="arrayPedidos.length > 0" class="col-12">
+                <div class="card">
+                    <div class="card-header">Pedidos</div>
+                    <div class="card-block">
+                        <div class="row align-items-end">
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <button type="button" (click)="generarObjetoJSON_Pedido()" class="btn-responsive btn btn-info">Enviar pedidos</button>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label>SeleccionaPedido</label>
+                                    <select class="form-control inputTextSize" (ngModelChange)="onChange($event)" [(ngModel)]="codPedidoActual">
+                                        <option class="inputTextSize" *ngFor="let pedido of arrayPedidos; let i = index" value={{pedido.codigo}}>{{pedido.nombre}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>  
+                    </div>
+                    <!--<div class="card-header color text-center">{{pedidoActual.nombre}}</div>-->
+                    <table class="card-block table table-responsive">
+                        <thead>
+                        <tr>
+                            <th class="th-responsive">C&oacute;digo</th>
+                            <th class="th-responsive">Producto</th>
+                            <th class="th-responsive">Precio</th>
+                            <th class="th-responsive">Pedido</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let producto of pedidoActual.carrito.productos | keys; let k = index" class="table-active">
+                                <td class="td-responsive">{{producto.codArt}}</td>
+                                <td class="td-responsive">{{producto.nombre}}</td>
+                                <td class="td-responsive">{{producto.precio}}</td>
+                                <td class="td-responsive">{{producto.cantidadPedido}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
     <hr />
+</div>
