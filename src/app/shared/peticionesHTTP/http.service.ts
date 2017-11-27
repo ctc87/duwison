@@ -71,7 +71,7 @@ export class HttpCalls  {
         this.blockUI.start("Cargando familias de productos.");
          this.http.get(HttpCalls.SREVER_PATH_LOCAL + HttpCalls.PATHS['familias'] + HttpCalls.EXT).subscribe(data => {
           this.objetosJSON['familias'] = data;
-          this.blockUI.stop();
+          // this.blockUI.stop();
           return data;
         }),
         error => console.log("Error: ", error),
@@ -141,10 +141,25 @@ export class HttpCalls  {
      * @param codAlmacen  Código del almacen que .
      */
     public getProductos(codAlmacen) {
+      let that = this;
       this.blockUI.start("Cargando productos de la base de datos.");
       this.http.get(HttpCalls.SREVER_PATH + HttpCalls.PATHS['productos'] + "?codprov=" + codAlmacen ).subscribe(data => {
         this.objetosJSON['productos'] = data;
          this.blockUI.stop();
+         
+        // // DEBUGGIN
+        //   that.blockUI.start("Cargando datos de muestra.");
+        //   that.http.get(HttpCalls.SREVER_PATH_LOCAL + '/obj' + HttpCalls.EXT).subscribe(data => {
+        //     that.objPruebas =  data;
+        //       that.blockUI.stop();
+        //   }),
+        //   error => console.log("Error: ", error),
+        //   () => ((data)=>{
+        //       that.data$.next(data);
+        //   });
+        //   // FIN
+          
+         
       }),
       error => console.log("Error: ", error),
       () => ((data)=>{
@@ -161,16 +176,17 @@ export class HttpCalls  {
     public getObjects() {
     this.getFamilias();
     // HAY QUE CAMBIAR ESTO PARA QUE VENGA DESDE EL COMERCIAL
-    this.getProductos('00001');
+    let codigoAlmacen = localStorage.provincia || '00002';  
     this.blockUI.start("Cargando clientes de la base de datos.");
     this.http.get(HttpCalls.SREVER_PATH + HttpCalls.PATHS['clientes'] ).subscribe(data => {
       this.objetosJSON['clientes'] = data;
-      this.blockUI.stop();
     }),
     error => console.log("Error: ", error),
     () => ((data)=>{
         this.data$.next(data);
     });
+    this.getProductos( codigoAlmacen );
+    
   }
   
 }

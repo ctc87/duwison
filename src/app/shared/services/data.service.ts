@@ -47,11 +47,12 @@ export class DataService {
             type: 'danger',
             message: `No se permiten más de ` + this.LIM + ` clientes.`
         }];
-        this.comercial = new Comercial("Com_ex_1")
+        this.comercial = new Comercial("Com_ex_1");
+        
   }
   
-  public cambiarDatosComercial(comercial : string, provincia : number, mail : string) {
-      this.comercial.nombre  = comercial;
+  public cambiarDatosComercial(nombre : string, provincia : number, mail : string) {
+      this.comercial.nombre  = nombre;
       this.comercial.provincia = provincia;
       this.comercial.mail = mail;
   }
@@ -78,10 +79,11 @@ export class DataService {
     if(this.alerts[0] && this.alerts[0].id === 1) {
        this.closeAlert(this.alerts[0]);
     }
+    if(that.comercial.pedidos.length < that.LIM) {
     let indexx = this.comercial.pedidos.length;
     this.httpCalls.getDescuentosPorClienteProducto(this.clienteSeleccionado.codcli, this.clienteSeleccionado.clientes, function(arrayDescuentosPorCliente){
       that.httpCalls.getPreciosPortipoCLiente(that.clienteSeleccionado.tipoCliente, that.clienteSeleccionado.clientes, function(arrayDescuentosPorTipoCliente){
-        if(that.comercial.pedidos.length < that.LIM) {
+        
           console.log(that.clienteSeleccionado)
           that.comercial.insertarCliente(
               that.clienteSeleccionado.tarCli,
@@ -94,11 +96,11 @@ export class DataService {
               arrayDescuentosPorCliente, 
               arrayDescuentosPorTipoCliente
         );
-       } else {
-        this.mostrarError(1);
-       }
       });
     });
+   } else {
+    that.mostrarError(1);
+   }
    
   } 
     

@@ -4,7 +4,7 @@
     <hr />
     
     <ngb-alert [type]="alert.type" (close)="closeAlert(alert)" *ngFor="let alert of alerts">{{ alert.message }}</ngb-alert>
-    
+    <button (click)="generarObjetoJSON_Pedido()">pedir</button>
     </div>
     <div class="container">
       <div class="row">

@@ -37,4 +37,8 @@ export class CartComponent implements OnInit {
     
     ngOnInit() {
     }
+    
+    public generarObjetoJSON_Pedido() {
+     console.log(this.dataService.comercial.generarPedidos_JSON())  
+    }
 }

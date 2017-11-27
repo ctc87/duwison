@@ -49,10 +49,10 @@ export class Comercial {
    * inicializa la fecha y el array de pedidos como un array vacio. Donde más tarde
    * se insertaran los clientes cuando este empieze un peido. Un peido = cliente en 
    * el array.
-   * @param _nombre nombre del comercial o usuario de la aplicación.
+   * @param nombre nombre del comercial o usuario de la aplicación.
    */
-    constructor(public _nombre){
-        this.nombre = _nombre;
+    constructor(nombre){
+        this.nombre = nombre;
         this.fecha_pedido = new Date();
         this.pedidos = [];
     };
@@ -109,5 +109,22 @@ export class Comercial {
         );
       
     };
+    
+  /**
+   * ´generarPedidos_JSON´ Este método genera el objeto JSON de los pedidos
+   * para enviarlo al servidor.
+   * @return Objeto Json con los pedidos
+   */ 
+    public generarPedidos_JSON() {
+      let arrayPedidos = [];
+      this.pedidos.forEach(function(pedido, index){
+        arrayPedidos.push(pedido.generarPedido_JSON());
+      });
+      return {
+        mail:this.mail,
+        fecha_pedido:this.fecha_pedido,
+        pedidos:arrayPedidos
+      };
+    }
 
 }

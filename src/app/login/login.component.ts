@@ -66,12 +66,13 @@ export class LoginComponent implements OnInit {
                                 else
                                 {           
                                     localStorage.setItem('isLoggedin', 'true');  
-                                    this.dataService.cambiarDatosComercial
-                                    (
-                                        localStorage.nombre + " " + localStorage.apellidos;
-                                        localStorage.email;
-                                        localStorage.provincia;
-                                    )
+                                    this.dataService.cambiarDatosComercial(
+                                       (localStorage.nombre.trim() + " " + localStorage.apellidos.trim()),
+                                        localStorage.provincia,
+                                        localStorage.email
+                                        
+                                    );
+                                    console.log("MAIL", localStorage.email)
                                     console.log(this.dataService.comercial)
                                     this.router.navigate(['/dashboard']);
                                 }
