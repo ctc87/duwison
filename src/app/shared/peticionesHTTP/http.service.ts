@@ -22,13 +22,13 @@ export class HttpCalls  {
   /**
    * ´IP´ Esta es la constante de la ip al backend
    */
-  public static readonly IP = "http://192.168.10.15";
+  public static readonly IP = "http://duwisonguitian.ddns.net";
   
   /**
    * ´SERVER_PATH´ Esta constante contiene el path del servidor backend
    * a donde van las consultas JSON. 
    */
-  public static readonly SREVER_PATH = HttpCalls.IP +"/appLorkel/web/app_dev.php";
+  public static readonly SREVER_PATH = HttpCalls.IP +"/symfony/web/app_dev.php";
   
   // SOLO DESARROLLO
   public static readonly SREVER_PATH_LOCAL = "assets/JSON";
@@ -39,7 +39,14 @@ export class HttpCalls  {
    * algunos son estáticos y otros dinámicos y se cambian a mediada que hace falta
    * en la aplicación.
    */  
-  public objetosJSON = {clientes:null, familias:null, productos:null, tarifaArtciuloFamilia:null, tarifaTipoCliente:null};
+  public objetosJSON = {
+    clientes:null, 
+    familias:null, 
+    productos:null,
+    tarifaArtciuloFamilia:null,
+    tarifaTipoCliente:null,
+    familiasLocal:null
+    };
   
   /**
    * ´PATHS´ Este objeto constante contiene los paths para las distintas consultas
@@ -67,11 +74,16 @@ export class HttpCalls  {
    */
   public data$: BehaviorSubject<any> = new BehaviorSubject({});
   
+    /**
+     * ´getFamilias´ Devuelve las familias a nivel local para ver cuales tienen imagen
+     * asociada. Tambien trae las familias del servidor y con eso construye el objeto
+     * para mostrarlas.
+     */
     public getFamilias() {
         this.blockUI.start("Cargando familias de productos.");
-         this.http.get(HttpCalls.SREVER_PATH_LOCAL + HttpCalls.PATHS['familias'] + HttpCalls.EXT).subscribe(data => {
+        this.http.get(HttpCalls.SREVER_PATH + HttpCalls.PATHS['familias']).subscribe(data => {
           this.objetosJSON['familias'] = data;
-          // this.blockUI.stop();
+          this.getFamiliasLocal();
           return data;
         }),
         error => console.log("Error: ", error),
@@ -79,6 +91,48 @@ export class HttpCalls  {
             this.data$.next(data);
         });
     }
+    
+    /**
+     * ´getFamiliasLocal´ Devuelve las familias a nivel local para ver cuales tienen imagen
+     * asociada.
+     */
+    public getFamiliasLocal() {
+     this.http.get(HttpCalls.SREVER_PATH_LOCAL + HttpCalls.PATHS['familias'] + HttpCalls.EXT).subscribe(data => {
+          this.objetosJSON['familiasLocal'] = data;
+          this.construirFamilias();
+          return data;
+        }),
+        error => console.log("Error: ", error),
+        () => ((data)=>{
+            this.data$.next(data);
+        }); 
+    }
+    
+    /**
+     * ´construirFamilias´ Construye el objeto de familias a partir de las familais locales y remotas.
+     */
+    public construirFamilias() {
+      let arrayFamiliasFinal = [];
+      let that = this;
+      this.objetosJSON.familias.forEach(function(element, index) {
+          let id = element["codfam"];
+          console.log(id)
+          let familiaCoincidientesArray = that.objetosJSON.familiasLocal.filter(function(familia){
+            return familia["codfam"] === id;
+          });
+          if(familiaCoincidientesArray.length > 0) {
+            arrayFamiliasFinal.push(familiaCoincidientesArray[0])  
+          } else {
+            let familia = element;
+            familia["img"] = "assets/png/001-cutlery.png"
+            arrayFamiliasFinal.push(familia)
+          }
+      })
+      this.objetosJSON.familias = arrayFamiliasFinal;
+      console.log(this.objetosJSON.familias)
+    }
+
+         
     
     /**
      * ´getDescuentosPorClienteProducto´ recibe el codigo del cliente y devuelve los productos 

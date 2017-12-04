@@ -12,8 +12,14 @@
         <a [routerLink]="['/forms']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-fw fa-power-off"></i>&nbsp;{{ 'Cerrar sesi&oacute;n' | translate }}
         </a>
+     
         <!--<a [routerLink]="['/about']"></a>-->
-            
+         <div class="nested-menu">
+            <a class="list-group-item" (click)="dataService.cargarPruebas()">
+                <span><i class="fa fa-cog"></i>&nbsp; {{ 'Cargar ejemplos' | translate }}</span>
+            </a>
+        </div>
+    
         <!--<div class="nested-menu">-->
         <!--    <a class="list-group-item" (click)="addExpandClass('pages')">-->
         <!--        <span><i class="fa fa-plus"></i>&nbsp; {{ 'Menu' | translate }}</span>-->

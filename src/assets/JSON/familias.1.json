@@ -43,10 +43,16 @@
       "codfam":"7",
       "familia":"PANADERIA Y PASTELERIA",
       "img":"assets/png/029-food-5.png"
-   },
+   }
+   
+]
+/**
+,
    {
       "codfam":"00",
       "familia":"VARIOS",
       "img":"assets/png/001-pistachio-1.png"
    }
-]
+   
+   
+   */ 

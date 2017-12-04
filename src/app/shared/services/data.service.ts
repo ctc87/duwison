@@ -79,33 +79,35 @@ export class DataService {
     });
   }
   
-  public addClient() {
-    let that = this;
-    if(this.alerts[0] && this.alerts[0].id === 1) {
-       this.closeAlert(this.alerts[0]);
-    }
-    if(that.comercial.pedidos.length < that.LIM) {
-    let indexx = this.comercial.pedidos.length;
-    this.httpCalls.getDescuentosPorClienteProducto(this.clienteSeleccionado.codcli, this.clienteSeleccionado.clientes, function(arrayDescuentosPorCliente){
-      that.httpCalls.getPreciosPortipoCLiente(that.clienteSeleccionado.tipoCliente, that.clienteSeleccionado.clientes, function(arrayDescuentosPorTipoCliente){
-        
-          console.log(that.clienteSeleccionado)
-          that.comercial.insertarCliente(
-              that.clienteSeleccionado.tarCli,
-              indexx,
-              that.clienteSeleccionado.codcli,
-              that.clienteSeleccionado.clientes, 
-              true,
-              false,
-              that.httpCalls.objetosJSON['productos'],
-              arrayDescuentosPorCliente, 
-              arrayDescuentosPorTipoCliente
-        );
+  public addClient(selected) {
+    if(!selected) {
+      let that = this;
+      if(this.alerts[0] && this.alerts[0].id === 1) {
+         this.closeAlert(this.alerts[0]);
+      }
+      if(that.comercial.pedidos.length < that.LIM) {
+      let indexx = this.comercial.pedidos.length;
+      this.httpCalls.getDescuentosPorClienteProducto(this.clienteSeleccionado.codcli, this.clienteSeleccionado.clientes, function(arrayDescuentosPorCliente){
+        that.httpCalls.getPreciosPortipoCLiente(that.clienteSeleccionado.tipoCliente, that.clienteSeleccionado.clientes, function(arrayDescuentosPorTipoCliente){
+          
+            console.log(that.clienteSeleccionado)
+            that.comercial.insertarCliente(
+                that.clienteSeleccionado.tarCli,
+                indexx,
+                that.clienteSeleccionado.codcli,
+                that.clienteSeleccionado.clientes, 
+                true,
+                false,
+                that.httpCalls.objetosJSON['productos'],
+                arrayDescuentosPorCliente, 
+                arrayDescuentosPorTipoCliente
+          );
+        });
       });
-    });
-   } else {
-    that.mostrarError(1);
-   }
+     } else {
+      that.mostrarError(1);
+     }
+    }
    
   } 
     
@@ -139,7 +141,7 @@ export class DataService {
     }
     
     
-    public filtrar($event) {
+    public filtrar() {
         let re = new RegExp(".*"+this.filtrado+".*", "ig");
         console.log(this.arrayProductosFamilia)
         this.arrayProductosFiltrados = this.arrayProductosFamilia.filter(function(element, index){

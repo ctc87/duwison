@@ -1,5 +1,5 @@
 import { Component, Input,  OnInit } from '@angular/core';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { HttpCalls } from '../../../../shared/peticionesHTTP/http.service';
 import { DataService } from '../../../../shared/services/data.service';
 import {SINGLE_SELECT_PRESET_VALUE_CONFIG, MULTI_SELECT_PRESET_VALUE_CONFIG} from './presetValueExample.config';
@@ -17,10 +17,12 @@ import {ExampleValues_Frameworks} from './selectize.configs';
 export class ModalCliente implements OnInit {
     closeResult: string;
     @Input() nombre_boton: string;
+    private modalRef: NgbModalRef;
     
     singleSelectConfig: any = SINGLE_SELECT_PRESET_VALUE_CONFIG;
 	singleSelectOptions: any;
 	cliente: string; // Defaulted value.
+	sleccionadoCLiente: boolean = false;
 
 	placeholder = 'Click to select...';
     
@@ -40,11 +42,13 @@ export class ModalCliente implements OnInit {
             tarCli: clienteNombre[0].tarcli, 
             tipoCliente:clienteNombre[0].clientes
         };
+        this.sleccionadoCLiente = true;
     }
     
     
     open(content) {
         let that = this;
+        this.sleccionadoCLiente = false;
         this.singleSelectOptions = this.httpJson.objetosJSON.clientes.filter(function(element, index){
             let aux = true;
             for(let i = 0; i < that.dataService.comercial.pedidos.length; i++) {
@@ -53,25 +57,22 @@ export class ModalCliente implements OnInit {
             return aux;
         });
         
-        
-        this.modalService.open(content).result.then((result) => {
-            this.closeResult = `Closed with: ${result}`;
-        }, (reason) => {
-            this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-        });
+       this.modalRef = this.modalService.open(content, {
+              backdrop : 'static',
+              keyboard : true
+        })
     }
 
-    private getDismissReason(reason: any): string {
-        if (reason === ModalDismissReasons.ESC) {
-            return 'by pressing ESC';
-        } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-            return 'by clicking on a backdrop';
-        } else {
-            return  `with: ${reason}`;
-        }
+
+    
+    public clienteSeleccionado () {
+        return this.sleccionadoCLiente;    
     }
     
-    cancelarPedido() {
-    //  this.dataService.clients.splice(this.index,1);   
+    public close(){
+        if(this.sleccionadoCLiente) {
+         console.log( this.modalRef)
+         this.modalRef.close();  
+        }
     }
 }

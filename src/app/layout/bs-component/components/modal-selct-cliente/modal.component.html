@@ -25,7 +25,7 @@
     
     <div class="modal-footer">
     <!--Falta darle funcionalidad a este boton para que cancele el pedido (lo borre del array de clientes)-->
-        <button type="button" class="btn btn-success" (click)="dataService.addClient()" (click)="c('Close click')">Seleccionar</button>
+        <button type="button" class="btn btn-success" [ngClass]="{'disabled': !clienteSeleccionado()}" (click)="dataService.addClient(!clienteSeleccionado())" (click)="close()">Seleccionar</button>
         <button type="button" class="btn btn-danger"  (click)="c('Close click')">Cancelar</button>
     </div>
 </ng-template>
