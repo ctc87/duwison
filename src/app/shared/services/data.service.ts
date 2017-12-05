@@ -3,7 +3,8 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Comercial } from '../class/comercial.class';
 import { Cliente } from '../class/cliente.class';
 import { HttpCalls } from '../peticionesHTTP/http.service';
-
+import { Router, Resolve, RouterStateSnapshot,
+         ActivatedRouteSnapshot } from '@angular/router';
 
 /**
  * DataService es un servicio que contiene todas los metdos y datos
@@ -37,7 +38,7 @@ export class DataService {
   public clienteSeleccionado = { codcli:null, clientes:null, tarCli:null, tipoCliente:null };
   
   
-  constructor(public httpCalls: HttpCalls) { 
+  constructor(public httpCalls: HttpCalls , private router: Router) { 
   this.errores =  [{
             id: 1,
             type: 'success',
@@ -52,9 +53,9 @@ export class DataService {
   }
   
   // DEBUGGIN
-  public cargarPruebas() {
-    this.comercial = this.httpCalls.objPruebas;
-  }
+  // public cargarPruebas() {
+  //   this.comercial = this.httpCalls.objPruebas;
+  // }
   
   public cambiarDatosComercial(nombre : string, provincia : number, mail : string) {
       this.comercial.nombre  = nombre;
@@ -87,21 +88,28 @@ export class DataService {
       }
       if(that.comercial.pedidos.length < that.LIM) {
       let indexx = this.comercial.pedidos.length;
-      this.httpCalls.getDescuentosPorClienteProducto(this.clienteSeleccionado.codcli, this.clienteSeleccionado.clientes, function(arrayDescuentosPorCliente){
-        that.httpCalls.getPreciosPortipoCLiente(that.clienteSeleccionado.tipoCliente, that.clienteSeleccionado.clientes, function(arrayDescuentosPorTipoCliente){
-          
-            console.log(that.clienteSeleccionado)
-            that.comercial.insertarCliente(
+      this.httpCalls.getHistorialAlbaranes(that.clienteSeleccionado.codcli, that.clienteSeleccionado.clientes, function(){
+        that.httpCalls.getCobrosPendientes(that.clienteSeleccionado.codcli, that.clienteSeleccionado.clientes, function(){
+          that.httpCalls.getDescuentosPorClienteProducto(that.clienteSeleccionado.codcli, that.clienteSeleccionado.clientes, function(arrayDescuentosPorCliente){
+            that.httpCalls.getPreciosPortipoCLiente(that.clienteSeleccionado.tipoCliente, that.clienteSeleccionado.clientes, function(arrayDescuentosPorTipoCliente){
+              console.log(that.clienteSeleccionado)
+              console.log(that.httpCalls.objetosJSON['albaranes'])
+              console.log(that.httpCalls.objetosJSON['cobrosPendientes'])
+              that.comercial.insertarCliente(
                 that.clienteSeleccionado.tarCli,
                 indexx,
                 that.clienteSeleccionado.codcli,
                 that.clienteSeleccionado.clientes, 
                 true,
                 false,
+                that.httpCalls.objetosJSON['cobrosPendientes'],
+                that.httpCalls.objetosJSON['albaranes'],
                 that.httpCalls.objetosJSON['productos'],
                 arrayDescuentosPorCliente, 
                 arrayDescuentosPorTipoCliente
-          );
+              );
+            });
+          });
         });
       });
      } else {
@@ -147,6 +155,15 @@ export class DataService {
         this.arrayProductosFiltrados = this.arrayProductosFamilia.filter(function(element, index){
             return re.test(element.articulo) || re.test(element.codart)
         });
+    }
+    
+    
+    public confirmarPedido (data) {
+      console.log("confirmando pedido")
+      if( data.status === 'ok') {
+         this.router.navigate(['/dashboard']);
+         window.location.reload();
+      }
     }
 
   

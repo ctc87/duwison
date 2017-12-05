@@ -19,7 +19,12 @@ export class StatComponent implements OnInit {
     @Input() sizeOut: string;
     @Input() index: number;
     @Input() codcli: number;
+    @Input() cobrosPendientes: boolean;
     
+    cobrosPendientesArray = [];
+    alabaranesArray = [];
+    
+    cobrosCadena = "";
     empezadoPedido = false;
     listaProductosCliente = []; 
     
@@ -61,8 +66,17 @@ export class StatComponent implements OnInit {
             return Number(element.codigo) === Number(that.codcli);
         });
         this.empezadoPedido = cliente[0].empezadoPedido;
+        this.cobrosPendientesArray = cliente[0].cobrosPendientes;
+        console.log("HISTORIAL ALABARANES")
+        this.alabaranesArray = cliente[0].historialAlbaranes;
+        
         this.cambiarBotonAccion();
         this.actualizarListaProductosCliente()
+        if(this.cobrosPendientes) {
+         this.bgClass = "cobrosPendientes";
+         this.icon = "fa-exclamation-triangle";
+         this.cobrosCadena += "El cliente tiene pagos pendientes!!"
+        }
     }
     
     

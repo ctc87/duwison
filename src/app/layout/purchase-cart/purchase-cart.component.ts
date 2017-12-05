@@ -20,7 +20,7 @@ export class CartComponent implements OnInit {
     codPedidoActual;
     pedidoActual;
     
-    constructor(public dataService: DataService) {
+    constructor(public dataService: DataService, public http: HttpCalls) {
         this.mensajes =  [
             {
                 id: 1,
@@ -54,9 +54,20 @@ export class CartComponent implements OnInit {
     }
     
     
+    public enviarPedido() {
+        let peido: Object;
+        let pedido = this.generarObjetoJSON_Pedido();
+        console.log("procede a suscribirse ")
+        this.http.enviarPedidoServidor(pedido).subscribe(
+          (data) => this.dataService.confirmarPedido(data)
+        );   
+    }
     
+    
+    // ENVIAR ESTE OBJETO 
     public generarObjetoJSON_Pedido() {
-     console.log(this.dataService.comercial.generarPedidos_JSON())  
+        console.log("creando objeto")
+        return this.dataService.comercial.generarPedidos_JSON();  
     }
     
     public onChange($event) {

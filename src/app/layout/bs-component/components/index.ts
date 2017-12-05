@@ -2,6 +2,8 @@ export * from './buttons/buttons.component';
 export * from './alert/alert.component';
 export * from './modal-selct-cliente/modal.component';
 export * from './modal-cancelar/modal-cancelar.component';
+export * from './modal-albaranes/modal-albaranes.component';
+export * from './modal-cobros-pendientes/modal-cobros-pendientes.component';
 export * from './collapse/collapse.component';
 export * from './date-picker/date-picker.component';
 export * from './dropdown/dropdown.component';

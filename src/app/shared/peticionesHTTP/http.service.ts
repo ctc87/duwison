@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Http, Response, Headers, RequestOptions, URLSearchParams  } from '@angular/http';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import {  BlockUI, NgBlockUI } from 'ng-block-ui';
+import { Observable } from 'rxjs/Rx';
 
 
 /**
@@ -19,11 +21,16 @@ export class HttpCalls  {
     // Wires up BlockUI instance
   @BlockUI() public blockUI: NgBlockUI;
   
+  
+  // Opciones de envio al servidor
+  options: RequestOptions;  
+  
+  
   /**
    * ´IP´ Esta es la constante de la ip al backend
    */
   public static readonly IP = "http://duwisonguitian.ddns.net";
-  
+
   /**
    * ´SERVER_PATH´ Esta constante contiene el path del servidor backend
    * a donde van las consultas JSON. 
@@ -45,7 +52,9 @@ export class HttpCalls  {
     productos:null,
     tarifaArtciuloFamilia:null,
     tarifaTipoCliente:null,
-    familiasLocal:null
+    familiasLocal:null,
+    alabaranes:null,
+    cobrosPendientes:null
     };
   
   /**
@@ -56,7 +65,10 @@ export class HttpCalls  {
     'clientes':'/clientes',
     'productos':'/conexion',
     'tarifaArtciuloFamilia' :'/tarArtFam',
-    'tarifaTipoCliente' : '/tarclitip'
+    'tarifaTipoCliente' : '/tarclitip',
+    'guardar' : '/guardar/pedido',
+    'albaranes': '/hisPre',
+    'cobrosPendientes' : '/carCli'
   };
   
   // DEBUGING
@@ -64,7 +76,7 @@ export class HttpCalls  {
 
 
   // Inject HttpClient into your component or service.
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private http2: Http) {
     console.log("creado servicio de objetos JSON")
     this.getObjects(); 
   };
@@ -84,6 +96,39 @@ export class HttpCalls  {
         this.http.get(HttpCalls.SREVER_PATH + HttpCalls.PATHS['familias']).subscribe(data => {
           this.objetosJSON['familias'] = data;
           this.getFamiliasLocal();
+          return data;
+        }),
+        error => console.log("Error: ", error),
+        () => ((data)=>{
+            this.data$.next(data);
+        });
+    }
+    
+    /**
+     * ´getCobrosPendientes´ Devuelve si el cliente tiene cobros pendientes y la información
+     * sobre estos pasandole un codigo de cliente
+     */
+    public getCobrosPendientes(codCli, cliente, callback) {
+      this.blockUI.start("Cargando cobros pendientes de " + cliente + ".");
+      this.http.get(HttpCalls.SREVER_PATH + HttpCalls.PATHS['cobrosPendientes'] + "?codcli=" + codCli ).subscribe(data => {
+          this.objetosJSON['cobrosPendientes'] = data;
+          callback();
+          return data;
+        }),
+        error => console.log("Error: ", error),
+        () => ((data)=>{
+            this.data$.next(data);
+        });
+    }
+    
+    /**
+     * ´getHistorialAlbaranes´ Devuelve si el hitorial de albaranes pasandole un codigo de cliente
+     */
+    public getHistorialAlbaranes(codCli, cliente, callback) {
+        this.blockUI.start("Cargando historial de albaranes de " + cliente + ".");
+      this.http.get(HttpCalls.SREVER_PATH + HttpCalls.PATHS['albaranes'] + "?codcli=" + codCli ).subscribe(data => {
+          this.objetosJSON['albaranes'] = data;
+          callback();
           return data;
         }),
         error => console.log("Error: ", error),
@@ -158,7 +203,6 @@ export class HttpCalls  {
       });
     }
     
-    // http://192.168.10.15/appLorkel/web/app_dev.php/tarclitip?tipcli=11
     
     /**
      * ´getPreciosPortipoCLiente´ recibe el tipo del cliente y devuelve los productos 
@@ -202,15 +246,15 @@ export class HttpCalls  {
          this.blockUI.stop();
          
         // DEBUGGIN
-          that.blockUI.start("Cargando datos de muestra.");
-          that.http.get(HttpCalls.SREVER_PATH_LOCAL + '/obj' + HttpCalls.EXT).subscribe(data => {
-            that.objPruebas =  data;
-              that.blockUI.stop();
-          }),
-          error => console.log("Error: ", error),
-          () => ((data)=>{
-              that.data$.next(data);
-          });
+          // that.blockUI.start("Cargando datos de muestra.");
+          // that.http.get(HttpCalls.SREVER_PATH_LOCAL + '/obj' + HttpCalls.EXT).subscribe(data => {
+          //   that.objPruebas =  data;
+          //     that.blockUI.stop();
+          // }),
+          // error => console.log("Error: ", error),
+          // () => ((data)=>{
+          //     that.data$.next(data);
+          // });
           // FIN
           
          
@@ -229,7 +273,6 @@ export class HttpCalls  {
      */
     public getObjects() {
     this.getFamilias();
-    // HAY QUE CAMBIAR ESTO PARA QUE VENGA DESDE EL COMERCIAL
     let codigoAlmacen = localStorage.provincia || '00002';  
     this.blockUI.start("Cargando clientes de la base de datos.");
     this.http.get(HttpCalls.SREVER_PATH + HttpCalls.PATHS['clientes'] ).subscribe(data => {
@@ -242,5 +285,27 @@ export class HttpCalls  {
     this.getProductos( codigoAlmacen );
     
   }
+  
+  public enviarPedidoServidor(obj:Object){
+        console.log("Procedindo al emnvio")
+        let json = JSON.stringify(obj);
+        let headers = new Headers({"Content-Type":"application/json"});
+        return this.http2.post(HttpCalls.SREVER_PATH + HttpCalls.PATHS['guardar'], json, this.options)
+        .map(this.extractData)
+        .catch(this.handleError);
+    }
+    
+    private extractData(res: Response) {
+        console.log("RES", res)
+        let json2 = res.json();
+        return json2 || {};
+    }
+
+    private handleError(error: any) {
+        let errMsg = (error.message) ? error.message :
+            error.status ? `${error.status} - ${error.statusText}` : 'Server handle error';
+        // console.error(errMsg);
+        return Observable.throw(errMsg);
+    }
   
 }

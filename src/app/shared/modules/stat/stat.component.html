@@ -25,6 +25,19 @@
     </div>
     <br/>
     <div id="collapseExample" [ngbCollapse]="isCollapsed" class="card-block">
+        <div class="row">
+            <ng-container *ngIf="cobrosPendientes">
+            <div class="col-12 col-sm-6">
+                 <app-modal-cobros-pendientes [nombre_boton]="'Cobros pendientes'" [cobros]="cobrosPendientesArray" [bgClass]="bgClass"></app-modal-cobros-pendientes> 
+            </div>
+            </ng-container>
+            <ng-container *ngIf="alabaranesArray.length > 0">
+            <div class="col-12 col-sm-6">
+                <app-modal-albaranes [nombre_boton]="'Albaranes'" [albaranes]="alabaranesArray" [bgClass]="bgClass"></app-modal-albaranes> 
+            </div>
+            </ng-container>
+        </div>
+        
         <ng-container *ngIf="listaProductosCliente.length > 0">
             <table class="card-block table table-responsive">
                 <thead>
@@ -46,13 +59,19 @@
             </table>
         </ng-container>
         <ng-container *ngIf="! (listaProductosCliente.length > 0)">
+              <br/>
               Cúando empieze el pedido, aquí verá los artículos añadidos.
         </ng-container>
     </div>
     <a  href="javascript:void(0)" (click)="dataService.closeTagsCLients(codcli)">
     <div class="card-footer">
-        <span *ngIf="isCollapsed" class="float-left">Ver pedido del cliente</span>
-        <span *ngIf="!isCollapsed" class="float-left">Contraer pedido cliente</span>
+        <span *ngIf="isCollapsed" class="float-left">
+            Ver info cliente
+            <ng-container *ngIf="cobrosPendientes">
+                <br/><span style="color:red">{{cobrosCadena}}</span>
+            </ng-container>
+        </span>
+        <span *ngIf="!isCollapsed" class="float-left">Contraer info cliente</span>
         <a href="javascript:void(0)" class="float-right card-inverse"  
                         [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample" >
             <span ><i class="fa fa-arrow-circle-right"></i></span>

@@ -89,6 +89,8 @@ export class Comercial {
                             nombreCliente,
                             collapsed,
                             empezadoPedido,
+                            cobrosPendientes, 
+                            historialAlbaranes,
                             todosProductosArray,
                             arrayPreciosParticulares, 
                             arrayDescuentosPorTipoCliente
@@ -102,9 +104,11 @@ export class Comercial {
                 nombreCliente, 
                 collapsed,
                 empezadoPedido,
+                cobrosPendientes, 
+                historialAlbaranes,
                 todosProductosArray,
                 arrayPreciosParticulares, 
-                arrayDescuentosPorTipoCliente
+                arrayDescuentosPorTipoCliente,
             )
         );
       
@@ -116,15 +120,18 @@ export class Comercial {
    * @return Objeto Json con los pedidos
    */ 
     public generarPedidos_JSON() {
+      console.log("PROVINCIA", this.provincia)
       let arrayPedidos = [];
+      let that = this;
       this.pedidos.forEach(function(pedido, index){
-        arrayPedidos.push(pedido.generarPedido_JSON());
+        arrayPedidos.push(pedido.generarPedido_JSON(that.provincia));
       });
-      return {
-        mail:this.mail,
-        fecha_pedido:this.fecha_pedido,
+      let a = {
+        obsint:this.mail,
         pedidos:arrayPedidos
       };
+      console.log(a);
+      return a;
     }
 
 }

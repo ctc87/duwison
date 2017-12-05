@@ -24,4 +24,9 @@ export class SidebarComponent {
             this.showMenu = element;
         }
     }
+
+    onLoggedout() {
+        localStorage.removeItem('isLoggedin');
+    }
+
 }

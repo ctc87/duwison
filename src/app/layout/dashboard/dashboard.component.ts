@@ -7,7 +7,7 @@ import { HttpCalls } from '../../shared/peticionesHTTP/http.service';
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
-    styleUrls: ['./dashboard.component.scss'],
+    styleUrls: ['./dashboard.component.css'],
     animations: [routerTransition()]
 })
 export class DashboardComponent implements OnInit {

@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { LoginService } from '../shared/services/login.service';
 import { DataService } from '../shared';
+import {  BlockUI, NgBlockUI } from 'ng-block-ui';
 
 @Component({
     selector: 'app-login',
@@ -19,9 +20,9 @@ export class LoginComponent implements OnInit {
     public prueba;
     public identity;
     public token;
-    
+    @BlockUI() public blockUI: NgBlockUI;
     constructor(public router: Router, private loginService:LoginService, public dataService: DataService) {}    
-
+    
     ngOnInit() {    
         
         this.user={
@@ -33,6 +34,7 @@ export class LoginComponent implements OnInit {
     }    
 
     onLoggedin() {
+       this.blockUI.start("iniciando sesión.");
        this.loginService.signup(this.user).
         subscribe(response=>{            
             let identity = response;
@@ -74,6 +76,7 @@ export class LoginComponent implements OnInit {
                                     );
                                     console.log("MAIL", localStorage.email)
                                     console.log(this.dataService.comercial)
+                                    this.blockUI.stop();
                                     this.router.navigate(['/dashboard']);
                                 }
 
