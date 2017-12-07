@@ -17,8 +17,9 @@ export class LoginService {
     options: RequestOptions;
 
     constructor (private http: Http) {}
-    public servidor = "http://192.168.10.15";
-    public LoginUrl  = this.servidor + "/appLorkel/web/app_dev.php/login";
+    // public servidor = "http://192.168.10.15";
+    public servidor = "http://duwisonguitian.ddns.net";
+    public LoginUrl  = this.servidor + "/symfony/web/app_dev.php/login";
     public identity;
     public token;
     
@@ -26,6 +27,7 @@ export class LoginService {
     {
         let json = JSON.stringify(user_to_login);        
         let params = "login="+json;
+        console.log(params)
         let headers = new Headers({"Content-Type":"application/x-www-form-urlencoded"});
          return this.http.post(this.LoginUrl, params,{headers:headers})     
         .map(this.extractData)

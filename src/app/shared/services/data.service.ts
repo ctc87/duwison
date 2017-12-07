@@ -92,9 +92,6 @@ export class DataService {
         that.httpCalls.getCobrosPendientes(that.clienteSeleccionado.codcli, that.clienteSeleccionado.clientes, function(){
           that.httpCalls.getDescuentosPorClienteProducto(that.clienteSeleccionado.codcli, that.clienteSeleccionado.clientes, function(arrayDescuentosPorCliente){
             that.httpCalls.getPreciosPortipoCLiente(that.clienteSeleccionado.tipoCliente, that.clienteSeleccionado.clientes, function(arrayDescuentosPorTipoCliente){
-              console.log(that.clienteSeleccionado)
-              console.log(that.httpCalls.objetosJSON['albaranes'])
-              console.log(that.httpCalls.objetosJSON['cobrosPendientes'])
               that.comercial.insertarCliente(
                 that.clienteSeleccionado.tarCli,
                 indexx,
@@ -122,7 +119,6 @@ export class DataService {
   public cambiarFamilia(familia_seleccionada: string) {
    
     this.messageSource.next(familia_seleccionada)
-    console.log(this.messageSource)
   };
   
   public nombreFormateado(name) {
@@ -131,7 +127,7 @@ export class DataService {
   
   public asignarClienteActual(cliente) {
     this.clienteActualPedido = cliente;
-   }
+  }
   
    
   public closeTagsCLients(index) {
@@ -151,7 +147,6 @@ export class DataService {
     
     public filtrar() {
         let re = new RegExp(".*"+this.filtrado+".*", "ig");
-        console.log(this.arrayProductosFamilia)
         this.arrayProductosFiltrados = this.arrayProductosFamilia.filter(function(element, index){
             return re.test(element.articulo) || re.test(element.codart)
         });
@@ -159,9 +154,8 @@ export class DataService {
     
     
     public confirmarPedido (data) {
-      console.log("confirmando pedido")
       if( data.status === 'ok') {
-         this.router.navigate(['/dashboard']);
+         this.router.navigate(['/']);
          window.location.reload();
       }
     }

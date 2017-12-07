@@ -25,6 +25,19 @@ export class HttpCalls  {
   // Opciones de envio al servidor
   options: RequestOptions;  
   
+  // Hash que indica si hay algo cargando
+  
+  public hashCargando = {
+    'familias':false,
+    'clientes':false,
+    'productos':false,
+    'tarifaArtciuloFamilia' :false,
+    'tarifaTipoCliente' : false,
+    'guardar' : false,
+    'albaranes': false,
+    'cobrosPendientes' : false
+  }; 
+  
   
   /**
    * ´IP´ Esta es la constante de la ip al backend
@@ -77,14 +90,26 @@ export class HttpCalls  {
 
   // Inject HttpClient into your component or service.
   constructor(private http: HttpClient, private http2: Http) {
-    console.log("creado servicio de objetos JSON")
+    // console.log("creado servicio de objetos JSON")
     this.getObjects(); 
+    this.EstaCargando();
   };
   
   /**
    * Variable dynamica para guardar los datos recibidos desde el servidor
    */
   public data$: BehaviorSubject<any> = new BehaviorSubject({});
+  
+  
+  
+  
+  public EstaCargando() {
+    let cargando = false;
+    for (let key in this.hashCargando) {
+      cargando = (cargando || this.hashCargando[key])
+    }
+    return cargando;
+  }
   
     /**
      * ´getFamilias´ Devuelve las familias a nivel local para ver cuales tienen imagen
@@ -93,8 +118,13 @@ export class HttpCalls  {
      */
     public getFamilias() {
         this.blockUI.start("Cargando familias de productos.");
+        this.hashCargando['familias'] = true;
         this.http.get(HttpCalls.SREVER_PATH + HttpCalls.PATHS['familias']).subscribe(data => {
           this.objetosJSON['familias'] = data;
+          this.hashCargando['familias'] = false;
+          if(!this.EstaCargando()) {
+             this.blockUI.stop();
+          }
           this.getFamiliasLocal();
           return data;
         }),
@@ -110,8 +140,13 @@ export class HttpCalls  {
      */
     public getCobrosPendientes(codCli, cliente, callback) {
       this.blockUI.start("Cargando cobros pendientes de " + cliente + ".");
+      this.hashCargando['cobrosPendientes'] = true;
       this.http.get(HttpCalls.SREVER_PATH + HttpCalls.PATHS['cobrosPendientes'] + "?codcli=" + codCli ).subscribe(data => {
           this.objetosJSON['cobrosPendientes'] = data;
+          this.hashCargando['cobrosPendientes'] = false;
+          if(!this.EstaCargando()) {
+             this.blockUI.stop();
+          }
           callback();
           return data;
         }),
@@ -126,8 +161,13 @@ export class HttpCalls  {
      */
     public getHistorialAlbaranes(codCli, cliente, callback) {
         this.blockUI.start("Cargando historial de albaranes de " + cliente + ".");
+          this.hashCargando['albaranes'] = true;
       this.http.get(HttpCalls.SREVER_PATH + HttpCalls.PATHS['albaranes'] + "?codcli=" + codCli ).subscribe(data => {
           this.objetosJSON['albaranes'] = data;
+          this.hashCargando['albaranes'] = false;
+          if(!this.EstaCargando()) {
+             this.blockUI.stop();
+          }
           callback();
           return data;
         }),
@@ -142,8 +182,14 @@ export class HttpCalls  {
      * asociada.
      */
     public getFamiliasLocal() {
+     this.blockUI.start("Cargando familias de productos con imágenes locales.");
+     this.hashCargando['familiasLocal'] = true;
      this.http.get(HttpCalls.SREVER_PATH_LOCAL + HttpCalls.PATHS['familias'] + HttpCalls.EXT).subscribe(data => {
           this.objetosJSON['familiasLocal'] = data;
+          this.hashCargando['familiasLocal'] = false;
+          if(!this.EstaCargando()) {
+             this.blockUI.stop();
+          }
           this.construirFamilias();
           return data;
         }),
@@ -161,7 +207,6 @@ export class HttpCalls  {
       let that = this;
       this.objetosJSON.familias.forEach(function(element, index) {
           let id = element["codfam"];
-          console.log(id)
           let familiaCoincidientesArray = that.objetosJSON.familiasLocal.filter(function(familia){
             return familia["codfam"] === id;
           });
@@ -174,7 +219,6 @@ export class HttpCalls  {
           }
       })
       this.objetosJSON.familias = arrayFamiliasFinal;
-      console.log(this.objetosJSON.familias)
     }
 
          
@@ -192,9 +236,13 @@ export class HttpCalls  {
      */
     public getDescuentosPorClienteProducto(codCli, cliente, callback) {
       this.blockUI.start("Cargando descuentos para " + cliente + ".");
+        this.hashCargando['tarifaArtciuloFamilia'] = true;
       this.http.get(HttpCalls.SREVER_PATH + HttpCalls.PATHS['tarifaArtciuloFamilia'] + "?codcli=" + codCli ).subscribe(data => {
         this.objetosJSON['tarifaArtciuloFamilia'] = data;
-        this.blockUI.stop();
+        this.hashCargando['tarifaArtciuloFamilia'] = false;
+        if(!this.EstaCargando()) {
+           this.blockUI.stop();
+        }
         callback(this.objetosJSON['tarifaArtciuloFamilia']);
       }),
       error => console.log("Error: ", error),
@@ -217,9 +265,13 @@ export class HttpCalls  {
      */
     public getPreciosPortipoCLiente(tipCli, cliente, callback) {
       this.blockUI.start("Cargando precios para " + cliente + ".");
+        this.hashCargando['tarifaTipoCliente'] = true;
       this.http.get(HttpCalls.SREVER_PATH + HttpCalls.PATHS['tarifaTipoCliente'] + "?tipcli=" + tipCli ).subscribe(data => {
         this.objetosJSON['tarifaTipoCliente'] = data;
-        this.blockUI.stop();
+        this.hashCargando['tarifaTipoCliente'] = false;
+        if(!this.EstaCargando()) {
+           this.blockUI.stop();
+        }
         callback(this.objetosJSON['tarifaTipoCliente']);
       }),
       error => console.log("Error: ", error),
@@ -241,9 +293,13 @@ export class HttpCalls  {
     public getProductos(codAlmacen) {
       let that = this;
       this.blockUI.start("Cargando productos de la base de datos.");
+        this.hashCargando['productos'] = true;
       this.http.get(HttpCalls.SREVER_PATH + HttpCalls.PATHS['productos'] + "?codprov=" + codAlmacen ).subscribe(data => {
         this.objetosJSON['productos'] = data;
-         this.blockUI.stop();
+        this.hashCargando['productos'] = false;
+        if(!this.EstaCargando()) {
+           this.blockUI.stop();
+        }
          
         // DEBUGGIN
           // that.blockUI.start("Cargando datos de muestra.");
@@ -275,8 +331,13 @@ export class HttpCalls  {
     this.getFamilias();
     let codigoAlmacen = localStorage.provincia || '00002';  
     this.blockUI.start("Cargando clientes de la base de datos.");
+      this.hashCargando['clientes'] = true;
     this.http.get(HttpCalls.SREVER_PATH + HttpCalls.PATHS['clientes'] ).subscribe(data => {
       this.objetosJSON['clientes'] = data;
+      this.hashCargando['clientes'] = false;
+      if(!this.EstaCargando()) {
+         this.blockUI.stop();
+      }
     }),
     error => console.log("Error: ", error),
     () => ((data)=>{
@@ -287,7 +348,7 @@ export class HttpCalls  {
   }
   
   public enviarPedidoServidor(obj:Object){
-        console.log("Procedindo al emnvio")
+        // console.log("Procedindo al emnvio")
         let json = JSON.stringify(obj);
         let headers = new Headers({"Content-Type":"application/json"});
         return this.http2.post(HttpCalls.SREVER_PATH + HttpCalls.PATHS['guardar'], json, this.options)
@@ -296,7 +357,7 @@ export class HttpCalls  {
     }
     
     private extractData(res: Response) {
-        console.log("RES", res)
+        // console.log("RES", res)
         let json2 = res.json();
         return json2 || {};
     }

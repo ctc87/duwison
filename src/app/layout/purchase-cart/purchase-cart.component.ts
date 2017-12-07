@@ -25,7 +25,12 @@ export class CartComponent implements OnInit {
             {
                 id: 1,
                 type: 'success',
-                message: `Información de los pedidos.`
+                message: `Para manipular un producto haga click encima. Para cambiar de peido pulse en seleccionar pedido.`
+            },
+            {
+                id: 3,
+                type: 'warning',
+                message: `\"Enviar pedidos\" enviará tods los pedidos!!!!`
             },
             {
                 id: 2,
@@ -48,8 +53,9 @@ export class CartComponent implements OnInit {
             this.codPedidoActual = this.arrayPedidos[0].codigo;
             this.pedidoActual = this.arrayPedidos[0]; 
             this.alerts.push(this.mensajes[0]);
-        } else {
             this.alerts.push(this.mensajes[1]);
+        } else {
+            this.alerts.push(this.mensajes[2]);
         }
     }
     
@@ -57,7 +63,7 @@ export class CartComponent implements OnInit {
     public enviarPedido() {
         let peido: Object;
         let pedido = this.generarObjetoJSON_Pedido();
-        console.log("procede a suscribirse ")
+        // console.log("procede a suscribirse ")
         this.http.enviarPedidoServidor(pedido).subscribe(
           (data) => this.dataService.confirmarPedido(data)
         );   
@@ -66,21 +72,22 @@ export class CartComponent implements OnInit {
     
     // ENVIAR ESTE OBJETO 
     public generarObjetoJSON_Pedido() {
-        console.log("creando objeto")
+        // console.log("creando objeto")
         return this.dataService.comercial.generarPedidos_JSON();  
     }
     
     public onChange($event) {
-     this.seleccionarPedidoActual()
+        // console.log($event)
+     this.seleccionarPedidoActual($event)
     }
     
-    public seleccionarPedidoActual() {
+    public seleccionarPedidoActual($event) {
         let that = this;
         let auxArr = this.arrayPedidos.filter(function(pedido, index){
-            return pedido.codigo === that.codPedidoActual;
+            return pedido.codigo === $event;
         }) 
         this.pedidoActual = auxArr[0];
-        console.log(this.pedidoActual.nombre)
+        // console.log(this.pedidoActual.nombre)
     }
     
   public filtrarPedidosVacios(pedidos) {

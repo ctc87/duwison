@@ -21,7 +21,7 @@
                             </div>
                             <div class="col-md-6 col-12">
                                 <div class="form-group">
-                                    <label>SeleccionaPedido</label>
+                                    <label>Seleccionar pedido</label>
                                     <select class="form-control inputTextSize" (ngModelChange)="onChange($event)" [(ngModel)]="codPedidoActual">
                                         <option class="inputTextSize" *ngFor="let pedido of arrayPedidos; let i = index" value={{pedido.codigo}}>{{pedido.nombre}}</option>
                                     </select>
@@ -40,12 +40,9 @@
                         </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let producto of pedidoActual.carrito.productos | keys; let k = index" class="table-active">
-                                <td class="td-responsive">{{producto.codArt}}</td>
-                                <td class="td-responsive">{{producto.nombre}}</td>
-                                <td class="td-responsive">{{producto.precio}}</td>
-                                <td class="td-responsive">{{producto.cantidadPedido}}</td>
-                            </tr>
+                            <ng-container *ngFor="let producto of pedidoActual.carrito.productos | keys; let k = index">
+                                <tr app-modal-producto  [producto]="producto" [cliente]="pedidoActual" style="cursor:pointer;"></tr>
+                            </ng-container>
                         </tbody>
                     </table>
                 </div>

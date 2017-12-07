@@ -10,7 +10,7 @@ import {
 import { CartRoutingModule } from './purchase-cart-routing.module';
 import { CartComponent } from './purchase-cart.component';
 import { PageHeaderModule } from '../../shared';
-import { TabsComponent } from '../bs-component/components';
+import { TabsComponent, ModalProducto } from '../bs-component/components';
 import { KeysPipe } from '../../shared/pipes/keys.pipe'
 
 @NgModule({
@@ -26,7 +26,8 @@ import { KeysPipe } from '../../shared/pipes/keys.pipe'
     declarations: [
         CartComponent,  
         TabsComponent, 
-        KeysPipe
+        KeysPipe,
+        ModalProducto
     ]
 })
 export class CartModule { 

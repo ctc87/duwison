@@ -25,7 +25,7 @@ export class ProductsCardsComponent implements OnInit {
     
     
     public restarPedido(codProd) {
-        if(this.dataService.clienteActualPedido.carrito.productos[codProd] > 0)
+        if(this.dataService.clienteActualPedido.carrito.productos[codProd].cantidadPedido > 0)
             this.dataService.clienteActualPedido.carrito.productos[codProd].cantidadPedido--;
         else
             this.dataService.clienteActualPedido.carrito.productos[codProd].cantidadPedido = 0
