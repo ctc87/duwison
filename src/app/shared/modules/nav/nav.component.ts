@@ -21,10 +21,12 @@ export class NavComponent implements OnInit {
         this.dataService.almacen = 1;
         console.log(this.dataService.familia_actual);
         let that = this;
+        
+        
         this.dataService.arrayProductosFamilia = this.httpService.objetosJSON["productos"].filter(function(element, index){
-            // console.log(element.codfam, that.dataService.familia_actual.codfam)
+            console.log(element.codfam, that.dataService.familia_actual.codfam)
             return Number(element.codfam) === Number(that.dataService.familia_actual.codfam) 
-            && Number(element.cod_almacen) === that.dataService.almacen;    
+            // && Number(element.cod_almacen) === that.dataService.almacen;    
             // ESTO ES PARA ALMACEN DE TENERIFE
         });
         
