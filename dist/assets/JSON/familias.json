@@ -1,0 +1,52 @@
+[
+   {
+      "codfam":"1",
+      "familia":"ARROCES, CARNES Y EMBUTIDOS",
+      "img":"assets/png/033-paella-1.png"
+   },
+   {
+      "codfam":"2",
+      "familia":"LACTEOS Y OVOPRODUCTOS",
+      "img":"assets/png/031-milk-products.png"
+   },
+   {
+      "codfam":"3",
+      "familia":"TEMATICOS",
+      "img":"assets/png/041-nachos.png"
+   },
+   {
+      "codfam":"4",
+      "familia":"PLATOS PREPARADOS",
+      "img":"assets/png/049-refrigerator.png"
+   },
+   {
+      "codfam":"5",
+      "familia":"PRODUCTOS DEL MAR",
+      "img":"assets/png/019-fruit.png"
+   },
+   {
+      "codfam":"55",
+      "familia":"ESPECIALIDADES",
+      "img":"assets/png/food.png"
+   },
+   {
+      "codfam":"56",
+      "familia":"JUGOS Y ZUMOS",
+      "img":"assets/png/orange-juice.png"
+   },
+   {
+      "codfam":"6",
+      "familia":"I y IV GAMA",
+      "img":"assets/png/037-food-3.png"
+   },
+   {
+      "codfam":"7",
+      "familia":"PANADERIA Y PASTELERIA",
+      "img":"assets/png/029-food-5.png"
+   },
+   {
+      "codfam":"00",
+      "familia":"VARIOS",
+      "img":"assets/png/001-pistachio-1.png"
+   }
+]
