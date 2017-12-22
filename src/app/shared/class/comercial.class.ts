@@ -59,7 +59,7 @@ export class Comercial {
        
     
     public imprimirPedidos() {
-     console.log(this.pedidos) 
+     //console.log(this.pedidos) 
     }
     
   /**
@@ -91,6 +91,7 @@ export class Comercial {
                             empezadoPedido,
                             cobrosPendientes, 
                             historialAlbaranes,
+                            estadisticasCliente,//--------AÑADIDO DAMIAN
                             todosProductosArray,
                             arrayPreciosParticulares, 
                             arrayDescuentosPorTipoCliente
@@ -106,6 +107,7 @@ export class Comercial {
                 empezadoPedido,
                 cobrosPendientes, 
                 historialAlbaranes,
+                estadisticasCliente,//-------AÑADIDO DAMIAN
                 todosProductosArray,
                 arrayPreciosParticulares, 
                 arrayDescuentosPorTipoCliente,
@@ -120,7 +122,7 @@ export class Comercial {
    * @return Objeto Json con los pedidos
    */ 
     public generarPedidos_JSON() {
-      console.log("PROVINCIA", this.provincia)
+      //console.log("PROVINCIA", this.provincia)
       let arrayPedidos = [];
       let that = this;
       this.pedidos.forEach(function(pedido, index){
@@ -130,8 +132,8 @@ export class Comercial {
         obsint:this.mail,
         pedidos:arrayPedidos
       };
-      console.log(a);
-      return a;
+     
+    return a;
     }
 
 }

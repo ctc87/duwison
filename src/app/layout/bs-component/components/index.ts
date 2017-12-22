@@ -4,6 +4,7 @@ export * from './modal-selct-cliente/modal.component';
 export * from './modal-cancelar/modal-cancelar.component';
 export * from './modal-albaranes/modal-albaranes.component';
 export * from './modal-producto/modal-producto.component';
+export * from './modal-estadisticas/modal-estadisticas.component';
 export * from './modal-cobros-pendientes/modal-cobros-pendientes.component';
 export * from './collapse/collapse.component';
 export * from './date-picker/date-picker.component';

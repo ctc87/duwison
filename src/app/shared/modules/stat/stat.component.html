@@ -26,16 +26,28 @@
     <br/>
     <div id="collapseExample" [ngbCollapse]="isCollapsed" class="card-block">
         <div class="row">
+            <!--   COBROS PENDIENTES   -->
             <ng-container *ngIf="cobrosPendientes">
             <div class="col-12 col-sm-6">
                  <app-modal-cobros-pendientes [nombre_boton]="'Cobros pendientes'" [cobros]="cobrosPendientesArray" [bgClass]="bgClass"></app-modal-cobros-pendientes> 
             </div>
             </ng-container>
+
+            <!--   HISTORIAL PRESUPUESTOS   -->
             <ng-container *ngIf="alabaranesArray.length > 0">
+                <div class="col-12 col-sm-6">
+                    <app-modal-albaranes [nombre_boton]="'Pedidos'" [albaranes]="alabaranesArray" [bgClass]="bgClass"></app-modal-albaranes> 
+                </div>
+                </ng-container>
+
+            <!--   ESTADISTICAS   -->
+            <!--AÑADIDO DAMIAN - INICIO -->
+            <ng-container><!--*ngIf="estadisticasArray.length > 0"-->
             <div class="col-12 col-sm-6">
-                <app-modal-albaranes [nombre_boton]="'Albaranes'" [albaranes]="alabaranesArray" [bgClass]="bgClass"></app-modal-albaranes> 
+                <app-modal-estadisticas [nombre_boton]="'Estadisticas'" [estadisticas]="estadisticasArray" [bgClass]="bgClass"></app-modal-estadisticas> 
             </div>
-            </ng-container>
+            </ng-container>  
+          <!--  AÑADIDO DAMIAN - FIN  -->          
         </div>
         
         <ng-container *ngIf="listaProductosCliente.length > 0">
@@ -67,11 +79,11 @@
     <div class="card-footer">
         <span *ngIf="isCollapsed" class="float-left">
             Ver info cliente
-            <ng-container *ngIf="cobrosPendientes">
+            <ng-container *ngIf="cobrosPendientes.impdeb > 0">
                 <br/><span style="color:red">{{cobrosCadena}}</span>
             </ng-container>
         </span>
-        <span *ngIf="!isCollapsed" class="float-left">Contraer info cliente</span>
+        <span *ngIf="!isCollapsed" class="float-left">Minimizar info cliente</span>
         <a href="javascript:void(0)" class="float-right card-inverse"  
                         [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample" >
             <span ><i class="fa fa-arrow-circle-right"></i></span>

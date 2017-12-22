@@ -17,6 +17,7 @@ export class Cliente {
         public empezadoPedido : boolean,
         public cobrosPendientes,
         public historialAlbaranes,
+        public estadisticasCliente, //--------AÑADIDO DAMIAN
         todosProductosArray,
         arrayPreciosParticulares,
         arrayDescuentosPorTipoCliente
@@ -26,8 +27,6 @@ export class Cliente {
             this.fecha_pedido = new Date();
             this.tieneCobrosPendientes = cobrosPendientes.length > 0;
         };
-        
-        
         
     
   /**
@@ -61,7 +60,7 @@ export class Cliente {
     
     private formatoProductoBD(producto, codalm) {
         return {
-                codart: producto.codArt,
+                codart:producto.codArt,
                 desmod:producto.nombre,
                 canpre:producto.cantidadPedido,
                 preven:producto.precio,
