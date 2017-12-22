@@ -17,15 +17,15 @@ export class DashboardComponent implements OnInit {
 
     ngOnInit() { 
         this.dataService.comercial.pedidos.length <= 0 ? this.dataService.mostrarError(0) : null;
-        
+
+
         if(localStorage.nombre) {
           this.dataService.cambiarDatosComercial(
               (localStorage.nombre.trim() + " " + localStorage.apellidos.trim()),
               localStorage.provincia,
               localStorage.email
           ); 
-          console.log(this.dataService.comercial)
-          console.log(this.dataService.comercial.pedidos)
+      
         }
     }
 

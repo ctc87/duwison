@@ -5,7 +5,7 @@ import { Cliente } from '../class/cliente.class';
 import { HttpCalls } from '../peticionesHTTP/http.service';
 import { Router, Resolve, RouterStateSnapshot,
          ActivatedRouteSnapshot } from '@angular/router';
-
+ 
 /**
  * DataService es un servicio que contiene todas los metdos y datos
  * compartidos a traves de la aplicación. Aquí es donde se guardan los datos 
@@ -89,6 +89,7 @@ export class DataService {
       if(that.comercial.pedidos.length < that.LIM) {
       let indexx = this.comercial.pedidos.length;
       this.httpCalls.getHistorialAlbaranes(that.clienteSeleccionado.codcli, that.clienteSeleccionado.clientes, function(){
+        that.httpCalls.getEstadisticasPorClienteProducto(that.clienteSeleccionado.codcli, that.clienteSeleccionado.clientes, function(){         //--------AÑADIDO DAMIAN 
         that.httpCalls.getCobrosPendientes(that.clienteSeleccionado.codcli, that.clienteSeleccionado.clientes, function(){
           that.httpCalls.getDescuentosPorClienteProducto(that.clienteSeleccionado.codcli, that.clienteSeleccionado.clientes, function(arrayDescuentosPorCliente){
             that.httpCalls.getPreciosPortipoCLiente(that.clienteSeleccionado.tipoCliente, that.clienteSeleccionado.clientes, function(arrayDescuentosPorTipoCliente){
@@ -101,19 +102,21 @@ export class DataService {
                 false,
                 that.httpCalls.objetosJSON['cobrosPendientes'],
                 that.httpCalls.objetosJSON['albaranes'],
+                that.httpCalls.objetosJSON['historialCliente'],//--------AÑADIDO DAMIAN 
                 that.httpCalls.objetosJSON['productos'],
                 arrayDescuentosPorCliente, 
                 arrayDescuentosPorTipoCliente
               );
             });
-          });
+           });
+          });//--------AÑADIDO DAMIAN 
         });
       });
      } else {
       that.mostrarError(1);
      }
-    }
-   
+    }    
+
   } 
     
   public cambiarFamilia(familia_seleccionada: string) {

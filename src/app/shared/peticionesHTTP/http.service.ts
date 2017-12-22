@@ -35,7 +35,8 @@ export class HttpCalls  {
     'tarifaTipoCliente' : false,
     'guardar' : false,
     'albaranes': false,
-    'cobrosPendientes' : false
+    'cobrosPendientes' : false,
+    'historialCliente': false
   }; 
   
   
@@ -66,8 +67,9 @@ export class HttpCalls  {
     tarifaArtciuloFamilia:null,
     tarifaTipoCliente:null,
     familiasLocal:null,
-    alabaranes:null,
-    cobrosPendientes:null
+    albaranes:null,
+    cobrosPendientes:null,
+    historialCliente:null   
     };
   
   /**
@@ -81,7 +83,9 @@ export class HttpCalls  {
     'tarifaTipoCliente' : '/tarclitip',
     'guardar' : '/guardar/pedido',
     'albaranes': '/hisPre',
-    'cobrosPendientes' : '/carCli'
+    'cobrosPendientes' : '/pagPen',
+    //'cobrosPendientes' : '/carCli',
+    'historialCliente':'/hisArt'
   };
   
   // DEBUGING
@@ -98,9 +102,7 @@ export class HttpCalls  {
   /**
    * Variable dynamica para guardar los datos recibidos desde el servidor
    */
-  public data$: BehaviorSubject<any> = new BehaviorSubject({});
-  
-  
+  public data$: BehaviorSubject<any> = new BehaviorSubject({}); 
   
   
   public EstaCargando() {
@@ -168,6 +170,7 @@ export class HttpCalls  {
           if(!this.EstaCargando()) {
              this.blockUI.stop();
           }
+          //console.log(data);
           callback();
           return data;
         }),
@@ -176,6 +179,32 @@ export class HttpCalls  {
             this.data$.next(data);
         });
     }
+/*
+    *     'get EstadisticasPorClienteProducto´ recibe el codigo del cliente y devuelve las estadísticas de todos los articulos vendidos
+    */
+    public getEstadisticasPorClienteProducto(codCli, cliente, callback) {
+      this.blockUI.start("Cargando estadisticas para " + cliente + ".");
+        this.hashCargando['historialCliente'] = true;
+      this.http.get(HttpCalls.SREVER_PATH + HttpCalls.PATHS['historialCliente'] + "?codcli=" + codCli ).subscribe(data => {
+       // console.log(data);
+       // console.log(codCli);
+        
+        this.objetosJSON['historialCliente'] = data;
+        this.hashCargando['historialCliente'] = false;
+        if(!this.EstaCargando()) {
+           this.blockUI.stop();
+        }
+        callback();
+        return data;
+        
+        
+      }),
+      error => console.log("Error: ", error),
+      () => ((data)=>{
+          this.data$.next(data);
+      });
+    }
+    
     
     /**
      * ´getFamiliasLocal´ Devuelve las familias a nivel local para ver cuales tienen imagen
@@ -321,6 +350,9 @@ export class HttpCalls  {
       });
       
     }
+
+
+  
   
     /**
      * ´getObjects´ Es la función principal para obtener todos los objetos JSON
@@ -350,10 +382,12 @@ export class HttpCalls  {
   public enviarPedidoServidor(obj:Object){
         // console.log("Procedindo al emnvio")
         let json = JSON.stringify(obj);
+        console.log(json);
         let headers = new Headers({"Content-Type":"application/json"});
         return this.http2.post(HttpCalls.SREVER_PATH + HttpCalls.PATHS['guardar'], json, this.options)
         .map(this.extractData)
         .catch(this.handleError);
+       
     }
     
     private extractData(res: Response) {

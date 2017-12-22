@@ -74,10 +74,10 @@ export class LoginComponent implements OnInit {
                                         localStorage.email
                                         
                                     );
-                                    console.log("MAIL", localStorage.email)
-                                    console.log(this.dataService.comercial)
+                                    //console.log("MAIL", localStorage.email)
+                                    //console.log(this.dataService.comercial)
                                     this.blockUI.stop();
-                                    this.router.navigate(['/dashboard']);
+                                    this.router.navigate(['/dashboard'], {skipLocationChange: false});
                                 }
 
                     }, error=>{

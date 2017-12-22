@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../../router.animations';
 import { DataService } from '../../shared/services/data.service';
 import { HttpCalls } from '../../shared/peticionesHTTP/http.service';
+import { Router,RouterModule } from '@angular/router';
+
 
 
 @Component({
@@ -20,12 +22,12 @@ export class CartComponent implements OnInit {
     codPedidoActual;
     pedidoActual;
     
-    constructor(public dataService: DataService, public http: HttpCalls) {
+    constructor(public dataService: DataService, public http: HttpCalls, public router: Router) {
         this.mensajes =  [
             {
                 id: 1,
                 type: 'success',
-                message: `Para manipular un producto haga click encima. Para cambiar de peido pulse en seleccionar pedido.`
+                message: `Para manipular un producto haga click encima. Para cambiar de pedido pulse en seleccionar pedido.`
             },
             {
                 id: 3,
@@ -46,8 +48,11 @@ export class CartComponent implements OnInit {
         const index: number = this.alerts.indexOf(alert);
         this.alerts.splice(index, 1);
     }
-    
+     
     ngOnInit() {
+
+        
+
         this.arrayPedidos = this.filtrarPedidosVacios(this.dataService.comercial.pedidos);
         if(this.arrayPedidos.length > 0) {
             this.codPedidoActual = this.arrayPedidos[0].codigo;
@@ -56,6 +61,7 @@ export class CartComponent implements OnInit {
             this.alerts.push(this.mensajes[1]);
         } else {
             this.alerts.push(this.mensajes[2]);
+            //this.router.navigate(['/dashboard']);
         }
     }
     
@@ -67,6 +73,11 @@ export class CartComponent implements OnInit {
         this.http.enviarPedidoServidor(pedido).subscribe(
           (data) => this.dataService.confirmarPedido(data)
         );   
+        
+        alert("Pedido enviado"); 
+        
+        window.location.reload();        
+        
     }
     
     

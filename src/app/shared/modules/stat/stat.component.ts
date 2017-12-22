@@ -23,6 +23,7 @@ export class StatComponent implements OnInit {
     
     cobrosPendientesArray = [];
     alabaranesArray = [];
+    estadisticasArray = [];//--------AÑADIDO DAMIAN
     
     cobrosCadena = "";
     empezadoPedido = false;
@@ -67,16 +68,22 @@ export class StatComponent implements OnInit {
         });
         this.empezadoPedido = cliente[0].empezadoPedido;
         this.cobrosPendientesArray = cliente[0].cobrosPendientes;
-        console.log("HISTORIAL ALABARANES")
+       // console.log("HISTORIAL ALABARANES")
         this.alabaranesArray = cliente[0].historialAlbaranes;
+        this.estadisticasArray = cliente[0].estadisticasCliente;//-------AÑADIDO DAMIAN
+        //console.log(cliente[0].estadisticasCliente);
+        //console.log(cliente[0].historialAlbaranes);
+        
         
         this.cambiarBotonAccion();
         this.actualizarListaProductosCliente()
         if(this.cobrosPendientes) {
+        if(this.cobrosPendientesArray[0].impdeb>0) {// ------AÑADIDO DAMIAN   
          this.bgClass = "cobrosPendientes";
          this.icon = "fa-exclamation-triangle";
          this.cobrosCadena += "El cliente tiene pagos pendientes!!"
         }
+    }
     }
     
     
@@ -100,11 +107,8 @@ export class StatComponent implements OnInit {
         this.listaProductosCliente = result.filter(function(element, index){
             return element.cantidadPedido > 0
         });
-      
-      
-    }
-    
-    
+            
+    }   
     
     
 }
