@@ -1,0 +1,39 @@
+.card {
+    margin-top:2%;    
+}
+
+
+.color {
+   color:green;
+}
+
+.table-white {
+    background-color:white;
+    color:black;
+}
+
+
+.cobrosPendientes { 
+ background-color:  #ea8d81;  
+ border-color:  #ea8d81
+}
+
+@media (max-width: 990px) {
+  .color {
+   color:red;
+  }
+  
+  .th-responsive {
+       padding: 5px 5px;
+       font-size: 70%;
+   }
+  
+   .td-responsive {
+       padding: 5px 5px;
+       font-size: 70%;
+   }
+   
+   .btn-responsive {
+    font-size:80%;   
+   }
+}

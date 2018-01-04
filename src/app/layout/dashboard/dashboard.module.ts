@@ -5,9 +5,10 @@ import {
     NgbAlertModule,
     NgbModule
 } from '@ng-bootstrap/ng-bootstrap';
+
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ModalCliente } from '../bs-component/components';
-import { FormsModule } from '@angular/forms';
 import { NgSelectizeModule } from 'ng-selectize';        
 
 
@@ -32,6 +33,7 @@ import { StatModule } from '../../shared';
         StatModule,
         RouterModule,
         FormsModule,
+        ReactiveFormsModule,
         NgSelectizeModule
     ],
     declarations: [

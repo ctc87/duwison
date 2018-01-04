@@ -1,0 +1,29 @@
+ <button type="button" (click)="open(content)" class="btn btn-primary separated-btn {{bgClass}}">
+     {{nombre_boton}}
+ </button>
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">SELECCIONA LA PROVINCIA</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+       <select (change)="changeProvinciaLocal($event.target.value)">
+            <option  [value]="00001">
+                Seleccione un valor
+            </option>
+            <option  [value]="00001">
+                Santa Cruz de tenerife
+            </option>
+            <option  [value]="00002">
+                Las Palmas de Gran Canaria
+            </option>
+        </select>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="setProvincia()" (click)="c('Close click')">Cambiar</button>
+        <button type="button" class="btn btn-default" (click)="c('Close click')">Cerrar</button>
+    </div>
+</ng-template>

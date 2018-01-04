@@ -22,13 +22,17 @@ export class NavComponent implements OnInit {
         //console.log(this.dataService.familia_actual);
         let that = this;
         
-        
-        this.dataService.arrayProductosFamilia = this.httpService.objetosJSON["productos"].filter(function(element, index){
-            //console.log(element.codfam, that.dataService.familia_actual.codfam)
-            return Number(element.codfam) === Number(that.dataService.familia_actual.codfam) 
-            // && Number(element.cod_almacen) === that.dataService.almacen;    
-            // ESTO ES PARA ALMACEN DE TENERIFE
-        });
+        if(that.dataService.familia_actual.codfam == '-1') {
+          this.dataService.arrayProductosFamilia = this.httpService.objetosJSON["productos"];
+        }
+        else {
+          this.dataService.arrayProductosFamilia = this.httpService.objetosJSON["productos"].filter(function(element, index){
+              //console.log(element.codfam, that.dataService.familia_actual.codfam)
+              return Number(element.codfam) === Number(that.dataService.familia_actual.codfam) 
+              // && Number(element.cod_almacen) === that.dataService.almacen;    
+              // ESTO ES PARA ALMACEN DE TENERIFE
+          });
+        }
         
         //console.log(this.dataService.arrayProductosFamilia);
         this.dataService.arrayProductosFiltrados = this.dataService.arrayProductosFamilia;

@@ -83,8 +83,7 @@ export class HttpCalls  {
     'tarifaTipoCliente' : '/tarclitip',
     'guardar' : '/guardar/pedido',
     'albaranes': '/hisPre',
-    'cobrosPendientes' : '/pagPen',
-    //'cobrosPendientes' : '/carCli',
+    'cobrosPendientes' : '/carCli',
     'historialCliente':'/hisArt'
   };
   
@@ -95,8 +94,10 @@ export class HttpCalls  {
   // Inject HttpClient into your component or service.
   constructor(private http: HttpClient, private http2: Http) {
     // console.log("creado servicio de objetos JSON")
-    this.getObjects(); 
-    this.EstaCargando();
+    if(localStorage.getItem('provincia')) {
+      this.getObjects(); 
+      this.EstaCargando();
+    }
   };
   
   /**
@@ -145,6 +146,7 @@ export class HttpCalls  {
       this.hashCargando['cobrosPendientes'] = true;
       this.http.get(HttpCalls.SREVER_PATH + HttpCalls.PATHS['cobrosPendientes'] + "?codcli=" + codCli ).subscribe(data => {
           this.objetosJSON['cobrosPendientes'] = data;
+          console.log(data)
           this.hashCargando['cobrosPendientes'] = false;
           if(!this.EstaCargando()) {
              this.blockUI.stop();
@@ -246,7 +248,13 @@ export class HttpCalls  {
             familia["img"] = "assets/png/001-cutlery.png"
             arrayFamiliasFinal.push(familia)
           }
+          
+          
       })
+      let todosProductos = that.objetosJSON.familiasLocal.filter(function(familia){
+        return familia["codfam"] === '-1';
+      });
+      arrayFamiliasFinal.push(todosProductos[0])
       this.objetosJSON.familias = arrayFamiliasFinal;
     }
 
@@ -382,7 +390,7 @@ export class HttpCalls  {
   public enviarPedidoServidor(obj:Object){
         // console.log("Procedindo al emnvio")
         let json = JSON.stringify(obj);
-        console.log(json);
+        // console.log(json);
         let headers = new Headers({"Content-Type":"application/json"});
         return this.http2.post(HttpCalls.SREVER_PATH + HttpCalls.PATHS['guardar'], json, this.options)
         .map(this.extractData)

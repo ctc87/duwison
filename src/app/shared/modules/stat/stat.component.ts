@@ -78,12 +78,13 @@ export class StatComponent implements OnInit {
         this.cambiarBotonAccion();
         this.actualizarListaProductosCliente()
         if(this.cobrosPendientes) {
-        if(this.cobrosPendientesArray[0].impdeb>0) {// ------AÑADIDO DAMIAN   
+        // if(this.cobrosPendientesArray[0].impdeb>0) {// ------AÑADIDO DAMIAN   
+            console.log("TIENE COBROS PENDIENTES")
          this.bgClass = "cobrosPendientes";
          this.icon = "fa-exclamation-triangle";
          this.cobrosCadena += "El cliente tiene pagos pendientes!!"
         }
-    }
+    // }
     }
     
     

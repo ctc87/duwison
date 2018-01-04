@@ -8,6 +8,10 @@
  margin-right: 5px;   
 }
 
+.td-total {
+       text-align: center;
+   }
+
 @media (max-width: 990px) {
   .color {
    color:red;
@@ -25,5 +29,12 @@
    .td-responsive {
        padding: 5px 5px;
        font-size: 50%;
+       text-align: center;
+   }
+  
+   .td-total {
+       padding: 5px 5px;
+       font-size: 70%;
+       text-align: center;
    }
 }

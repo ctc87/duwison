@@ -19,26 +19,49 @@ export class ProductsCardsComponent implements OnInit {
     
     
     public ngOnInit() {
-        console.log(this.dataService.arrayProductosFiltrados)
+        // console.log(this.dataService.arrayProductosFiltrados)
     }
     
     
-    
-    public restarPedido(codProd) {
+    public restarPedido(codProd, prod) {
         if(this.dataService.clienteActualPedido.carrito.productos[codProd].cantidadPedido > 0)
             this.dataService.clienteActualPedido.carrito.productos[codProd].cantidadPedido--;
         else
-            this.dataService.clienteActualPedido.carrito.productos[codProd].cantidadPedido = 0
+            this.dataService.clienteActualPedido.carrito.productos[codProd].cantidadPedido = 0;
+        
+        this.calcularTotal(codProd, prod);
     }
 
     
-    public sumarPedido(codProd) {
+    public sumarPedido(codProd, prod) {
         this.dataService.clienteActualPedido.carrito.productos[codProd].cantidadPedido++;
+        this.calcularTotal(codProd, prod);
     }
     
-    public comprobarValorNumerico(valor, codProd) {
+    public comprobarValorNumerico(valor, codProd, prod) {
         if(!this.dataService.reNumbers.test(String(this.dataService.clienteActualPedido.carrito.productos[codProd].cantidadPedido)))
             this.dataService.clienteActualPedido.carrito.productos[codProd].cantidadPedido = "";
+        this.calcularTotal(codProd, prod);
+    }
+    
+    public calcularTotal(codProd, prod) {
+        let can = Number(this.dataService.clienteActualPedido.carrito.productos[codProd].cantidadPedido);
+        let unilot = Number(prod.unilot);
+        let precio = Number(prod.prevena);
+        if(unilot > 0)
+            this.dataService.clienteActualPedido.carrito.productos[codProd].totalProducto = can * precio * unilot;
+        else
+            this.dataService.clienteActualPedido.carrito.productos[codProd].totalProducto = can * precio;
+    }
+    
+    
+    
+    public pesoVariable(unilot) {
+         return unilot <= 0 ? "Peso de caja variable" : unilot
+    }
+    
+    public totalVariable(unilot) {
+         return !(unilot <= 0) ? "Total" : "Total por kilos pedidos<br/>(el precio final depende de la caja)"
     }
     
 

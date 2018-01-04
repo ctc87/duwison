@@ -34,8 +34,15 @@ export class DataService {
   public filtrado: String;
   public almacen: number;
   public reNumbers: RegExp = /^\d+$/;
+
+  public provincia = {
+      '00001' : 'Santa cruz de Tenerife',
+      '00002' : 'Las Palmas de Gran canaria'    
+  }
   
-  public clienteSeleccionado = { codcli:null, clientes:null, tarCli:null, tipoCliente:null };
+  public showedProv;
+  
+  public clienteSeleccionado = { codcli:null, clientes:null, tarCli:null, tipoCliente:null, codenv:null };
   
   
   constructor(public httpCalls: HttpCalls , private router: Router) { 
@@ -81,6 +88,7 @@ export class DataService {
   }
   
   public addClient(selected) {
+    console.log(this.clienteSeleccionado.codenv)
     if(!selected) {
       let that = this;
       if(this.alerts[0] && this.alerts[0].id === 1) {
@@ -163,6 +171,14 @@ export class DataService {
       }
     }
 
+  
+  
+  getProvincia() {
+    
+    this.showedProv = this.provincia[localStorage.getItem('provincia')];
+    console.log(localStorage.getItem('provincia'))
+    console.log(this.showedProv)
+  }
   
 
   

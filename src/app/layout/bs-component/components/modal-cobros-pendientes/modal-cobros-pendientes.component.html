@@ -14,16 +14,18 @@
                 <tr class="active">
                     <th class="th-responsive">Fecha</th>                        
                     <th class="th-responsive">Factura</th>
-                    <th class="th-responsive">Pendiente de cobro</th>
+                    <th class="th-responsive">Total</th>
+                    <th class="th-responsive">Pagado</th>
+                    <th class="th-responsive">A pagar</th>
                 </tr>
                 </thead>
                 <tbody>
                     <tr  *ngFor="let cobro of cobros; let i = index" class="table-white">
-                    <!--<td class="td-responsive">{{cobro.fecmov.timestamp * 1000 | date}}</td>-->
-                    <td class="td-responsive">{{cobro.fecmov}}</td>
-                    <td class="td-responsive">{{cobro.numfac}}</td>
-                    <td class="td-responsive">{{toFixed(cobro.impdeb)}}</td>
-                  <!--  <td class="td-responsive">{{toFixed(cobro.pagado)}}</td>-->
+                    <td class="td-responsive">{{cobro.fecha.timestamp * 1000 | date:'dd/MM/yyyy'}}</td>
+                    <td class="td-responsive">{{cobro.factura}}</td>
+                    <td class="td-responsive">{{toFixed(cobro.total)}}</td>
+                    <td class="td-responsive">{{toFixed(cobro.pagado)}}</td>
+                    <td class="td-responsive">{{toFixed(calcularResto(cobro.total, cobro.pagado))}}</td>
                     </tr>
                 </tbody>
             </table>

@@ -2,7 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StatComponent } from './stat.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ModalCancelar, ModalCobrosPendientes, ModalAlbaranes,ModalEstadisticas } from '../../../layout/bs-component/components';
+import { 
+        ModalCancelar, 
+        ModalCobrosPendientes, 
+        ModalAlbaranes, 
+        ModalEstadisticas,
+        ModalFacturaDetalle
+    } from '../../../layout/bs-component/components';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
@@ -16,8 +22,8 @@ import { RouterModule } from '@angular/router';
         ModalCancelar,
         ModalCobrosPendientes,
         ModalAlbaranes,
-        ModalEstadisticas
-        
+        ModalEstadisticas,
+        ModalFacturaDetalle
     ],
     exports: [StatComponent]
 })

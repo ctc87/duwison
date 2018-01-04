@@ -4,17 +4,28 @@ import { DataService } from '../../../../shared/services/data.service';
 import { DatePipe } from '@angular/common';
 
 @Component({
-    selector: 'app-modal-cobros-pendientes',
-    templateUrl: './modal-cobros-pendientes.component.html',
-    styleUrls: ['./modal-cobros-pendientes.component.scss']
+    selector: 'app-modal-slecect-provinica',
+    templateUrl: './modal-slecect-provinica.component.html',
+    styleUrls: ['./modal-slecect-provinica.component.scss']
 })
-export class ModalCobrosPendientes {
+export class ModalSelectProvincia {
     closeResult: string;
     @Input() nombre_boton: string;
-    @Input() cobros;
     @Input() bgClass;
-    constructor(private modalService: NgbModal, public dataService: DataService) { }
-
+    public prov;
+    constructor(private modalService: NgbModal, public dataService: DataService) {
+        
+    }
+    
+    public changeProvinciaLocal(prov) {
+        prov = '0000' + prov;
+        this.prov = prov;
+    }
+    
+    setProvincia() {
+        localStorage.provincia = this.prov; 
+        this.dataService.getProvincia();
+    }
     
     open(content) {
         this.modalService.open(content).result.then((result) => {
@@ -37,10 +48,4 @@ export class ModalCobrosPendientes {
     public toFixed (val) {
         return String(Number(val).toFixed(2) + "€");
     }
-    
-    public calcularResto(total, pagado) {
-        return Number(total) - Number(pagado);    
-    }
-    
-    
 }

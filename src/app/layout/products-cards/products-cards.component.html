@@ -39,15 +39,15 @@
                 <div class="card-header">
                     <div class="row text-center">
                         <div class="col-12">
-                            <div class="d-block">Stock</div>
-                            <div class="d-block">{{dataService.truncate(producto.stock)}}</div>
+                            <div class="d-block">Unidades o peso por lote</div>
+                            <div class="d-block">{{pesoVariable(dataService.truncate(producto.unilot))}}</div>
                         </div>
                     </div>
                 </div>
                 <div class="card-footer">
                     <div class="input-group">
                       <span class="input-group-btn">
-                        <a class="btn btn-danger" (click)="restarPedido(producto.codart)">
+                        <a class="btn btn-danger" (click)="restarPedido(producto.codart, producto)">
                           <i class="fa fa-minus" title="Align Left"></i>
                         </a>
                       </span>
@@ -55,13 +55,23 @@
                       (click)="$event.target.select()"
                        type="number" pattern="[0-9]*"
                       [(ngModel)]="dataService.clienteActualPedido.carrito.productos[producto.codart].cantidadPedido"
-                      (keyup)="comprobarValorNumerico($event, producto.codart)"
+                      (keyup)="comprobarValorNumerico($event, producto.codart, producto)"
                       >
                       <span class="input-group-btn">
-                        <a class="btn btn-success" (click)="sumarPedido(producto.codart)">
+                        <a class="btn btn-success" (click)="sumarPedido(producto.codart, producto)">
                           <i class="fa fa-plus" title="Align Left"></i>
                         </a>
                       </span>
+                    </div>
+                </div>
+                <div *ngIf="dataService.truncate(dataService.clienteActualPedido.carrito.productos[producto.codart].totalProducto) > 0" class="card-footer">
+                    <div class="row text-center">
+                        <div class="col-12">
+                            <div class="d-block" [innerHTML]="totalVariable(producto.unilot)"></div>
+                            <div class="d-block">
+                                {{dataService.truncate(dataService.clienteActualPedido.carrito.productos[producto.codart].totalProducto)}}€
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>   

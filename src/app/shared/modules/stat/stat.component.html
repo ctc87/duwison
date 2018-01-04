@@ -42,7 +42,7 @@
 
             <!--   ESTADISTICAS   -->
             <!--AÑADIDO DAMIAN - INICIO -->
-            <ng-container><!--*ngIf="estadisticasArray.length > 0"-->
+            <ng-container *ngIf="estadisticasArray.length > 0">
             <div class="col-12 col-sm-6">
                 <app-modal-estadisticas [nombre_boton]="'Estadisticas'" [estadisticas]="estadisticasArray" [bgClass]="bgClass"></app-modal-estadisticas> 
             </div>
@@ -79,7 +79,7 @@
     <div class="card-footer">
         <span *ngIf="isCollapsed" class="float-left">
             Ver info cliente
-            <ng-container *ngIf="cobrosPendientes.impdeb > 0">
+            <ng-container *ngIf="cobrosPendientes">
                 <br/><span style="color:red">{{cobrosCadena}}</span>
             </ng-container>
         </span>

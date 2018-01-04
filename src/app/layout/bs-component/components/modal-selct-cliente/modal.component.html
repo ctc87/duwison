@@ -21,6 +21,18 @@
     		ngDefaultControl
     	>
 		</ng-selectize>
+		<span  *ngIf="mostrarCodEnv">
+		<p>Seleccione un código de envío</p>
+    		<ng-selectize 
+        	    [config]="singleSelectConfig2" 
+        	    [options]="arrayCodigosEnvio" 
+        	    [placeholder]="placeholder"
+        		[(ngModel)]="dataService.clienteSeleccionado.codenv"
+        		(ngModelChange)="seleccionarCodEnv($event)"
+        		ngDefaultControl
+        	>
+    		</ng-selectize>
+		</span>
 	</div>
     
     <div class="modal-footer">

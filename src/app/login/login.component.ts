@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { LoginService } from '../shared/services/login.service';
 import { DataService } from '../shared';
+import { HttpCalls } from '../shared';
 import {  BlockUI, NgBlockUI } from 'ng-block-ui';
 
 @Component({
@@ -21,14 +22,22 @@ export class LoginComponent implements OnInit {
     public identity;
     public token;
     @BlockUI() public blockUI: NgBlockUI;
-    constructor(public router: Router, private loginService:LoginService, public dataService: DataService) {}    
+    public logged = false;
+    constructor(public httpCall : HttpCalls, public router: Router, private loginService:LoginService, public dataService: DataService) {}    
+    
+  
+    
+    finishLogin() {
+        this.httpCall.getObjects(); 
+        this.httpCall.EstaCargando();
+        this.router.navigate(['/dashboard'], {skipLocationChange: false});
+    }
     
     ngOnInit() {    
-        
         this.user={
-            "email":"",
-            "password":"",
-            "gethash":"false"
+                "email":"",
+                "password":"",
+                "gethash":"false"
             }; 
             localStorage.clear();           
     }    
@@ -43,7 +52,8 @@ export class LoginComponent implements OnInit {
             if (this.identity.status =="error")
             {
                 alert("Usuario y/o contraseña incorrecta");
-                console.log("Error en la comunicación/logueo servidor.");         
+                console.log("Error en la comunicación/logueo servidor.");
+                this.blockUI.stop();
             }
             else
             {
@@ -77,7 +87,9 @@ export class LoginComponent implements OnInit {
                                     //console.log("MAIL", localStorage.email)
                                     //console.log(this.dataService.comercial)
                                     this.blockUI.stop();
-                                    this.router.navigate(['/dashboard'], {skipLocationChange: false});
+                                    // ANTES DE LLMAR ESTO ELEGIR PROVINCIA
+                                    this.dataService.getProvincia();
+                                    this.logged = true;
                                 }
 
                     }, error=>{

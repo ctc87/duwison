@@ -25,7 +25,7 @@ export class Cliente {
         {
             this.carrito = new Carrito(todosProductosArray, arrayPreciosParticulares, arrayDescuentosPorTipoCliente, metodoFacturacion);
             this.fecha_pedido = new Date();
-            this.tieneCobrosPendientes = cobrosPendientes.length > 0;
+            this.tieneCobrosPendientes = cobrosPendientes.length > 1;
         };
         
     

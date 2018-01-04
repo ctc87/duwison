@@ -48,5 +48,10 @@
       "codfam":"00",
       "familia":"VARIOS",
       "img":"assets/png/001-pistachio-1.png"
+   },
+   {
+      "codfam":"-1",
+      "familia":"Todos los productos",
+      "img":"assets/png/001-cutlery.png"
    }
 ]

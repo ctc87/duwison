@@ -43,6 +43,11 @@
       "codfam":"7",
       "familia":"PANADERIA Y PASTELERIA",
       "img":"assets/png/029-food-5.png"
+   }, 
+   {
+      "codfam":"-1",
+      "familia":"Todos los productos",
+      "img":"assets/png/001-cutlery.png"
    }
    
 ]
