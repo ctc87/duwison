@@ -18,6 +18,10 @@
  border-color:  #ea8d81
 } 
 
+th, td {
+ text-align: center;   
+}
+
 @media (max-width: 990px) {
   .color {
    color:red;
@@ -31,6 +35,14 @@
    .td-responsive {
        padding: 5px 5px;
        font-size: 50%;
+   }
+  
+  .th-responsive-est {
+       padding: 5px 5px;
+   }
+  
+   .td-responsive-est {
+       padding: 5px 5px;
    }
    
    .btn-responsive {

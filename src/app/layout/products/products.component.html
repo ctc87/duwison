@@ -10,6 +10,16 @@
     <!--<ngb-alert [type]="alert.type" (close)="closeAlert(alert)" *ngFor="let alert of alerts">{{ alert.message }}</ngb-alert>-->
     <div class="container">
       <div class="row justify-content-center">
+      <div class="has-text-centered">
+        <pagination-controls
+            [maxSize]="5"
+            [autoHide]="true"
+            [directionLinks]="true"
+            [previousLabel]="'Prev'"
+            [nextLabel]="'Sig'"
+            (pageChange)="page = $event">
+        </pagination-controls>
+        </div>
         <div class="col-12 d-flex justify-content-center">
           <table class="align-self-center table  table-bordered">
               <thead>
@@ -21,7 +31,7 @@
               </tr>
               </thead>
               <tbody>
-                <ng-container *ngFor="let producto of dataService.arrayProductosFiltrados; let i = index">
+                <ng-container *ngFor="let producto of dataService.arrayProductosFiltrados | paginate: { itemsPerPage: 10, currentPage: page }; let i = index">
                   <tr [ngClass]="{'table-active': i % 2 == 0}">
                     <td class="td-responsive">{{producto.codart}}</td>
                     <td class="td-responsive">{{producto.articulo}}</td>

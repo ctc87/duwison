@@ -10,7 +10,17 @@
     <div [@routerTransition]>
     <div class="container">
       <div class="row">
-        <ng-container *ngFor="let producto of dataService.arrayProductosFiltrados; let i = index">
+      <div class="has-text-centered">
+        <pagination-controls
+            [maxSize]="5"
+            [autoHide]="true"
+            [directionLinks]="true"
+            [previousLabel]="'Prev'"
+            [nextLabel]="'Sig'"
+            (pageChange)="page = $event">
+        </pagination-controls>
+        </div>
+        <ng-container *ngFor="let producto of dataService.arrayProductosFiltrados  | paginate: { itemsPerPage: 10, currentPage: page }">
           <div class="col-md-4 col-12" style="margin-bottom: 20px;">
             <div class="card card-inverse bg-info" >
                 <div class="card-header bg-primary">
@@ -80,3 +90,22 @@
     </div>
   </div>
 </div>
+
+<!--<ul class="meal-list">-->
+<!--    <li *ngFor="let meal of meals | stringFilter: filter | paginate: config">-->
+<!--        {{ meal }}-->
+<!--    </li>-->
+<!--</ul>-->
+
+<!--<div class="has-text-centered">-->
+<!--    <pagination-controls [id]="config.id"-->
+<!--                         [maxSize]="maxSize"-->
+<!--                         [directionLinks]="directionLinks"-->
+<!--                         [autoHide]="autoHide"-->
+<!--                         [previousLabel]="labels.previousLabel"-->
+<!--                         [nextLabel]="labels.nextLabel"-->
+<!--                         [screenReaderPaginationLabel]="labels.screenReaderPaginationLabel"-->
+<!--                         [screenReaderPageLabel]="labels.screenReaderPageLabel"-->
+<!--                         [screenReaderCurrentLabel]="labels.screenReaderCurrentLabel"-->
+<!--                         (pageChange)="onPageChange($event)"></pagination-controls>-->
+<!--</div>-->

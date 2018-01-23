@@ -18,7 +18,7 @@ export class Carrito {
     private preciosArticuloParticular = {};
     private descuentosFamilia = {};
     private preciosPorTipoCLiente = {};
-    
+    public totalPrecioPedido = 0; 
     
     /**
      * ´constructor´ Recibe tdos los articulos e inicializa el objeto produtos.
@@ -46,7 +46,7 @@ export class Carrito {
         this.inicializarEstructurasDePrecios(arrayPreciosParticulares, arrayDescuentosPorTipoCliente);
         
         todosProductosArray.forEach(function(element, index) {
-            that.productos[element.codart] = new Producto(element.codart, element.articulo, that.definirPrecio(element.codart, element['preven' + tarifaCliente ]));           
+            that.productos[element.codart] = new Producto(element.codart, element.articulo, that.definirPrecio(element.codart, element['preven' + tarifaCliente ]), element.unilot);           
         });
     }
     

@@ -7,9 +7,9 @@ export const SINGLE_SELECT_PRESET_VALUE_CONFIG = Object.assign({}, DEFAULT_DROPD
 });
 
 export const SINGLE_SELECT_PRESET_VALUE_CONFIG_2 = Object.assign({}, DEFAULT_DROPDOWN_CONFIG, {
-	 labelField: 'codenv',
+	labelField: 'nomenv',
     valueField: 'codenv',
-    searchField: ['codenv']
+    searchField: ['codenv', 'nomenv']
 });
 
 export const MULTI_SELECT_PRESET_VALUE_CONFIG = Object.assign({}, DEFAULT_DROPDOWN_CONFIG, {

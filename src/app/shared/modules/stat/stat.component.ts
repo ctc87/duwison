@@ -25,6 +25,7 @@ export class StatComponent implements OnInit {
     alabaranesArray = [];
     estadisticasArray = [];//--------AÑADIDO DAMIAN
     
+    totalPrecioPedido;
     cobrosCadena = "";
     empezadoPedido = false;
     listaProductosCliente = []; 
@@ -102,6 +103,7 @@ export class StatComponent implements OnInit {
             return Number(element.codigo) === Number(that.codcli)
         });
         let obj = cliente[0].carrito.productos;
+        this.totalPrecioPedido = cliente[0].carrito.totalPrecioPedido;
         let result = Object.keys(obj).map(function(key) {
                 return obj[key];
         });

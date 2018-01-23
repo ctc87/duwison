@@ -42,26 +42,52 @@ export class ModalProducto {
         return fecha.split(" ")[0]; 
     }
     
-    
-    public restarPedido(codProd) {
-        console.log(Number(this.dataService.clienteActualPedido.carrito.productos[codProd]))
-        if(Number(this.dataService.clienteActualPedido.carrito.productos[codProd].cantidadPedido) > 0)
-            this.dataService.clienteActualPedido.carrito.productos[codProd].cantidadPedido--;
-        else
-            this.dataService.clienteActualPedido.carrito.productos[codProd].cantidadPedido = 0
-    }
-
-    
-    public sumarPedido(codProd) {
-        this.dataService.clienteActualPedido.carrito.productos[codProd].cantidadPedido++;
-    }
-    
-    public deletePedido(codProd) {
+    public deletePedido(codProd, prod) {
+        let unilot = Number(prod.unilot);
+        let precio = Number(prod.precio);
+        let can = Number(this.dataService.clienteActualPedido.carrito.productos[codProd].cantidadPedido);
+        let resta = unilot > 0 ? (unilot * precio) : precio;
+        this.dataService.clienteActualPedido.carrito.totalPrecioPedido -= resta * can;
         this.dataService.clienteActualPedido.carrito.productos[codProd].cantidadPedido = 0
     }
+      
+    public restarPedido(codProd, prod) {
+        if(this.dataService.clienteActualPedido.carrito.productos[codProd].cantidadPedido > 0) {
+            this.dataService.clienteActualPedido.carrito.productos[codProd].cantidadPedido--;
+            let unilot = Number(prod.unilot);
+            let precio = Number(prod.precio);
+            let resta = unilot > 0 ? (unilot * precio) : precio;
+            this.dataService.clienteActualPedido.carrito.totalPrecioPedido -= resta;   
+        }
+        else
+            this.dataService.clienteActualPedido.carrito.productos[codProd].cantidadPedido = 0;
+        
+        this.calcularTotal(codProd, prod);
+    }
+
+    public sumarPedido(codProd, prod) {
+        this.dataService.clienteActualPedido.carrito.productos[codProd].cantidadPedido++;
+        this.calcularTotal(codProd, prod);
+        let unilot = Number(prod.unilot);
+        let precio = Number(prod.precio);
+        let suma = unilot > 0 ? (unilot * precio) : precio;
+        this.dataService.clienteActualPedido.carrito.totalPrecioPedido += suma;
+    }
     
-    public comprobarValorNumerico(valor, codProd) {
+    public comprobarValorNumerico(valor, codProd, prod) {
         if(!this.dataService.reNumbers.test(String(this.dataService.clienteActualPedido.carrito.productos[codProd].cantidadPedido)))
             this.dataService.clienteActualPedido.carrito.productos[codProd].cantidadPedido = "";
+        this.calcularTotal(codProd, prod);
+    }
+    
+    public calcularTotal(codProd, prod) {
+        let can = Number(this.dataService.clienteActualPedido.carrito.productos[codProd].cantidadPedido);
+        let unilot = Number(prod.unilot);
+        let precio = Number(prod.precio);
+        if(unilot > 0)
+            this.dataService.clienteActualPedido.carrito.productos[codProd].totalProducto = can * precio * unilot;
+        else
+            this.dataService.clienteActualPedido.carrito.productos[codProd].totalProducto = can * precio;
+        console.log(this.dataService.clienteActualPedido.carrito.productos[codProd].totalProducto)
     }
 }

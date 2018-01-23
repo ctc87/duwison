@@ -37,12 +37,16 @@
                             <th class="th-responsive">Producto</th>
                             <th class="th-responsive">Precio</th>
                             <th class="th-responsive">Pedido</th>
+                            <th class="th-responsive">Total</th>
                         </tr>
                         </thead>
                         <tbody>
                             <ng-container *ngFor="let producto of pedidoActual.carrito.productos | keys; let k = index">
                                 <tr app-modal-producto  [producto]="producto" [cliente]="pedidoActual" style="cursor:pointer;"></tr>
                             </ng-container>
+                            <tr>
+                                <td colspan="4" class="text-right"><b>Total: </b>{{dataService.truncate(pedidoActual.carrito.totalPrecioPedido)}}€</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>

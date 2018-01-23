@@ -13,16 +13,16 @@
 
 <div id="collapseExample" [ngbCollapse]="isCollapsed" class="card-block">
 <nav class="nav nav-pills flex-column flex-sm-row">
-  <a href="javascript:void(0)" class="btn btn-primary separated-btn" [routerLink]="['/products-cards']">
+  <a href="javascript:void(0)" class="btn btn-primary separated-btn" (click)="filtrando(true)" [routerLink]="['/products-cards']">
     <i class="fa fa-th-large"> Recuadros</i>
   </a>
-  <a href="javascript:void(0)" class="btn btn-primary separated-btn" [routerLink]="['/products']">
+  <a href="javascript:void(0)" class="btn btn-primary separated-btn" (click)="filtrando(true)" [routerLink]="['/products']">
       <i class="fa fa-th-list"> Listado</i>
   </a>
-  <a href="javascript:void(0)" class="btn btn-primary separated-btn" [routerLink]="['/familias']">
+  <a href="javascript:void(0)" class="btn btn-primary separated-btn" (click)="filtrando(false)" [routerLink]="['/familias']">
       <i class="fa fa-list-alt"> Familias</i>
   </a>
-  <a href="javascript:void(0)" class="btn btn-primary separated-btn" [routerLink]="['/dashboard']">
+  <a href="javascript:void(0)" class="btn btn-primary separated-btn" (click)="filtrando(false)" [routerLink]="['/dashboard']">
       <i class="fa fa-dashboard"> Inicio</i>
   </a>
 </nav>

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { DataService } from '../../../../shared/services/data.service';
 import {  BlockUI, NgBlockUI } from 'ng-block-ui';
@@ -6,7 +6,8 @@ import {  BlockUI, NgBlockUI } from 'ng-block-ui';
 @Component({
     selector: 'app-modal-estadisticas',
     templateUrl: './modal-estadisticas.component.html',
-    styleUrls: ['./modal-estadisticas.component.scss']
+    styleUrls: ['./modal-estadisticas.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ModalEstadisticas {
     closeResult: string;
@@ -15,6 +16,7 @@ export class ModalEstadisticas {
     @Input() bgClass;
     public arrayEstadisticasClasificadas = [];
     @BlockUI() public blockUI: NgBlockUI;
+    page: number = 1;
     
     constructor(private modalService: NgbModal, public dataService: DataService) { }
 

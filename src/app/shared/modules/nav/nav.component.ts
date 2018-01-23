@@ -19,7 +19,7 @@ export class NavComponent implements OnInit {
     
     public ngOnInit() {
         this.dataService.almacen = 1;
-        //console.log(this.dataService.familia_actual);
+        console.log(this.dataService.familia_actual);
         let that = this;
         
         if(that.dataService.familia_actual.codfam == '-1') {
@@ -34,9 +34,16 @@ export class NavComponent implements OnInit {
           });
         }
         
-        //console.log(this.dataService.arrayProductosFamilia);
-        this.dataService.arrayProductosFiltrados = this.dataService.arrayProductosFamilia;
+        // si cambiamos de cards a lista se mantiene el filtrado si no se renueva
+        if(!this.dataService.filtrando) {
+          this.dataService.arrayProductosFiltrados = this.dataService.arrayProductosFamilia;
+          this.dataService.filtrado = "";
+        }
         //console.log(this.dataService.clienteActualPedido.carrito.productos)
+    }
+    
+    public filtrando(value: boolean) {
+     this.dataService.filtrando = value; 
     }
     
 

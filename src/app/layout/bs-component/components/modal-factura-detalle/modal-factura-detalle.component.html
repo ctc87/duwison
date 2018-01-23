@@ -2,8 +2,8 @@
     <!--<td (click)="open(content)" class="td-responsive">{{producto.nombre}}</td>-->
     <!--<td (click)="open(content)" class="td-responsive">{{toFixed(producto.precio)}}</td>-->
     <!--<td (click)="open(content)" class="td-responsive">{{producto.cantidadPedido}}</td>-->
-    <td (click)="open(content)" class="td-responsive text-center">{{reg[0].fecfac.timestamp}}</td>
-    <td (click)="open(content)" class="td-responsive">{{reg[0].fecfac.timestamp * 1000 | date:'dd/MM/yyyy'}}</td>   
+    <td (click)="open(content)" class="td-responsive-est">{{reg[0].fecfac.timestamp}}</td>
+    <td (click)="open(content)" class="td-responsive-est">{{reg[0].fecfac.timestamp * 1000 | date:'dd/MM/yyyy'}}</td>   
 <ng-template #content let-c="close" let-d="dismiss">
     <div class="modal-header">
         <h4 class="modal-title">Factura: {{reg[0].fecfac.timestamp}}</h4>

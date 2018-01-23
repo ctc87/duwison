@@ -44,28 +44,33 @@
             <!--AÑADIDO DAMIAN - INICIO -->
             <ng-container *ngIf="estadisticasArray.length > 0">
             <div class="col-12 col-sm-6">
-                <app-modal-estadisticas [nombre_boton]="'Estadisticas'" [estadisticas]="estadisticasArray" [bgClass]="bgClass"></app-modal-estadisticas> 
+                <app-modal-estadisticas [nombre_boton]="'Estadísticas'" [estadisticas]="estadisticasArray" [bgClass]="bgClass"></app-modal-estadisticas> 
             </div>
             </ng-container>  
           <!--  AÑADIDO DAMIAN - FIN  -->          
         </div>
         
         <ng-container *ngIf="listaProductosCliente.length > 0">
-            <table class="card-block table table-responsive">
+            <table class="card-block table" style="padding:0.5rem">
                 <thead>
                 <tr class="active">
                     <th class="th-responsive">C&oacute;digo</th>
                     <th class="th-responsive">Producto</th>
                     <th class="th-responsive">Precio</th>
                     <th class="th-responsive">Pedido</th>
+                    <th class="th-responsive">Total</th>
                 </tr>
                 </thead>
                 <tbody>
                     <tr  *ngFor="let producto of listaProductosCliente; let i = index" class="table-white">
                     <td class="td-responsive">{{producto.codArt}}</td>
                     <td class="td-responsive">{{producto.nombre}}</td>
-                    <td class="td-responsive">{{producto.precio}}</td>
+                    <td class="td-responsive">{{dataService.truncate(producto.precio)}}</td>
                     <td class="td-responsive">{{producto.cantidadPedido}}</td>
+                    <td class="td-responsive">{{dataService.truncate(producto.totalProducto)}}</td>
+                    </tr>
+                    <tr class="table-white">
+                        <td colspan="5" class="text-right"><b>Total: </b>{{dataService.truncate(totalPrecioPedido)}}€</td>
                     </tr>
                 </tbody>
             </table>

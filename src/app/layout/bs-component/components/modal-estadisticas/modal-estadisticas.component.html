@@ -1,5 +1,5 @@
 <a href="javascript:void(0)" (click)="open(content)" class="btn btn-primary separated-btn {{bgClass}}">
-    <i class="fa fa-money"> {{nombre_boton}}</i>
+    <i class="fa fa-line-chart"> {{nombre_boton}}</i>
 </a>         
 <ng-template #content let-c="close" let-d="dismiss">
     <div class="modal-header">
@@ -9,16 +9,26 @@
         </button>
     </div>
     <div class="modal-body">
+      <div class="has-text-centered">
+        <pagination-controls
+            [maxSize]="4"
+            [autoHide]="true"
+            [directionLinks]="true"
+            [previousLabel]="Prev"
+            [nextLabel]="Sig"
+            (pageChange)="page = $event">
+        </pagination-controls>
+        </div>
         
-        <table class="card-block table table-responsive">
+        <table class="card-block table">
                 <thead>
                 <tr class="active">
                     <th class="th-responsive">Factura</th>  
-                    <th class="th-responsive">fecha</th>       
+                    <th class="th-responsive">Fecha</th>       
                 </tr>
                 </thead>
                 <tbody>
-                    <ng-container *ngFor="let reg of arrayEstadisticasClasificadas; let i = index">
+                    <ng-container *ngFor="let reg of arrayEstadisticasClasificadas  | paginate: { itemsPerPage: 10, currentPage: page }; let i = index">
                         <tr app-modal-factura-detalle  [reg]="reg" style="cursor:pointer;"></tr>
                     </ng-container>
                 </tbody>
@@ -26,7 +36,6 @@
     </div>
 
     <div class="modal-footer">
-    <!--Falta darle funcionalidad a este boton para que cancele el pedido (lo borre del array de clientes)-->
         <button type="button" class="btn btn-default" (click)="c('Close click')">Cerrar</button>
     </div>
 </ng-template>

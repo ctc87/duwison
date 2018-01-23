@@ -10,12 +10,14 @@ import {
         ModalFacturaDetalle
     } from '../../../layout/bs-component/components';
 import { RouterModule } from '@angular/router';
+import {NgxPaginationModule} from 'ngx-pagination'; 
 
 @NgModule({
     imports: [
         CommonModule,
         RouterModule,
-        NgbModule.forRoot() 
+        NgbModule.forRoot(),  
+        NgxPaginationModule
     ],
     declarations: [
         StatComponent, 

@@ -30,6 +30,7 @@ export class DataService {
   public productosArray;
   public arrayProductosFamilia;
   public arrayProductosFiltrados;
+  public filtrando = false;
   mensajes = [];
   public filtrado: String;
   public almacen: number;

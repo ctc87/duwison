@@ -16,7 +16,11 @@
 .cobrosPendientes { 
  background-color:  #ea8d81;  
  border-color:  #ea8d81
-} 
+}
+
+td,th {
+   text-align: center; 
+}
 
 @media (max-width: 990px) {
   .color {
@@ -25,12 +29,12 @@
   
   .th-responsive {
        padding: 5px 5px;
-       font-size: 80%;
+    //   font-size: 80%;
    }
   
    .td-responsive {
        padding: 5px 5px;
-       font-size: 80%;
+    //   font-size: 80%;
    }
    
    .btn-responsive {

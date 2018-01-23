@@ -1,7 +1,8 @@
     <td (click)="open(content)" class="td-responsive">{{producto.codArt}}</td>
     <td (click)="open(content)" class="td-responsive">{{producto.nombre}}</td>
-    <td (click)="open(content)" class="td-responsive">{{toFixed(producto.precio)}}</td>
+    <td (click)="open(content)" class="td-responsive">{{dataService.truncate(producto.precio)}}</td>
     <td (click)="open(content)" class="td-responsive">{{producto.cantidadPedido}}</td>
+    <td (click)="open(content)" class="td-responsive">{{dataService.truncate(producto.totalProducto)}}</td>
 <ng-template #content let-c="close" let-d="dismiss">
     <div class="modal-header">
         <h4 class="modal-title">{{producto.nombre}}</h4>
@@ -12,7 +13,7 @@
     <div class="modal-body">
         <div class="input-group">
           <span class="input-group-btn">
-            <a class="btn btn-danger" (click)="restarPedido(producto.codArt)">
+            <a class="btn btn-danger" (click)="restarPedido(producto.codArt, producto)">
               <i class="fa fa-minus" title="Align Left"></i>
             </a>
           </span>
@@ -20,15 +21,15 @@
           (click)="$event.target.select()"
            type="number" pattern="[0-9]*"
           [(ngModel)]="dataService.clienteActualPedido.carrito.productos[producto.codArt].cantidadPedido"
-          (keyup)="comprobarValorNumerico($event, producto.codArt)"
+          (keyup)="comprobarValorNumerico($event, producto.codArt, producto)"
           >
           <span class="input-group-btn">
-            <a class="btn btn-success" (click)="sumarPedido(producto.codArt)">
+            <a class="btn btn-success" (click)="sumarPedido(producto.codArt, producto)">
               <i class="fa fa-plus" title="Align Left"></i>
             </a>
           </span>
           <span class="input-group-btn">
-            <a class="btn btn-danger" (click)="deletePedido(producto.codArt)" (click)="d('Cross click')">
+            <a class="btn btn-danger" (click)="deletePedido(producto.codArt, producto)" (click)="d('Cross click')">
               <i class="fa fa-trash-o" title="Align Left"></i>
             </a>
           </span>

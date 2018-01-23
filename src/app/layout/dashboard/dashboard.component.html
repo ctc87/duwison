@@ -15,7 +15,7 @@
     
     <ngb-alert [type]="alert.type" (close)="dataService.closeAlert(alert)" *ngFor="let alert of dataService.alerts">{{ alert.message }}</ngb-alert>
     
-    <div class="row">
+    <div class="row justify-content-center">
         <app-stat  
           *ngFor="let client of dataService.comercial.pedidos" 
           [sizeOut]="'col-xl-12 col-lg-6'" 
