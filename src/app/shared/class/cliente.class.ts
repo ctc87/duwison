@@ -12,6 +12,7 @@ export class Cliente {
         public metodoFacturacion : String,
         public id : number,
         public codigo : number,
+        public codenv : number,
         public nombre : String,
         public collapsed : boolean,
         public empezadoPedido : boolean,
@@ -20,9 +21,15 @@ export class Cliente {
         public estadisticasCliente, //--------AÑADIDO DAMIAN
         todosProductosArray,
         arrayPreciosParticulares,
+        //arrayDescuentosPorCliente,
         arrayDescuentosPorTipoCliente
         )
         {
+          //  console.log(arrayPreciosParticulares);//viene vacio el array
+
+            console.log("ARRAY POR TIPO EN LA CLASE CLIENTE", arrayDescuentosPorTipoCliente);//viene ok el array
+
+
             this.carrito = new Carrito(todosProductosArray, arrayPreciosParticulares, arrayDescuentosPorTipoCliente, metodoFacturacion);
             this.fecha_pedido = new Date();
             this.tieneCobrosPendientes = cobrosPendientes.length > 1;
@@ -37,9 +44,11 @@ export class Cliente {
    public generarPedido_JSON(codalm) {
         let pedido = {};
         let arrayPedido = this.objetToArray(this.carrito.productos, codalm);
+  console.log(arrayPedido);
         return {
              codcli: this.codigo,
-             "can": "B",
+             codenv: this.codenv,
+             observa: this.carrito.observa,
              pedido : arrayPedido
         }
    }
@@ -60,14 +69,16 @@ export class Cliente {
     
     private formatoProductoBD(producto, codalm) {
         return {
-                codart:producto.codArt,
+                codart:producto.codArt,           
                 desmod:producto.nombre,
                 canpre:producto.cantidadPedido,
                 preven:producto.precio,
+                unilot:producto.unilot,//AÑADIDO DAMIAN
+                unidad:producto.unidad,//AÑADIDO DAMIAN
+                peso:producto.peso,//AÑADIDO DAMIAN
                 codalm:codalm
-            }
-    }
-    
+            }    
+    }    
 }
 
 

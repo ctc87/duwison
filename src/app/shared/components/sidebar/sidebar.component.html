@@ -1,18 +1,24 @@
 <nav class="sidebar" [ngClass]="{sidebarPushRight: isActive}">
     <ul class="list-group">
-        <a routerLink="/dashboard" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        <a class="list-group-item" (click)="inicio()">
+        <!--<a routerLink="/dashboard" [routerLinkActive]="['router-link-active']" class="list-group-item" >-->
             <i class="fa fa-fw fa-dashboard"></i>&nbsp;{{ 'Inicio' | translate }}
         </a>
-        <a [routerLink]="['/cart']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        <!--<a [routerLink]="['/cart']" [routerLinkActive]="['router-link-active']" class="list-group-item">-->
+        <a class="list-group-item" (click)="pedidos()">   
             <i class="fa fa-fw fa-shopping-cart"></i>&nbsp;{{ 'Pedidos' | translate }}
         </a>
-        <!--<a [routerLink]="['/tables']" [routerLinkActive]="['router-link-active']" class="list-group-item">-->
-        <!--    <i class="fa fa-fw fa-user"></i>&nbsp;{{ 'Usuario' | translate }}-->
-        <!--</a>-->
-        <a [routerLink]="['/login']" (click)="onLoggedout()" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        
+        <!--<a [routerLink]="['/login']" (click)="onLoggedout()" [routerLinkActive]="['router-link-active']" class="list-group-item">-->
+        <a class="list-group-item" (click)="onLoggedout()">
             <i class="fa fa-fw fa-power-off"></i>&nbsp;{{ 'Cerrar sesi&oacute;n' | translate }}
         </a>
      
+
+        <!--<a [routerLink]="['/tables']" [routerLinkActive]="['router-link-active']" class="list-group-item">-->
+        <!--    <i class="fa fa-fw fa-user"></i>&nbsp;{{ 'Usuario' | translate }}-->
+        <!--</a>-->
+
         <!--<a [routerLink]="['/about']"></a>-->
         <!-- <div class="nested-menu">-->
         <!--    <a class="list-group-item" (click)="dataService.cargarPruebas()">-->

@@ -86,6 +86,7 @@ export class Comercial {
                             tipoTarificacion,
                             indiceClienteApp,
                             codigoCliente,
+                            codenv,
                             nombreCliente,
                             collapsed,
                             empezadoPedido,
@@ -93,15 +94,18 @@ export class Comercial {
                             historialAlbaranes,
                             estadisticasCliente,//--------AÑADIDO DAMIAN
                             todosProductosArray,
-                            arrayPreciosParticulares, 
+                            arrayDescuentosPorCliente,
+                            //arrayPreciosParticulares, //COMENTADO - PROBANDO----------------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                             arrayDescuentosPorTipoCliente
                         )     
     {
+      //console.log(arrayPreciosParticulares);
         this.pedidos.push(
             new Cliente(
                 this.arrayTarifasNumeroALetra[tipoTarificacion - 1],
                 indiceClienteApp,
                 codigoCliente,
+                codenv,
                 nombreCliente, 
                 collapsed,
                 empezadoPedido,
@@ -109,11 +113,11 @@ export class Comercial {
                 historialAlbaranes,
                 estadisticasCliente,//-------AÑADIDO DAMIAN
                 todosProductosArray,
-                arrayPreciosParticulares, 
+                arrayDescuentosPorCliente,
+                //arrayPreciosParticulares, //COMENTADO - PROBANDO----------------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 arrayDescuentosPorTipoCliente,
             )
-        );
-      
+        );      
     };
     
   /**
@@ -128,8 +132,22 @@ export class Comercial {
       this.pedidos.forEach(function(pedido, index){
         arrayPedidos.push(pedido.generarPedido_JSON(that.provincia));
       });
+
+        let prov = localStorage.getItem('provincia') ;
+        let can;
+        
+        if (prov == '00001')
+        {
+            can = 'B';
+        }
+        else
+        {
+            can = '0';
+        }
+
       let a = {
         obsint:this.mail,
+        "can": can,
         pedidos:arrayPedidos
       };
      

@@ -38,8 +38,8 @@ export class ModalCobrosPendientes {
         return String(Number(val).toFixed(2) + "€");
     }
     
-    public calcularResto(total, pagado) {
-        return Number(total) - Number(pagado);    
+    public calcularResto(total,gastos, pagado) {
+        return (Number(total) + Number(gastos) )- Number(pagado);    
     }
     
     

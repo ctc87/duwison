@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DataService } from '../../services/data.service';
 import { HttpCalls } from '../../';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
@@ -10,7 +12,7 @@ export class NavComponent implements OnInit {
   
 
  
-  constructor(public dataService : DataService, public httpService: HttpCalls) { }
+  constructor(public dataService : DataService, public httpService: HttpCalls, public router:Router) { }
   public isCollapsed = true;
  
     collapsar() {
@@ -19,7 +21,7 @@ export class NavComponent implements OnInit {
     
     public ngOnInit() {
         this.dataService.almacen = 1;
-        console.log(this.dataService.familia_actual);
+       // console.log(this.dataService.familia_actual);
         let that = this;
         
         if(that.dataService.familia_actual.codfam == '-1') {
@@ -42,9 +44,42 @@ export class NavComponent implements OnInit {
         //console.log(this.dataService.clienteActualPedido.carrito.productos)
     }
     
-    public filtrando(value: boolean) {
-     this.dataService.filtrando = value; 
-    }
-    
+    /*public filtrando(value: boolean) {
+      this.dataService.filtrando = value; 
+      if (value=true)
+      {
+        this.router.navigate(['/products-cards'], {skipLocationChange: true} );
+      }
+    }*/
 
+    recuadros()
+    {
+      this.dataService.filtrando = true; 
+      this.router.navigate(['/products-cards'], {skipLocationChange: true} );
+    }
+
+    listado()
+    {
+      this.dataService.filtrando = true; 
+      this.router.navigate(['/products'], {skipLocationChange: true} );
+    } 
+
+    familias()
+    {
+      this.dataService.filtrando = false; 
+      this.router.navigate(['/familias'], {skipLocationChange: true} );
+    }
+
+    nuevoPedido()
+    {
+      this.dataService.filtrando = false; 
+      this.router.navigate(['/dashboard'], {skipLocationChange: true} );
+    } 
+
+    terminar()
+    {
+      this.dataService.filtrando = false; 
+      this.router.navigate(['/cart'], {skipLocationChange: true} );
+    }    
+ 
 }

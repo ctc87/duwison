@@ -21,7 +21,7 @@ export class ProductsComponent implements OnInit {
     } 
     
     public ngOnInit() {
-        console.log(this.dataService.arrayProductosFiltrados)
+      //  console.log(this.dataService.arrayProductosFiltrados)
     }
     
    public restarPedido(codProd, prod) {

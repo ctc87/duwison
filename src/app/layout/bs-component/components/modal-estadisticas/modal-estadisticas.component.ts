@@ -60,18 +60,19 @@ export class ModalEstadisticas {
             estadisticasFormateadas[cod].push(element);
         });
         
-        console.log(estadisticasFormateadas);
+        //console.log(estadisticasFormateadas);
         this.arrayEstadisticasClasificadas = Object.keys(estadisticasFormateadas).map(function (key) {
             return estadisticasFormateadas[key]; 
         });
         
         this.arrayEstadisticasClasificadas.forEach(function(array, index){
             array.sort(function(a,b) {
-                return a.fecfac.timestamp - b.fecfac.timestamp; 
+               // return a.fecfac.timestamp - b.fecfac.timestamp; 
+                return a.numfac - b.numfac;
             }); 
         });
         this.arrayEstadisticasClasificadas.reverse();
-        console.log(this.arrayEstadisticasClasificadas);
+        //console.log(this.arrayEstadisticasClasificadas);
        
 
         this.blockUI.stop();

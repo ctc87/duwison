@@ -43,7 +43,7 @@ export class HttpCalls  {
   /**
    * ´IP´ Esta es la constante de la ip al backend
    */
-  public static readonly IP = "http://duwisonguitian.ddns.net";
+  public static readonly IP = "http://duwisonguitian.ddns.net:8081";
 
   /**
    * ´SERVER_PATH´ Esta constante contiene el path del servidor backend
@@ -146,7 +146,7 @@ export class HttpCalls  {
       this.hashCargando['cobrosPendientes'] = true;
       this.http.get(HttpCalls.SREVER_PATH + HttpCalls.PATHS['cobrosPendientes'] + "?codcli=" + codCli ).subscribe(data => {
           this.objetosJSON['cobrosPendientes'] = data;
-          console.log(data)
+          //console.log(data)
           this.hashCargando['cobrosPendientes'] = false;
           if(!this.EstaCargando()) {
              this.blockUI.stop();
@@ -188,9 +188,6 @@ export class HttpCalls  {
       this.blockUI.start("Cargando estadisticas para " + cliente + ".");
         this.hashCargando['historialCliente'] = true;
       this.http.get(HttpCalls.SREVER_PATH + HttpCalls.PATHS['historialCliente'] + "?codcli=" + codCli ).subscribe(data => {
-       // console.log(data);
-       // console.log(codCli);
-        
         this.objetosJSON['historialCliente'] = data;
         this.hashCargando['historialCliente'] = false;
         if(!this.EstaCargando()) {
@@ -280,7 +277,7 @@ export class HttpCalls  {
         if(!this.EstaCargando()) {
            this.blockUI.stop();
         }
-        callback(this.objetosJSON['tarifaArtciuloFamilia']);
+        callback(this.objetosJSON['tarifaArtciuloFamilia']); 
       }),
       error => console.log("Error: ", error),
       () => ((data)=>{
@@ -304,6 +301,7 @@ export class HttpCalls  {
       this.blockUI.start("Cargando precios para " + cliente + ".");
         this.hashCargando['tarifaTipoCliente'] = true;
       this.http.get(HttpCalls.SREVER_PATH + HttpCalls.PATHS['tarifaTipoCliente'] + "?tipcli=" + tipCli ).subscribe(data => {
+       // console.log("array", data)
         this.objetosJSON['tarifaTipoCliente'] = data;
         this.hashCargando['tarifaTipoCliente'] = false;
         if(!this.EstaCargando()) {
@@ -315,9 +313,7 @@ export class HttpCalls  {
       () => ((data)=>{
           this.data$.next(data);
       });
-    }
-    
-    
+    } 
     
     /**
      * ´getProductos´ recibe el codigo del almacen y devuelve los productos de uno
@@ -348,19 +344,14 @@ export class HttpCalls  {
           // () => ((data)=>{
           //     that.data$.next(data);
           // });
-          // FIN
-          
+          // FIN          
          
       }),
       error => console.log("Error: ", error),
       () => ((data)=>{
           this.data$.next(data);
-      });
-      
+      });      
     }
-
-
-  
   
     /**
      * ´getObjects´ Es la función principal para obtener todos los objetos JSON
@@ -383,19 +374,17 @@ export class HttpCalls  {
     () => ((data)=>{
         this.data$.next(data);
     });
-    this.getProductos( codigoAlmacen );
-    
+    this.getProductos( codigoAlmacen );    
   }
   
   public enviarPedidoServidor(obj:Object){
-        // console.log("Procedindo al emnvio")
+         //console.log("Procedindo al envio")
         let json = JSON.stringify(obj);
         // console.log(json);
         let headers = new Headers({"Content-Type":"application/json"});
         return this.http2.post(HttpCalls.SREVER_PATH + HttpCalls.PATHS['guardar'], json, this.options)
         .map(this.extractData)
-        .catch(this.handleError);
-       
+        .catch(this.handleError);       
     }
     
     private extractData(res: Response) {

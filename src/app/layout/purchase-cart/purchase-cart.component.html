@@ -29,7 +29,9 @@
                             </div>
                         </div>  
                     </div>
+
                     <!--<div class="card-header color text-center">{{pedidoActual.nombre}}</div>-->
+
                     <table class="card-block table table-responsive">
                         <thead>
                         <tr>
@@ -37,17 +39,23 @@
                             <th class="th-responsive">Producto</th>
                             <th class="th-responsive">Precio</th>
                             <th class="th-responsive">Pedido</th>
-                            <th class="th-responsive">Total</th>
-                        </tr>
+                            <th class="th-responsive">Total</th>                   
+                        </tr>                      
+
                         </thead>
                         <tbody>
                             <ng-container *ngFor="let producto of pedidoActual.carrito.productos | keys; let k = index">
                                 <tr app-modal-producto  [producto]="producto" [cliente]="pedidoActual" style="cursor:pointer;"></tr>
                             </ng-container>
                             <tr>
-                                <td colspan="4" class="text-right"><b>Total: </b>{{dataService.truncate(pedidoActual.carrito.totalPrecioPedido)}}€</td>
+                                <td colspan="4" class="text-right"><b>Total: </b>{{dataService.truncate(pedidoActual.carrito.totalPrecioPedido)}}€</td> 
                             </tr>
                         </tbody>
+
+                        <tr>
+                            <th class="th-responsive">Observaciones</th>                                  
+                        </tr>   
+                        <input type="text"  id="ob" [(ngModel)]="pedidoActual.carrito.observa"> <!--AÑADIDO DAMIAN-->                   
                     </table>
                 </div>
             </div>

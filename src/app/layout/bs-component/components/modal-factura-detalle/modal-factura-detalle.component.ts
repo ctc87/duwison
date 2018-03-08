@@ -32,8 +32,7 @@ export class ModalFacturaDetalle {
         } else {
             return  `with: ${reason}`;
         }
-    }
-    
+    }    
     
     // public toFixed (val) {
     //     return String(Number(val).toFixed(2) + "€");
@@ -41,8 +40,7 @@ export class ModalFacturaDetalle {
     
     // public quitarHoraFecha(fecha) {
     //     return fecha.split(" ")[0]; 
-    // }
-    
+    // }    
     
     // public restarPedido(codProd) {
     //     console.log(Number(this.dataService.clienteActualPedido.carrito.productos[codProd]))
@@ -51,7 +49,6 @@ export class ModalFacturaDetalle {
     //     else
     //         this.dataService.clienteActualPedido.carrito.productos[codProd].cantidadPedido = 0
     // }
-
     
     // public sumarPedido(codProd) {
     //     this.dataService.clienteActualPedido.carrito.productos[codProd].cantidadPedido++;

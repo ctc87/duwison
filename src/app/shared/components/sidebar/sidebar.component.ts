@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { DataService } from '../../services/data.service'
+import { Router } from '@angular/router';
+
 @Component({
     selector: 'app-sidebar',
     templateUrl: './sidebar.component.html',
@@ -7,8 +9,8 @@ import { DataService } from '../../services/data.service'
 })
 export class SidebarComponent {
     
-    constructor(public dataService: DataService){
-        console.log("DATASREVICE SIDE", this.dataService)    
+    constructor(public dataService: DataService,public router:Router){
+        //console.log("DATASREVICE SIDE", this.dataService)    
         
     }
     
@@ -25,8 +27,20 @@ export class SidebarComponent {
         }
     }
 
-    onLoggedout() {
+    inicio()
+    {    
+        this.router.navigate(['/dashboard'], {skipLocationChange: true});
+    }
+
+    pedidos()
+    {    
+        this.router.navigate(['/cart'], {skipLocationChange: true});
+    }    
+
+    onLoggedout() 
+    {
         localStorage.removeItem('isLoggedin');
+        this.router.navigate(['/login'], {skipLocationChange: true});
     }
 
 }

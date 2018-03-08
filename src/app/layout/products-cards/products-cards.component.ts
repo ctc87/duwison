@@ -4,6 +4,8 @@ import { routerTransition } from '../../router.animations';
 import { HttpCalls } from '../../shared';
 import { Cliente } from '../../shared/class/cliente.class';
 import { Producto } from '../../shared/class/producto.class';
+import { AuthGuard } from '../../shared';
+import { LoginService } from '../../shared/services/login.service';
 
 
 @Component({
@@ -16,12 +18,18 @@ import { Producto } from '../../shared/class/producto.class';
 export class ProductsCardsComponent implements OnInit {
      page: number = 1;
 
- constructor(public dataService: DataService, public httpService: HttpCalls) {
+ constructor(public dataService: DataService, public httpService: HttpCalls,public authGuard: AuthGuard, public loginService:LoginService) {
     } 
     
     
     public ngOnInit() {
-        console.log(this.dataService.arrayProductosFiltrados)
+
+        this.authGuard.checkLogout();
+        if (localStorage.getItem('isLoggedin'))
+        {            
+            this.loginService.refreshToken();            
+        } 
+        console.log(this.dataService);
     }
     
     public restarPedido(codProd, prod) {

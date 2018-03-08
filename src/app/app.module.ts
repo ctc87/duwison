@@ -13,9 +13,8 @@ import { DataService } from './shared';
 import { HttpCalls } from './shared';
 import { NgSelectizeModule } from 'ng-selectize';
 import { BlockUIModule } from 'ng-block-ui';
-
 import { LoginService } from './shared/services/login.service';
-
+//import { NgxSelectModule } from 'ngx-select-ex';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: Http) {
@@ -36,6 +35,7 @@ export function HttpLoaderFactory(http: Http) {
         HttpClientModule,
         NgSelectizeModule,
         BlockUIModule,
+        //NgxSelectModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,

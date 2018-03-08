@@ -4,23 +4,21 @@ import { HttpCalls } from '../../../../shared/peticionesHTTP/http.service';
 import { DataService } from '../../../../shared/services/data.service';
 import { SINGLE_SELECT_PRESET_VALUE_CONFIG, SINGLE_SELECT_PRESET_VALUE_CONFIG_2 } from './presetValueExample.config';
 import { ExampleValues_Frameworks } from './selectize.configs';
-
-
-
-
+import {SelectModule} from 'ng2-select-compat';
 
 @Component({
-    selector: 'app-modal-clientes',
+    selector: 'app-modal-clientes', 
     templateUrl: './modal.component.html',
     styleUrls: ['./modal.component.scss']
 })
 export class ModalCliente implements OnInit {
+
     closeResult: string;
     @Input() nombre_boton: string;
     private modalRef: NgbModalRef;
     
     singleSelectConfig: any = SINGLE_SELECT_PRESET_VALUE_CONFIG;
-    singleSelectConfig2: any = SINGLE_SELECT_PRESET_VALUE_CONFIG_2;
+    singleSelectConfig2: any = SINGLE_SELECT_PRESET_VALUE_CONFIG_2; 
 	singleSelectOptions: any;
 	cliente: string; // Defaulted value.
 	sleccionadoCLiente: boolean = false;
@@ -45,12 +43,14 @@ export class ModalCliente implements OnInit {
             codcli:$event, 
             clientes:this.cliente, 
             tarCli: clienteNombre[0].tarcli, 
-            tipoCliente:clienteNombre[0].clientes,
+            //tipoCliente:clienteNombre[0].clientes,
+            tipoCliente:clienteNombre[0].tipoCliente,
+            
             codenv:null
-        };
-        
+            
+        };       
         this.crearArrayDeCodigoEnvio();
-        console.log(this.arrayCodigosEnvio)
+        //console.log(this.arrayCodigosEnvio)
         if(this.arrayCodigosEnvio.length > 1)
             this.mostrarCodEnv = true
         else
@@ -83,22 +83,24 @@ export class ModalCliente implements OnInit {
     
     public reformarArrayClientes() {
         this.formateadoArray = true;
-        console.log(this.httpJson.objetosJSON.clientes)
+        //console.log(this.httpJson.objetosJSON.clientes)
         this.httpJson.objetosJSON.clientes.forEach(function(element, index){
             if(element.nombreComercial)
                 element.clientes = element.clientes + " " + element.nombreComercial;
         })
-        console.log(this.httpJson.objetosJSON.clientes)
+        //console.log(this.httpJson.objetosJSON.clientes)
     }
 
     public crearArrayDeCodigoEnvio() {
         let that = this;
         this.arrayCodigosEnvio =  this.httpJson.objetosJSON.clientes.filter(function(element, index) {
-            // console.log(that.dataService.clienteSeleccionado.codcli)
-            // console.log(element.codcli)
-            // console.log(that.dataService.clienteSeleccionado.codcli == element.codcli)
+             //console.log(that.dataService.clienteSeleccionado.codcli)
+             //console.log(element.codcli)
+             //console.log(that.dataService.clienteSeleccionado.codcli == element.codcli)
+             
             return that.dataService.clienteSeleccionado.codcli == element.codcli;
         });
+        console.log(this.arrayCodigosEnvio);
     }
     
     public clienteSeleccionado () {

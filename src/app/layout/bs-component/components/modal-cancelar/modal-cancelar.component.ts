@@ -33,7 +33,7 @@ export class ModalCancelar {
     }
     
     cancelarPedido() {
-        console.log("Se cancela el " + this.index)
+        //console.log("Se cancela el " + this.index)
      let indiceArray = 0;
      let that = this;
      this.dataService.comercial.pedidos.some(function(element, i){

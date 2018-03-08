@@ -88,6 +88,6 @@ export class ModalProducto {
             this.dataService.clienteActualPedido.carrito.productos[codProd].totalProducto = can * precio * unilot;
         else
             this.dataService.clienteActualPedido.carrito.productos[codProd].totalProducto = can * precio;
-        console.log(this.dataService.clienteActualPedido.carrito.productos[codProd].totalProducto)
+      //  console.log(this.dataService.clienteActualPedido.carrito.productos[codProd].totalProducto)
     }
 }

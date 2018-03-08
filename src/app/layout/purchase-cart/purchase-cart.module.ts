@@ -12,6 +12,7 @@ import { CartComponent } from './purchase-cart.component';
 import { PageHeaderModule } from '../../shared';
 import { TabsComponent, ModalProducto } from '../bs-component/components';
 import { KeysPipe } from '../../shared/pipes/keys.pipe'
+import { BlockUIModule } from 'ng-block-ui';
 
 @NgModule({
     imports: [
@@ -22,6 +23,7 @@ import { KeysPipe } from '../../shared/pipes/keys.pipe'
         FormsModule,
         ReactiveFormsModule,
         NgbModule.forRoot(),
+        BlockUIModule,
     ],
     declarations: [
         CartComponent,  

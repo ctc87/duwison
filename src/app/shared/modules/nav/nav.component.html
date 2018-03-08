@@ -10,7 +10,7 @@
     </div>
   </div>
 </div>
-
+<!--
 <div id="collapseExample" [ngbCollapse]="isCollapsed" class="card-block">
 <nav class="nav nav-pills flex-column flex-sm-row">
   <a href="javascript:void(0)" class="btn btn-primary separated-btn" (click)="filtrando(true)" [routerLink]="['/products-cards']">
@@ -26,5 +26,28 @@
       <i class="fa fa-dashboard"> Inicio</i>
   </a>
 </nav>
+</div>
+-->
+
+<div id="collapseExample" [ngbCollapse]="isCollapsed" class="card-block">
+
+  <nav class="nav nav-pills flex-column flex-sm-row">
+    <a class="btn btn-primary separated-btn" (click)="recuadros()">
+        <i class="fa fa-th-large"> Mostrar recuadros</i>
+    </a>  
+    <a class="btn btn-primary separated-btn" (click)="listado()">
+      <i class="fa fa-th-list"> Mostrar listado</i>
+    </a>
+    <a class="btn btn-primary separated-btn" (click)="familias()">
+      <i class="fa fa-list-alt"> Familias</i>
+    </a>  
+    <a class="btn btn-primary separated-btn" (click)="nuevoPedido()">
+      <i class="fa fa-dashboard"> Nuevo pedido</i>
+    </a>  
+    <a class="btn btn-primary separated-btn" (click)="terminar()">
+      <i class="fa fa-dashboard"> Terminar pedidos</i>
+    </a>
+  </nav>
+
 </div>
 

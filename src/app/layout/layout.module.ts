@@ -9,7 +9,7 @@ import { HeaderComponent, SidebarComponent } from '../shared';
 import { SearchComponent } from '../shared/modules/search/search.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
-
+//import { NgxSelectModule } from 'ngx-select-ex';
 
 @NgModule({
     imports: [
@@ -20,6 +20,8 @@ import { RouterModule } from '@angular/router';
         RouterModule,
         NgbModule.forRoot(),
         FormsModule
+        //NgxSelectModule 
+
     ],
     declarations: [
         LayoutComponent,

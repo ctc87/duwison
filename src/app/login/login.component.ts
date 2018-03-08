@@ -6,112 +6,50 @@ import { FormsModule } from '@angular/forms';
 import { LoginService } from '../shared/services/login.service';
 import { DataService } from '../shared';
 import { HttpCalls } from '../shared';
-import {  BlockUI, NgBlockUI } from 'ng-block-ui';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss'],
-    animations: [routerTransition()]
+    styleUrls: ['./login.component.scss'],    
+    animations: [routerTransition()]   
 })
 export class LoginComponent implements OnInit {
 
+    @BlockUI() public blockUI: NgBlockUI;
     public user;
     public errorMessage;
     public prueba;
     public identity;
     public token;
-    @BlockUI() public blockUI: NgBlockUI;
     public logged = false;
+    public prov = false;
+
     constructor(public httpCall : HttpCalls, public router: Router, private loginService:LoginService, public dataService: DataService) {}    
-    
-  
-    
-    finishLogin() {
-        this.httpCall.getObjects(); 
-        this.httpCall.EstaCargando();
-        this.router.navigate(['/dashboard'], {skipLocationChange: false});
-    }
-    
-    ngOnInit() {    
+        
+    ngOnInit() 
+    {    
         this.user={
                 "email":"",
                 "password":"",
                 "gethash":"false"
             }; 
-            localStorage.clear();           
-    }    
+            localStorage.clear();   
+    }   
 
-    onLoggedin() {
-       this.blockUI.start("iniciando sesión.");
-       this.loginService.signup(this.user).
-        subscribe(response=>{            
-            let identity = response;
-            this.identity = identity;            
+    onLoggedin() 
+    {
+        let that=this;         
+        this.loginService.onLoggedin(this.user, function ()
+                                        {
+                                            that.logged=that.loginService.logged;     
+                                        }
+                                    );// MODIFICADO DAMIAN --LOGIN       
+    }
 
-            if (this.identity.status =="error")
-            {
-                alert("Usuario y/o contraseña incorrecta");
-                console.log("Error en la comunicación/logueo servidor.");
-                this.blockUI.stop();
-            }
-            else
-            {
-                if(this.identity.status=="ok")
-                {
-                    localStorage.setItem('email', identity.email); 
-                    localStorage.setItem('nombre', identity.nombre); 
-                    localStorage.setItem('apellidos', identity.apellidos);
-                    localStorage.setItem('provincia', identity.codalm);                    
-                    
-                    this.user.gethash="true";
-                    this.loginService.signup(this.user).subscribe(
-                    response=>{
-                            let token = response;
-                            this.token=token;
-                            
-                                if (this.token.length <=0)
-                                {
-                                    alert("Error");
-                                    console.log("Error en la comunicación servidor");         
-                                }
-                                else
-                                {           
-                                    localStorage.setItem('isLoggedin', 'true');  
-                                    this.dataService.cambiarDatosComercial(
-                                       (localStorage.nombre.trim() + " " + localStorage.apellidos.trim()),
-                                        localStorage.provincia,
-                                        localStorage.email
-                                        
-                                    );
-                                    //console.log("MAIL", localStorage.email)
-                                    //console.log(this.dataService.comercial)
-                                    this.blockUI.stop();
-                                    // ANTES DE LLMAR ESTO ELEGIR PROVINCIA
-                                    this.dataService.getProvincia();
-                                    this.logged = true;
-                                }
-
-                    }, error=>{
-                        this.errorMessage = <any>error;
-                            if(this.errorMessage!=null)
-                            {
-                            console.log("Error desde componente "+this.errorMessage);
-                            }                  
-                        })
-                } 
-                
-            }
-
-            },
-    error=>{
-            this.errorMessage = <any>error;
-                if(this.errorMessage!=null)
-                {
-                console.log("Error desde componente "+this.errorMessage);
-                }                  
-            })             
-            
+    finishLogin()
+    {
+        this.loginService.finishLogin();
     }
 
 }

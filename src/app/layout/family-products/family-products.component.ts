@@ -2,6 +2,8 @@ import { Component, Input } from '@angular/core';
 import { DataService } from '../../shared/services/data.service';
 import { routerTransition } from '../../router.animations';
 import { HttpCalls } from '../../shared';
+import { AuthGuard } from '../../shared';
+import { LoginService } from '../../shared/services/login.service';
 
 
 @Component({
@@ -15,15 +17,16 @@ export class FamilyProductsComponent {
  mensajes = [];
  public alerts: Array<any> = [];
  
- constructor(public dataService: DataService, public httpService: HttpCalls) {
+ constructor(public dataService: DataService, public httpService: HttpCalls,public authGuard: AuthGuard, public loginService:LoginService) {
     this.familiArray = httpService.objetosJSON["familias"];
     
-   
+    
+
    this.mensajes =  [
             {
                 id: 1,
                 type: 'success',
-                message: `Selecciona la familia que desess.`
+                message: `Selecciona la familia que desees.`
             }
         ];
     this.alerts.push(this.mensajes[0]);
@@ -34,5 +37,12 @@ export class FamilyProductsComponent {
         this.alerts.splice(index, 1);
     }
 
+    ngOnInit() {
 
+        this.authGuard.checkLogout();
+        if (localStorage.getItem('isLoggedin'))
+        {            
+            this.loginService.refreshToken();            
+        } 
+    }
 }

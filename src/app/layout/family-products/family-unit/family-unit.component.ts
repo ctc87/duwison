@@ -1,6 +1,7 @@
 import { Component, Input, OnInit} from '@angular/core';
 import { DataService } from '../../../shared/services/data.service';
 import { NavigationExtras } from '@angular/router';
+import { Router } from '@angular/router';  //AÑADIDO DAMIAN - LOGIN
 
 @Component({
   selector: 'app-family-unit',
@@ -16,7 +17,7 @@ export class FamilyUnitComponent implements OnInit{
  @Input() name: string;
  @Input() codfam: string;
 
- constructor(public dataService: DataService) {
+ constructor(public dataService: DataService, public router:Router) {
   
    // this.dataService.familia_actual.subscribe(message => this.name = message)
  } 
@@ -33,6 +34,7 @@ export class FamilyUnitComponent implements OnInit{
  seleccionarFamilia() {
   this.dataService.familia_actual.codfam = this.codfam;
   this.dataService.familia_actual.familia = this.name;
+  this.router.navigate(["/products-cards"],{skipLocationChange: true});
  };
  
  

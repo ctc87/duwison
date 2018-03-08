@@ -21,11 +21,7 @@ export class HeaderComponent implements OnInit {
     }
 
     ngOnInit() {
-
-   // let nombreUsuario;
-    this.nombreUsuario = localStorage.getItem('nombre');
-    console.log(localStorage.getItem('nombre') );
-    
+    this.nombreUsuario = localStorage.getItem('nombre');   
     }
 
     isToggled(): boolean {
@@ -45,9 +41,15 @@ export class HeaderComponent implements OnInit {
 
     onLoggedout() {
         localStorage.removeItem('isLoggedin');
+        this.router.navigate(['/login'], {skipLocationChange: true});
+    }
+
+    carrito()
+    {
+        this.router.navigate(['/cart'], {skipLocationChange: true});  
     }
 
     changeLang(language: string) {
         this.translate.use(language);
-    }
+    } 
 }

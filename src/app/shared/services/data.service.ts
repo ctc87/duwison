@@ -18,8 +18,7 @@ import { Router, Resolve, RouterStateSnapshot,
  */
 @Injectable()
 export class DataService {
-  
-  
+    
   private messageSource = new BehaviorSubject<string>("Otros");
   public familia_actual = {codfam:null, familia:null};
   public alerts: Array<any> = [];
@@ -89,7 +88,7 @@ export class DataService {
   }
   
   public addClient(selected) {
-    console.log(this.clienteSeleccionado.codenv)
+   // console.log(this.clienteSeleccionado.codenv)
     if(!selected) {
       let that = this;
       if(this.alerts[0] && this.alerts[0].id === 1) {
@@ -102,10 +101,12 @@ export class DataService {
         that.httpCalls.getCobrosPendientes(that.clienteSeleccionado.codcli, that.clienteSeleccionado.clientes, function(){
           that.httpCalls.getDescuentosPorClienteProducto(that.clienteSeleccionado.codcli, that.clienteSeleccionado.clientes, function(arrayDescuentosPorCliente){
             that.httpCalls.getPreciosPortipoCLiente(that.clienteSeleccionado.tipoCliente, that.clienteSeleccionado.clientes, function(arrayDescuentosPorTipoCliente){
+             console.log("array tipo clientes venido del http calls", arrayDescuentosPorTipoCliente);
               that.comercial.insertarCliente(
                 that.clienteSeleccionado.tarCli,
                 indexx,
                 that.clienteSeleccionado.codcli,
+                that.clienteSeleccionado.codenv,
                 that.clienteSeleccionado.clientes, 
                 true,
                 false,
@@ -139,8 +140,7 @@ export class DataService {
   
   public asignarClienteActual(cliente) {
     this.clienteActualPedido = cliente;
-  }
-  
+  }  
    
   public closeTagsCLients(index) {
    this.comercial.pedidos.forEach(function(element, i) {
@@ -150,37 +150,27 @@ export class DataService {
                   element.collapsed = true;
       }); 
   }
-
     
     public truncate(val) {
         return Number(val).toFixed(2)   
-    }
-    
+    }    
     
     public filtrar() {
         let re = new RegExp(".*"+this.filtrado+".*", "ig");
         this.arrayProductosFiltrados = this.arrayProductosFamilia.filter(function(element, index){
             return re.test(element.articulo) || re.test(element.codart)
         });
-    }
-    
+    }    
     
     public confirmarPedido (data) {
       if( data.status === 'ok') {
-         this.router.navigate(['/']);
+         this.router.navigate(['/'], {skipLocationChange: true});
          window.location.reload();
       }
-    }
-
+    }  
   
-  
-  getProvincia() {
-    
+  getProvincia() {    
     this.showedProv = this.provincia[localStorage.getItem('provincia')];
-    console.log(localStorage.getItem('provincia'))
-    console.log(this.showedProv)
   }
-  
-
   
 }

@@ -14,7 +14,8 @@
     <div class="card-block">
         <div class="row">
             <div class="col-6">
-            <a [routerLink]="['/familias']">
+            <!--<a [routerLink]="['/familias']">-->
+                <a >
                <button (click)="empezarPedido()" class="btn-responsive btn btn-lg btn-{{boton_accion.tipo}}" type="button">{{boton_accion.accion}}</button>
             </a>
             </div>
@@ -27,7 +28,7 @@
     <div id="collapseExample" [ngbCollapse]="isCollapsed" class="card-block">
         <div class="row">
             <!--   COBROS PENDIENTES   -->
-            <ng-container *ngIf="cobrosPendientes">
+            <ng-container *ngIf="cobrosPendientesArray.length > 0">
             <div class="col-12 col-sm-6">
                  <app-modal-cobros-pendientes [nombre_boton]="'Cobros pendientes'" [cobros]="cobrosPendientesArray" [bgClass]="bgClass"></app-modal-cobros-pendientes> 
             </div>
@@ -84,7 +85,7 @@
     <div class="card-footer">
         <span *ngIf="isCollapsed" class="float-left">
             Ver info cliente
-            <ng-container *ngIf="cobrosPendientes">
+            <ng-container *ngIf="cobrosPendientesArray">
                 <br/><span style="color:red">{{cobrosCadena}}</span>
             </ng-container>
         </span>

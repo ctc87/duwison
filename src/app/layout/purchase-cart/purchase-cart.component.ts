@@ -3,8 +3,9 @@ import { routerTransition } from '../../router.animations';
 import { DataService } from '../../shared/services/data.service';
 import { HttpCalls } from '../../shared/peticionesHTTP/http.service';
 import { Router,RouterModule } from '@angular/router';
-
-
+import { BlockUI, NgBlockUI } from 'ng-block-ui';//AÑADIDO DAMIAN - LOGIN
+import { AuthGuard } from '../../shared';
+import { LoginService } from '../../shared/services/login.service';
 
 @Component({
     selector: 'app-purchase-cart',
@@ -16,13 +17,16 @@ import { Router,RouterModule } from '@angular/router';
 
 export class CartComponent implements OnInit {
     
+    // Decorator wires up blockUI instance      
+    @BlockUI() blockUI: NgBlockUI;
+
     mensajes = [];
     public alerts: Array<any> = [];
     public arrayPedidos = [];
     codPedidoActual;
     pedidoActual;
     
-    constructor(public dataService: DataService, public http: HttpCalls, public router: Router) {
+    constructor(public dataService: DataService, public http: HttpCalls, public router: Router,public authGuard: AuthGuard, public loginService:LoginService ) {
         this.mensajes =  [
             {
                 id: 1,
@@ -41,19 +45,21 @@ export class CartComponent implements OnInit {
             }
         ];
         
-    }
-    
+    }    
     
     public closeAlert(alert: any) {
         const index: number = this.alerts.indexOf(alert);
         this.alerts.splice(index, 1);
     }
      
-    ngOnInit() {
+    ngOnInit() {    
+        this.authGuard.checkLogout();
+        if (localStorage.getItem('isLoggedin'))
+        {            
+            this.loginService.refreshToken();            
+        } 
 
-        
-
-        this.arrayPedidos = this.filtrarPedidosVacios(this.dataService.comercial.pedidos);
+     this.arrayPedidos = this.filtrarPedidosVacios(this.dataService.comercial.pedidos);
         if(this.arrayPedidos.length > 0) {
             this.codPedidoActual = this.arrayPedidos[0].codigo;
             this.pedidoActual = this.arrayPedidos[0]; 
@@ -61,25 +67,29 @@ export class CartComponent implements OnInit {
             this.alerts.push(this.mensajes[1]);
         } else {
             this.alerts.push(this.mensajes[2]);
-            //this.router.navigate(['/dashboard']);
         }
-    }
-    
+    }    
     
     public enviarPedido() {
+       
+        //this.blockUI.start("Enviando pedido");  
         let peido: Object;
         let pedido = this.generarObjetoJSON_Pedido();
-        // console.log("procede a suscribirse ")
-        this.http.enviarPedidoServidor(pedido).subscribe(
-          (data) => this.dataService.confirmarPedido(data)
-        );   
-        
-        alert("Pedido enviado"); 
-        
-        window.location.reload();        
-        
-    }
-    
+
+        //console.log("procede a suscribirse ")
+        console.log(pedido);
+        //this.http.enviarPedidoServidor(pedido).subscribe(
+        //  (data) => this.dataService.confirmarPedido(data)
+        //);   
+                
+    //window.location.reload();               
+      //  setTimeout(() => {
+             
+      //      this.router.navigate(['/'], {skipLocationChange: true});   
+       //     this.blockUI.stop();
+      //  }, 3000);
+
+    }    
     
     // ENVIAR ESTE OBJETO 
     public generarObjetoJSON_Pedido() {
@@ -98,7 +108,7 @@ export class CartComponent implements OnInit {
             return pedido.codigo === $event;
         }) 
         this.pedidoActual = auxArr[0];
-        // console.log(this.pedidoActual.nombre)
+         console.log(this.pedidoActual.nombre)
     }
     
   public filtrarPedidosVacios(pedidos) {
@@ -106,8 +116,7 @@ export class CartComponent implements OnInit {
       return pedidos.filter(function(pedido, index){
         return that.pedidoVacio(pedido);
       }) 
-  }
-  
+  }  
   
   public pedidoVacio(pedido) {
       return (this.objetToArray(pedido.carrito.productos).length > 0);

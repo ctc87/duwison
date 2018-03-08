@@ -5,13 +5,10 @@ import {
     NgbAlertModule,
     NgbModule
 } from '@ng-bootstrap/ng-bootstrap';
-
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ModalCliente } from '../bs-component/components';
-import { NgSelectizeModule } from 'ng-selectize';        
-
-
+import { NgSelectizeModule } from 'ng-selectize';  
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
 import {

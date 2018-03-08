@@ -1,8 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { DataService } from '../../services/data.service';
 import { ModalCancelar, ModalCliente } from '../../../layout/bs-component/components';
-
-
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-stat',
@@ -46,7 +45,7 @@ export class StatComponent implements OnInit {
             this.boton_accion.accion = "Empezar";
             this.boton_accion.tipo = "success";
         }
-    }
+    } 
     
     empezarPedido() {
         let that = this;
@@ -57,9 +56,11 @@ export class StatComponent implements OnInit {
         this.empezadoPedido = cliente[0].empezadoPedido;
         this.dataService.asignarClienteActual(cliente[0]);
         this.cambiarBotonAccion();
-    }
+        this.router.navigate(['/familias'], {skipLocationChange: true} );
     
-    constructor(public dataService: DataService) { 
+    } 
+    
+    constructor(public dataService: DataService, public router: Router) { 
     }
     
     ngOnInit() {
@@ -69,6 +70,8 @@ export class StatComponent implements OnInit {
         });
         this.empezadoPedido = cliente[0].empezadoPedido;
         this.cobrosPendientesArray = cliente[0].cobrosPendientes;
+        //console.log(this.cobrosPendientesArray);
+
        // console.log("HISTORIAL ALABARANES")
         this.alabaranesArray = cliente[0].historialAlbaranes;
         this.estadisticasArray = cliente[0].estadisticasCliente;//-------AÑADIDO DAMIAN
@@ -78,12 +81,12 @@ export class StatComponent implements OnInit {
         
         this.cambiarBotonAccion();
         this.actualizarListaProductosCliente()
-        if(this.cobrosPendientes) {
+        if(this.cobrosPendientesArray.length>0) {
         // if(this.cobrosPendientesArray[0].impdeb>0) {// ------AÑADIDO DAMIAN   
-            console.log("TIENE COBROS PENDIENTES")
+           // console.log("TIENE COBROS PENDIENTES")
          this.bgClass = "cobrosPendientes";
          this.icon = "fa-exclamation-triangle";
-         this.cobrosCadena += "El cliente tiene pagos pendientes!!"
+         this.cobrosCadena += "El cliente tiene pagos pendientes!!";
         }
     // }
     }

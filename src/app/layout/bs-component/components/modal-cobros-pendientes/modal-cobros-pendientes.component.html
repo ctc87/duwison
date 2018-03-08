@@ -8,13 +8,14 @@
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
-    <div class="modal-body">
+    <div class="modal-body"> 
         <table class="card-block table table-responsive">
                 <thead>
                 <tr class="active">
                     <th class="th-responsive">Fecha</th>                        
                     <th class="th-responsive">Factura</th>
                     <th class="th-responsive">Total</th>
+                    <th class="th-responsive">Gastos</th>
                     <th class="th-responsive">Pagado</th>
                     <th class="th-responsive">A pagar</th>
                 </tr>
@@ -24,12 +25,14 @@
                     <td class="td-responsive">{{cobro.fecha.timestamp * 1000 | date:'dd/MM/yyyy'}}</td>
                     <td class="td-responsive">{{cobro.factura}}</td>
                     <td class="td-responsive">{{toFixed(cobro.total)}}</td>
+                    <td class="td-responsive">{{toFixed(cobro.gastos)}}</td>
                     <td class="td-responsive">{{toFixed(cobro.pagado)}}</td>
-                    <td class="td-responsive">{{toFixed(calcularResto(cobro.total, cobro.pagado))}}</td>
+                    <td class="td-responsive">{{toFixed(calcularResto(cobro.total,cobro.gastos,cobro.pagado))}}</td>
                     </tr>
                 </tbody>
             </table>
     </div>
+ 
 
     <div class="modal-footer">
         <button type="button" class="btn btn-default" (click)="c('Close click')">Cerrar</button>

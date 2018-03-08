@@ -1,7 +1,8 @@
 <a class="btn btl-lg btn-success"   (click)="open(content)" style="color:white">
               <i class="fa fa-plus fa-lg"></i> 
                 &nbsp;{{nombre_boton}}
-             </a>
+			 </a>
+	
 <ng-template #content let-c="close" let-d="dismiss">
     <div class="modal-header">
         <h4 class="modal-title">Selecionar Cliente</h4>
@@ -11,17 +12,17 @@
     </div>
     <div class="modal-body">
         <p>Seleccione un cliente</p>
-
-	    <ng-selectize 
-    	    [config]="singleSelectConfig" 
-    	    [options]="singleSelectOptions" 
-    	    [placeholder]="placeholder"
-    		[(ngModel)]="singleSelectValue"
-    		(ngModelChange)="onChange($event)"
-    		ngDefaultControl
-    	>
+		
+		<ng-selectize 
+		[(ngModel)]="singleSelectValue"
+		(ngModelChange)="onChange($event)"
+    	[config]="singleSelectConfig" 
+    	[options]="singleSelectOptions" 
+    	[placeholder]="placeholder"    		
+    	ngDefaultControl>
 		</ng-selectize>
-		<span  *ngIf="mostrarCodEnv">
+
+		<!--<span  *ngIf="mostrarCodEnv">
 		<p>Seleccione un código de envío</p>
     		<ng-selectize 
         	    [config]="singleSelectConfig2" 
@@ -32,7 +33,16 @@
         		ngDefaultControl
         	>
     		</ng-selectize>
+		</span>-->
+		
+		<span  *ngIf="mostrarCodEnv">
+			<p>Seleccione un código de envío</p>
+				<select [(ngModel)]="dataService.clienteSeleccionado.codenv" (ngModelChange)="seleccionarCodEnv($event)">
+					<option *ngFor="let c of arrayCodigosEnvio" [ngValue]="c.codenv"> {{c.nomenv}} </option>
+				</select>
 		</span>
+		
+		
 	</div>
     
     <div class="modal-footer">

@@ -12,13 +12,14 @@ import { Producto } from './producto.class';
  */
 export class Carrito {
     /**
-     * ´prductos´ contiene productos indexados por su referencia.
+     * ´productos´ contiene productos indexados por su referencia.
      */
     public productos = {};
     private preciosArticuloParticular = {};
     private descuentosFamilia = {};
     private preciosPorTipoCLiente = {};
     public totalPrecioPedido = 0; 
+    public observa = 'Observaciones...';
     
     /**
      * ´constructor´ Recibe tdos los articulos e inicializa el objeto produtos.
@@ -29,6 +30,7 @@ export class Carrito {
      * o un descuento para una famiala para un cliente en particular.
      */
     constructor(todosProductosArray, arrayPreciosParticulares, arrayDescuentosPorTipoCliente, tarifaCliente){
+        console.log(arrayPreciosParticulares);//viene vacio el array
         this.inicizalizarCarrito(todosProductosArray, arrayPreciosParticulares, arrayDescuentosPorTipoCliente, tarifaCliente);
     };
     
@@ -46,20 +48,28 @@ export class Carrito {
         this.inicializarEstructurasDePrecios(arrayPreciosParticulares, arrayDescuentosPorTipoCliente);
         
         todosProductosArray.forEach(function(element, index) {
-            that.productos[element.codart] = new Producto(element.codart, element.articulo, that.definirPrecio(element.codart, element['preven' + tarifaCliente ]), element.unilot);           
+            
+            //console.log(element.codart );//devuelve codart
+            //console.log(tarifaCliente);//devuelve la tarifa (a)
+            //console.log(that.definirPrecio(element.codart, element['preven' + tarifaCliente ])); //devuelve el precio
+            that.productos[element.codart] = new Producto(element.codart, element.articulo, that.definirPrecio(element.codart, element['preven' + tarifaCliente]), element.unilot, element.peso, element.unidad);           
+      
         });
     }
     
     private inicializarEstructurasDePrecios(arrayPreciosParticulares, arrayDescuentosPorTipoCliente) {
         let that = this;
+      
         let arrayPreciosArticuloParticular = arrayPreciosParticulares.filter(function(articulo, index) {
             return articulo.codfam == "";
         });
-        
         arrayPreciosArticuloParticular.forEach(function(articulo, index){
+         
             that.preciosArticuloParticular[articulo.codart] = articulo.preven;
-        });
-        
+                        
+          });
+     
+
         let arrayDescuentosPorFamilia = arrayPreciosParticulares.filter(function(articulo, index) {
             return articulo.codfam != "";
         });
@@ -68,11 +78,16 @@ export class Carrito {
             that.descuentosFamilia[articulo.codart] = articulo.descuento;
         });
         
+        console.log(that.preciosPorTipoCLiente);
+        
         arrayDescuentosPorTipoCliente.forEach(function(articulo, index) {
-            that.preciosPorTipoCLiente[articulo.codArt] = articulo.preven;    
-        })
-        
-        
+            // that.preciosPorTipoCLiente[articulo.codArt] = articulo.preven; 
+ 
+
+
+        })        
+     //  el objeto final que muestra el precio por tipo de cliente
+        console.log("that.preciosPorTipoCLiente", that.preciosPorTipoCLiente)
     }
     
     /**
@@ -110,20 +125,33 @@ export class Carrito {
    * @param arrayDePreciosCliente Array que contiene los descuentos y los precios
    * que dependen del codCli(casos 1 y 3).
    */
-    
+
     private definirPrecio(codArt, precioTarificado) {
+        //console.log(codArt);//devuelve el codart
+        //console.log(this.preciosArticuloParticular[codArt]);//undefined
+        //console.log(this.preciosPorTipoCLiente[codArt]);//undefined 
+       // console.log(this.preciosArticuloParticular);//undefined
+
+
         if(this.preciosArticuloParticular[codArt]) {
+
             return this.preciosArticuloParticular[codArt];
+
         } else if(this.preciosPorTipoCLiente[codArt]) {
+            console.log("entro en definir precio  IF 2");
+
+          
             return this.preciosPorTipoCLiente[codArt]
+
         } else { 
-            if(this.descuentosFamilia[codArt]) {
-             return (precioTarificado - (precioTarificado * (this.descuentosFamilia[codArt] * 100)));   
+            if(this.descuentosFamilia[codArt]) {          
+            //return (precioTarificado - (precioTarificado * (this.descuentosFamilia[codArt] * 100)));  
+            return precioTarificado;
             } else {
-             return precioTarificado;   
+            return precioTarificado;   
             }
         }
-        // return 0.0001;
+         
     }
     
     
